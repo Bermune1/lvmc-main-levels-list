@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<meta name="theme-color" content="#0d1118" />
+<meta name="description" content="The official LVMC Main Levels List, ranked by Bermune with 150 completion points across all 22 Geometry Dash main levels." />
+<title>Main Levels List. — Official LVMC Rankings</title>
+<style>
+ :root{color-scheme:dark;--bg:#0d1118;--panel:#151b25;--panel-active:#192333;--border:#293241;--muted:#99a7ba;--text:#f1f5fb;--accent:#79b9ff}
+ *{box-sizing:border-box}
+ html{scroll-behavior:smooth}
+ body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -9%,#1b314b 0,transparent 54%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif}
+ .wrap{max-width:880px;margin:auto;padding:64px 20px 82px}
+ header{text-align:center;margin:0 auto 42px}
+ .eyebrow{color:var(--accent);text-transform:uppercase;letter-spacing:.22em;font-size:11px;font-weight:750}
+ h1{font-size:clamp(37px,7vw,60px);letter-spacing:-.058em;line-height:1.1;margin:11px 0 14px;font-weight:790}
+ header p{color:var(--muted);margin:10px auto;max-width:540px;font-size:14px}
+ .stats{display:flex;justify-content:center;gap:10px;margin-top:26px;flex-wrap:wrap}
+ .stat{border:1px solid var(--border);background:#151e2a;border-radius:12px;padding:10px 17px;color:var(--muted);font-size:12px;white-space:nowrap}
+ .stat strong{color:#fff;font-size:16px;margin-right:6px}
+ .section-title{display:flex;align-items:center;justify-content:space-between;margin:0 0 13px;gap:10px}
+ .section-title h2{font-size:17px;letter-spacing:-.02em;margin:0}
+ .section-title span{font-size:12px;color:var(--muted)}
+ .list{display:grid;gap:9px}
+ details{border:1px solid var(--border);background:var(--panel);border-radius:13px;overflow:hidden;transition:border-color .2s,background .2s,box-shadow .2s}
+ details:hover,details[open]{border-color:#466485;background:var(--panel-active)}
+ details[open]{box-shadow:0 10px 32px #05070b26}
+ summary{cursor:pointer;display:flex;align-items:center;gap:16px;padding:11px 18px;list-style:none;min-height:77px;outline-offset:3px}
+ summary::-webkit-details-marker{display:none}
+ summary:focus-visible{outline:2px solid var(--accent)}
+ .rank{color:#9caac0;font-variant-numeric:tabular-nums;font-weight:750;width:38px;flex:0 0 38px;font-size:14px}
+ .thumb{width:92px;height:53px;flex:0 0 92px;border-radius:8px;object-fit:cover;object-position:center;border:1px solid #ffffff24;background:#253348;box-shadow:0 2px 10px #0003}
+ .name{font-weight:670;flex:1;min-width:0;line-height:1.3;letter-spacing:-.008em}
+ .points{color:#b2d6ff;background:#20384f;border:1px solid #365979;padding:5px 10px;border-radius:8px;font-size:12px;font-weight:740;white-space:nowrap;font-variant-numeric:tabular-nums}
+ .chev{color:#9cadbf;transition:transform .2s;display:inline-flex;align-items:center;justify-content:center;width:15px;height:18px;font-size:18px;line-height:1}
+ details[open] .chev{transform:rotate(180deg)}
+ .detail-panel{border-top:1px solid var(--border);padding:17px 21px;display:grid;grid-template-columns:220px 1fr;gap:20px;align-items:center}
+ .detail-image{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:9px;border:1px solid #ffffff25;background:#253348}
+ .small-label{color:#90a2bc;text-transform:uppercase;letter-spacing:.13em;font-size:10px;font-weight:740}
+ .detail-value{font-size:31px;letter-spacing:-.04em;line-height:1.13;font-weight:780;color:#f4f8ff;margin:5px 0 8px}
+ .detail-value span{color:#8fbef1;font-size:14px;letter-spacing:0;font-weight:600}
+ .detail-description{color:#a4b2c4;font-size:12px;margin:0}
+ .img-source{color:#8dbff8;text-decoration:none;font-size:11px;display:inline-block;margin-top:10px}
+ .img-source:hover{text-decoration:underline}
+ footer{text-align:center;color:#758398;font-size:12px;margin-top:38px}
+ footer p{margin:5px 0}
+ footer .credit{font-size:11px;color:#65788e}
+ footer a{color:#86a9d5;text-underline-offset:2px}
+ @media(max-width:600px){
+  .wrap{padding-top:45px;padding-bottom:60px}
+  .detail-panel{grid-template-columns:1fr;gap:12px;padding:14px 17px 18px}
+  .detail-image{max-width:100%;max-height:200px}
+  .detail-value{font-size:27px}
+ }
+ @media(max-width:480px){
+  .wrap{padding-left:13px;padding-right:13px}
+  summary{gap:10px;padding:10px 12px;min-height:68px}
+  .rank{width:29px;flex-basis:29px;font-size:12px}
+  .thumb{width:73px;height:45px;flex-basis:73px;border-radius:7px}
+  .name{font-size:13px}
+  .points{font-size:11px;padding:4px 6px}
+  .chev{width:10px}
+  .stat{padding:9px 12px}
+ }
+ @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<header>
+  <div class="eyebrow">Geometry Dash · LVMC Rankings</div>
+  <h1>Main Levels List<span style="color:#79b9ff">.</span></h1>
+  <p>A Bermune-made ranking of the 22 classic Geometry Dash main levels, from hardest to easiest.</p>
+  <div class="stats">
+    <div class="stat"><strong id="count">22</strong> Levels</div>
+    <div class="stat"><strong id="total">150</strong> Total points</div>
+    <div class="stat"><strong>Official</strong> LVMC Rankings</div>
+  </div>
+</header>
+<section aria-label="Ranked Geometry Dash main levels">
+  <div class="section-title"><h2>Level rankings</h2><span>Click a level for details</span></div>
+  <div class="list" id="list"></div>
+</section>
+<footer>
+  <p>Made for the LVMC gang · Not affiliated with actual RobTop or Geometry Dash</p>
+  <p class="credit">Gameplay screenshots: <a href="https://stpkukaif.github.io/GeometryDash/" target="_blank" rel="noopener noreferrer">GD screenshot collection</a> &amp; <a href="https://www.bluestacks.com/blog/updates/geometry-dash-lite/gd-latest-update-en.html" target="_blank" rel="noopener noreferrer">BlueStacks (Dash)</a>.</p>
+</footer>
+</main>
+<script>
+// --- LVMC DATA: You can reorder levels and edit their points later. ---
+const levels = [
+  {
+    "name": "Deadlocked",
+    "points": 17,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Deadlocked.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Theory Of Everything 2",
+    "points": 15,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/TOE2.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Clubstep",
+    "points": 15,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Clubstep.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Hexagon Force",
+    "points": 10,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/HexagonForce.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Electrodynamix",
+    "points": 10,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Electrodynamix.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Clutterfunk",
+    "points": 10,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Clutterfunk.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Electroman Adventures",
+    "points": 8,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Electroman_Adventures.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Fingerdash",
+    "points": 6,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Fingerdash.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Geometrical Dominator",
+    "points": 6,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Geometrical_Dominator.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Time Machine",
+    "points": 6,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/TimeMachine.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Cycles",
+    "points": 6,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Cycles.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Dash",
+    "points": 6,
+    "image": "https://cdn-www.bluestacks.com/bs-images/Geometry-Dash_2.2-Update_EN_4-1024x576.png",
+    "source": "https://www.bluestacks.com/blog/updates/geometry-dash-lite/gd-latest-update-en.html"
+  },
+  {
+    "name": "xStep",
+    "points": 6,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/xStep.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Theory Of Everything",
+    "points": 5,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/TheoryOfEverything.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Can't Let Go",
+    "points": 5,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Cant_Let_Go.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Blast Processing",
+    "points": 5,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Blast_Processing.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Jumper",
+    "points": 4,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Jumper.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Base After Base",
+    "points": 3,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/BaseAfterBase.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Dry Out",
+    "points": 3,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Dry_Out.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Polargeist",
+    "points": 2,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Polargeist.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Back On Track",
+    "points": 1,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Back_on_Track.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Stereo Madness",
+    "points": 1,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Stereo_Madness.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  }
+];
+// All 22 image URLs were selected from screenshots of the actual RobTop levels.
+// When offline, a distinct illustrated placeholder appears instead of a broken-image icon.
+const palette=[['#a51c34','#f7646c'],['#123d88','#4ed9f9'],['#4d257f','#da6bff'],['#dc6e18','#ffd358'],['#2337a6','#5ce6f5'],['#7b296e','#ff8cdb'],['#126e7e','#65f8c6'],['#a3312e','#ffce64'],['#4b267b','#ff5eac'],['#784a25','#e9c37b'],['#235b9b','#83f2fa'],['#8b245d','#ff92c9'],['#41649b','#a9d4ff'],['#306381','#7ee6ff'],['#6b3c82','#e3a7ff'],['#206b6c','#93ffe2'],['#447d37','#c9f77a'],['#785b31','#ffe59a'],['#315d7e','#9de5ff'],['#714c33','#efb780'],['#5a448b','#c5afff'],['#316c87','#9beaff']];
+const shapes=['wave','rings','monster','dual','saws','gears','lightning','spider','stars','steps','rings','dash','stairs','rings','spikes','wave','steps','stairs','spikes','blocks','rings','steps'];
+function fallbackThumbnail(i){
+ const [dark,light]=palette[i%palette.length];
+ const shape=shapes[i%shapes.length];
+ let art='';
+ if(shape==='wave'||shape==='dash')art='<path d="M-8 60 12 26 30 55 50 17 70 52 96 12" stroke="#fff" stroke-width="7" fill="none"/><path d="M0 68 20 43 39 69 59 35 83 62" stroke="#101626" stroke-width="8" fill="none"/>';
+ else if(shape==='dual')art='<path d="M0 38H96" stroke="#fff" opacity=".7"/><rect x="25" y="12" width="22" height="22" transform="rotate(20 36 23)" fill="#fff"/><rect x="53" y="47" width="22" height="22" transform="rotate(20 64 58)" fill="#111a30" stroke="#fff" stroke-width="3"/>';
+ else if(shape==='rings')art='<circle cx="30" cy="37" r="17" stroke="#fff" stroke-width="6" fill="none"/><circle cx="71" cy="42" r="14" stroke="#fff" stroke-width="5" fill="none"/><circle cx="30" cy="37" r="6" fill="#111a30"/>';
+ else if(shape==='saws'||shape==='gears')art='<path d="M48 8 55 21 70 12 69 29 86 31 73 43 83 57 65 56 60 72 48 60 34 73 31 56 13 55 23 42 10 30 28 27 27 11 42 21Z" fill="#101626" stroke="#fff" stroke-width="3"/><circle cx="48" cy="41" r="12" fill="'+light+'"/>';
+ else if(shape==='lightning')art='<path d="M55 5 24 44 47 44 37 76 78 30 51 30Z" fill="#fff"/>';
+ else if(shape==='monster')art='<path d="M15 22H81V65H15Z" fill="#111a30" stroke="#fff" stroke-width="3"/><path d="M25 48 34 57 43 48 52 57 61 48 70 57" stroke="'+light+'" stroke-width="5" fill="none"/><rect x="28" y="30" width="12" height="9" fill="#fff"/><rect x="56" y="30" width="12" height="9" fill="#fff"/>';
+ else if(shape==='stars')art='<path d="M48 8 59 30 84 34 66 52 70 75 48 63 26 75 30 52 12 34 37 30Z" fill="#fff"/>';
+ else if(shape==='spider')art='<path d="M48 14 65 28 60 52 48 65 34 52 30 28Z" fill="#111a30" stroke="#fff" stroke-width="4"/><path d="M30 31 12 20M30 48 10 59M65 31 85 20M65 48 85 59" stroke="#fff" stroke-width="4"/>';
+ else art='<path d="M0 68H18V53H36V37H54V22H74V8H96" fill="none" stroke="#fff" stroke-width="7"/><path d="M12 68 24 47 36 68M52 68 64 47 76 68" fill="#111a30" stroke="#fff" stroke-width="2"/>';
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 80"><defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="${dark}"/><stop offset="1" stop-color="${light}"/></linearGradient></defs><rect width="96" height="80" fill="url(#g)"/><path d="M0 16H96M0 55H96M22 0V80M70 0V80" stroke="#fff" stroke-opacity=".13" stroke-width="2"/>${art}</svg>`;
+ return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg);
+}
+function levelImage(level,i,klass){
+ const img=document.createElement('img');
+ img.className=klass;
+ img.alt=klass==='detail-image'?'Gameplay screenshot for '+level.name:'';
+ img.src=level.image;
+ img.loading=i<3?'eager':'lazy';
+ img.decoding='async';
+ img.addEventListener('error',()=>{img.src=fallbackThumbnail(i);img.alt='Illustrated fallback thumbnail for '+level.name;},{once:true});
+ return img;
+}
+const list=document.getElementById('list');
+document.getElementById('total').textContent=levels.reduce((sum,l)=>sum+l.points,0);
+document.getElementById('count').textContent=levels.length;
+levels.forEach((level,i)=>{
+ const details=document.createElement('details');
+ const summary=document.createElement('summary');
+ const rank=document.createElement('span');rank.className='rank';rank.textContent='#'+(i+1);
+ const title=document.createElement('span');title.className='name';title.textContent=level.name;
+ const pill=document.createElement('span');pill.className='points';pill.textContent=level.points+' '+(level.points===1?'pt':'pts');
+ const chev=document.createElement('span');chev.className='chev';chev.textContent='⌄';chev.setAttribute('aria-hidden','true');
+ summary.append(rank,levelImage(level,i,'thumb'),title,pill,chev);
+ const body=document.createElement('div');body.className='detail-panel';
+ const preview=levelImage(level,i,'detail-image');
+ const content=document.createElement('div');
+ const label=document.createElement('div');label.className='small-label';label.textContent='Completion reward · Rank #'+(i+1);
+ const value=document.createElement('div');value.className='detail-value';value.textContent=String(level.points)+' ';
+ const unit=document.createElement('span');unit.textContent=level.points===1?'point':'points';value.append(unit);
+ const desc=document.createElement('p');desc.className='detail-description';desc.textContent='Completing '+level.name+' earns '+level.points+' '+(level.points===1?'point':'points')+' toward the 150-point maximum.';
+ const source=document.createElement('a');source.className='img-source';source.href=level.source;source.target='_blank';source.rel='noopener noreferrer';source.textContent='View screenshot source ↗';
+ content.append(label,value,desc,source);body.append(preview,content);details.append(summary,body);list.append(details);
+});
+</script>
+</body>
+</html>
