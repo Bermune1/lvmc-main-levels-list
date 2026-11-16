@@ -100,7 +100,14 @@
   .tag{display:inline-block;border:1px solid #536378;padding:2px 8px;border-radius:99px;color:#dce8f6;font-size:11px}
   .tag.approved{color:#a3dbb1;border-color:#477b60}
   .tag.rejected{color:#ff9ca3;border-color:#a94755}
-  .tag.pending{color:#ffe59a;border-color:#9e7a2d}
+   .tag.pending{color:#ffe59a;border-color:#9e7a2d}
+   .tag.revoked{color:#d5b6ff;border-color:#8564b1}
+   .danger-zone{border:1px solid #85404b;background:#261b25;border-radius:12px;padding:17px;margin-top:25px}
+   .danger-zone h3{color:#ffacb5;margin:0 0 8px}
+   .danger-btn{border-color:#a94755;color:#ffc3c9;background:#43242c}
+   .moderation-row{border-top:1px solid var(--border);padding:14px 0;display:grid;gap:9px}
+   .moderation-row .button-row{margin-top:3px}
+   .muted-note{font-size:12px;color:var(--muted)}
   .safe-link{color:#91c6ff;overflow-wrap:anywhere}
   [hidden]{display:none!important}
   @media(max-width:480px){.feature{padding:14px}.navtab{flex:1 1 40%}.board-row{grid-template-columns:29px minmax(0,1fr) auto;gap:7px}}
@@ -145,6 +152,7 @@
     <div class="feature-grid">
       <form id="signup-form" class="form-stack">
         <h3>Create an account</h3>
+        <label>Username <input type="text" name="username" autocomplete="username" required minlength="3" maxlength="20" pattern="[A-Za-z0-9_]{3,20}" title="3–20 letters, numbers, or underscores" placeholder="GeometryDashPro"></label>
         <label>Email <input type="email" name="email" autocomplete="email" required maxlength="254"></label>
         <label>Password <input type="password" name="password" autocomplete="new-password" required minlength="8"></label>
         <button class="action-btn primary" type="submit">Sign up</button>
@@ -170,8 +178,23 @@
       <button type="submit" class="action-btn primary">Submit completion</button>
     </form>
     <p id="submission-status" class="status-line" role="status" aria-live="polite"></p>
+    <form id="username-form" class="form-stack" style="margin:16px 0 24px">
+      <h3>Change username</h3>
+      <label>New username <input type="text" name="username" autocomplete="username" required minlength="3" maxlength="20" pattern="[A-Za-z0-9_]{3,20}" title="3–20 letters, numbers, or underscores" placeholder="Your new username"></label>
+      <button type="submit" class="action-btn">Save username</button>
+    </form>
+    <p id="username-status" class="status-line" role="status" aria-live="polite"></p>
     <h3 style="margin-top:25px">My submissions</h3>
     <div id="my-submissions">Loading…</div>
+    <div class="danger-zone" id="delete-account-zone">
+      <h3>Delete account</h3>
+      <p>Permanently delete your LVMC account, all completions and points, and your leaderboard entry. Your username will become available to others. This cannot be undone.</p>
+      <form id="delete-account-form" class="form-stack">
+        <label>Type DELETE to confirm <input name="confirmation" type="text" autocomplete="off" placeholder="DELETE" required></label>
+        <button class="action-btn danger-btn" type="submit">Permanently delete my account</button>
+      </form>
+      <p id="delete-account-status" class="status-line" role="status" aria-live="polite"></p>
+    </div>
   </div>
 </section>
 <section class="feature" data-panel="admin" hidden aria-label="Administrator dashboard">
@@ -180,6 +203,11 @@
   <button type="button" class="action-btn" id="refresh-admin">Refresh submissions</button>
   <p id="admin-status" class="status-line" role="status" aria-live="polite"></p>
   <div id="admin-queue">Loading…</div>
+  <h3 style="margin-top:26px">Player moderation</h3>
+  <p>Ban or unban submissions, or revoke a non-admin player's approved points. Revoked completions cannot be resubmitted.</p>
+  <button type="button" class="action-btn" id="refresh-players">Refresh players</button>
+  <p id="moderation-status" class="status-line" role="status" aria-live="polite"></p>
+  <div id="admin-players">Loading players…</div>
 </section>
 <footer>
   <p>Made for the LVMC gang · Not affiliated with actual RobTop or Geometry Dash</p>
@@ -399,7 +427,40 @@ let isAdmin = false;
 let dbLevels = [];
 const nameForLevel = (id) => dbLevels.find(l => String(l.id) === String(id))?.name || `Level #${id}`;
 function showStatus(id, message, error=false) { const el=$(id); el.textContent=message; el.classList.toggle('error',error); }
-function errorText(error) { return error?.message || 'Something went wrong. Please try again.'; }
+function errorText(error) {
+  const message=String(error?.message||'');
+  const code=String(error?.code||'');
+  if(/invalid login credentials/i.test(message))return 'Incorrect email or password. Please try again.';
+  if(/email not confirmed/i.test(message))return 'Please confirm your email address before logging in.';
+  if(/user already registered/i.test(message))return 'An account with this email already exists. Try logging in.';
+  if(/password should be|password is too short|weak password/i.test(message))return 'Please choose a stronger password (at least 8 characters).';
+  if(/rate limit|too many requests|over_email_send_rate_limit/i.test(message))return 'Too many attempts. Please wait a little while and try again.';
+  if(/jwt expired|invalid jwt|session.*expired|not authenticated/i.test(message))return 'Your session expired. Please log in again.';
+  if(code==='23505'||/duplicate key|unique constraint/i.test(message))return 'That entry already exists. Please check your previous submission or username.';
+  if(/Only administrators can/i.test(message))return 'You do not have permission to perform this action.';
+  if(/Administrator points cannot be reset|Administrators cannot be banned/i.test(message))return 'Administrator accounts are protected from this action.';
+  if(/Revoked completions cannot be reviewed/i.test(message))return 'This completion was revoked and cannot be reviewed again.';
+  if(/Only rejected completions can be resubmitted/i.test(message))return 'Only rejected completions can be resubmitted.';
+  if(/banned from submitting completions/i.test(message))return 'You are banned from submitting completions. Contact an LVMC administrator if you think this is a mistake.';
+  if(/row.level security|permission denied|not allowed|42501/i.test(message)||code==='42501')return 'This action is not permitted for your account. Please check your permissions or contact an LVMC administrator.';
+  if(/failed to fetch|networkerror|fetch failed/i.test(message))return 'Could not connect to the server. Check your internet connection and try again.';
+  if(/invalid video url/i.test(message))return 'Video links must begin with https://';
+  if(/no existing completion found/i.test(message))return 'We could not find that completion. Refresh your submissions and try again.';
+  console.warn('LVMC unrecognized error:',error);
+  return 'Something went wrong. Please try again or contact an LVMC administrator.';
+}
+async function submissionErrorText(error){
+  const message=String(error?.message||'');
+  if(/row.level security|permission denied/i.test(message)||error?.code==='42501'){
+    if(currentUser){
+      const {data, error:banCheckError}=await supabase.from('submission_bans').select('user_id').eq('user_id',currentUser.id).maybeSingle();
+      if(!banCheckError && data)return 'You are banned from submitting completions. Contact an LVMC administrator if you think this is a mistake.';
+    }
+    return 'Your submission could not be accepted. Please log in again or contact an LVMC administrator.';
+  }
+  if(error?.code==='23505'||/duplicate key|unique constraint/i.test(message))return 'You already submitted this level. Check My Submissions; rejected completions can be resubmitted there.';
+  return errorText(error);
+}
 function element(tag, cls, text) { const el=document.createElement(tag); if(cls)el.className=cls; if(text!==undefined)el.textContent=String(text); return el; }
 function clear(el){el.replaceChildren();}
 function switchTab(tab) {
@@ -408,7 +469,7 @@ function switchTab(tab) {
   document.querySelectorAll('[data-tab]').forEach(el=>el.setAttribute('aria-selected',String(el.dataset.tab===tab)));
   if(tab==='leaderboard') loadLeaderboard();
   if(tab==='account' && currentUser) loadMySubmissions();
-  if(tab==='admin' && isAdmin) loadAdminQueue();
+  if(tab==='admin' && isAdmin) {loadAdminQueue();loadAdminPlayers();}
 }
 document.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>switchTab(btn.dataset.tab)));
 
@@ -455,7 +516,30 @@ async function loadMySubmissions(){
   if(error){root.textContent='Could not load submissions: '+errorText(error);return;}
   clear(root);
   if(!data?.length){root.textContent='No submissions yet.';return;}
-  for(const c of data){const row=element('div','submission-row');const line=element('div');line.append(element('strong','',nameForLevel(c.level_id)),' ',element('span','tag '+c.status,c.status));row.append(line,element('div','submission-meta',new Date(c.submitted_at).toLocaleString()));root.append(row);}
+  for(const c of data){
+    const row=element('div','submission-row');const line=element('div');
+    line.append(element('strong','',nameForLevel(c.level_id)),' ',element('span','tag '+c.status,c.status));
+    row.append(line,element('div','submission-meta',new Date(c.submitted_at).toLocaleString()));
+    if(c.status==='rejected'){
+      const form=element('form','form-stack');
+      const label=element('label','', 'New evidence link (optional)');
+      const input=element('input');input.type='url';input.placeholder='https://...';input.maxLength=2000;
+      label.append(input);
+      const button=element('button','action-btn primary','Resubmit for review');button.type='submit';
+      const status=element('div','status-line');form.append(label,button,status);
+      form.addEventListener('submit',async event=>{
+        event.preventDefault();if(!currentUser)return;
+        const video=input.value.trim();
+        if(video){try{if(new URL(video).protocol!=='https:')throw Error();}catch{status.textContent='Use an https:// video URL.';status.classList.add('error');return;}}
+        button.disabled=true;status.textContent='Resubmitting…';status.classList.remove('error');
+        const {error}=await supabase.rpc('resubmit_completion',{p_level_id:c.level_id,p_video_url:video||null});
+        if(error){status.textContent=await submissionErrorText(error);status.classList.add('error');button.disabled=false;}
+        else{showStatus('submission-status','Completion resubmitted for admin review!');await loadMySubmissions();}
+      });
+      row.append(form);
+    }
+    root.append(row);
+  }
 }
 async function loadAdminStatus(){
   isAdmin=false;
@@ -465,6 +549,7 @@ async function loadAdminStatus(){
     isAdmin=!!data;
   }
   $('admin-tab').hidden=!isAdmin;
+  $('delete-account-zone').hidden=isAdmin;
   if(!isAdmin && !document.querySelector('[data-panel="admin"]').hidden)switchTab('rankings');
 }
 async function refreshAuth(user){
@@ -472,17 +557,39 @@ async function refreshAuth(user){
   $('signed-out').hidden=!!user;
   $('signed-in').hidden=!user;
   if(user){await Promise.all([loadProfile(),loadAdminStatus(),loadMySubmissions()]);}
-  else{isAdmin=false;$('admin-tab').hidden=true;$('profile-info').textContent='';}
+   else{isAdmin=false;$('admin-tab').hidden=true;$('delete-account-zone').hidden=false;$('profile-info').textContent='';}
 }
 $('signup-form').addEventListener('submit',async(e)=>{
   e.preventDefault();const form=e.currentTarget;const btn=form.querySelector('[type="submit"]');btn.disabled=true;
   showStatus('auth-status','Creating your account…');
   try{
-    const {error}=await supabase.auth.signUp({email:form.elements.namedItem('email').value.trim(),password:form.elements.namedItem('password').value,options:{emailRedirectTo:window.location.origin+window.location.pathname}});
+    const username=form.elements.namedItem('username').value.trim();
+    if(!/^[A-Za-z0-9_]{3,20}$/.test(username))throw new Error('Username must be 3–20 letters, numbers, or underscores.');
+    const {error}=await supabase.auth.signUp({email:form.elements.namedItem('email').value.trim(),password:form.elements.namedItem('password').value,options:{data:{username},emailRedirectTo:window.location.origin+window.location.pathname}});
     if(error)throw error;
     showStatus('auth-status','Check your inbox for a confirmation email, then return here and log in.');form.reset();
   }catch(err){showStatus('auth-status',errorText(err),true);}finally{btn.disabled=false;}
 });
+$('username-form').addEventListener('submit',async(e)=>{
+  e.preventDefault();if(!currentUser)return;
+  const form=e.currentTarget,btn=form.querySelector('[type="submit"]');
+  const username=form.elements.namedItem('username').value.trim();
+  if(!/^[A-Za-z0-9_]{3,20}$/.test(username)){
+    showStatus('username-status','Username must be 3–20 letters, numbers, or underscores.',true);return;
+  }
+  btn.disabled=true;showStatus('username-status','Saving username…');
+  try{
+    const {error}=await supabase.rpc('change_my_username',{new_username:username});
+    if(error)throw error;
+    showStatus('username-status','Username updated successfully!');
+    form.reset();await Promise.all([loadProfile(),loadLeaderboard()]);
+    if(isAdmin)await loadAdminQueue();
+  }catch(err){
+    const msg=errorText(err);
+    showStatus('username-status',(err?.code==='23505'||/duplicate key|unique constraint/i.test(String(err?.message||'')))?'That username already exists. Please try another.':msg,true);
+  }finally{btn.disabled=false;}
+});
+
 $('login-form').addEventListener('submit',async(e)=>{
   e.preventDefault();const form=e.currentTarget;const btn=form.querySelector('[type="submit"]');btn.disabled=true;
   showStatus('auth-status','Signing in…');
@@ -507,7 +614,7 @@ $('completion-form').addEventListener('submit',async(e)=>{
   if(video){try{const url=new URL(video);if(url.protocol!=='https:')throw Error();}catch{showStatus('submission-status','Video links must begin with https://',true);return;}}
   btn.disabled=true;showStatus('submission-status','Submitting…');
   const {error}=await supabase.from('completions').insert({user_id:currentUser.id,level_id:id,video_url:video||null});
-  showStatus('submission-status',error?errorText(error):'Completion submitted! Awaiting admin review.',!!error);
+  showStatus('submission-status',error?await submissionErrorText(error):'Completion submitted! Awaiting admin review.',!!error);
   if(!error){form.reset();await loadMySubmissions();}btn.disabled=false;
 });
 async function loadAdminQueue(){
@@ -528,7 +635,7 @@ async function loadAdminQueue(){
     row.append(top,element('div','submission-meta',`${name} · ${new Date(c.submitted_at).toLocaleString()}`));
     if(c.video_url){try{const u=new URL(c.video_url);if(u.protocol==='https:'){const link=element('a','safe-link','View submitted video ↗');link.href=u.href;link.target='_blank';link.rel='noopener noreferrer';row.append(link);}}catch{}}
     const actions=element('div','button-row');
-    for(const decision of ['approved','rejected']){
+    for(const decision of (c.status==='revoked'?[]:['approved','rejected'])){
       const btn=element('button','action-btn'+(decision==='approved'?' primary':''),decision==='approved'?'Approve':'Reject');btn.type='button';
       btn.addEventListener('click',async()=>{
         if(!confirm(`${decision==='approved'?'Approve':'Reject'} ${name}'s ${nameForLevel(c.level_id)} completion?`))return;
@@ -542,6 +649,83 @@ async function loadAdminQueue(){
   }
 }
 $('refresh-admin').addEventListener('click',loadAdminQueue);
+$('refresh-players').addEventListener('click',loadAdminPlayers);
+
+async function loadAdminPlayers(){
+  if(!isAdmin)return;
+  const root=$('admin-players');root.textContent='Loading players…';
+  const [profilesResult,bansResult,adminsResult]=await Promise.all([
+    supabase.from('profiles').select('id,username').order('username'),
+    supabase.from('submission_bans').select('user_id,reason'),
+    supabase.from('admins').select('user_id')
+  ]);
+  const error=profilesResult.error||bansResult.error||adminsResult.error;
+  if(error){root.textContent='Could not load players: '+errorText(error);return;}
+  const banned=new Map((bansResult.data||[]).map(b=>[b.user_id,b]));
+  const adminIds=new Set((adminsResult.data||[]).map(a=>a.user_id));
+  clear(root);
+  const players=(profilesResult.data||[]).filter(p=>!adminIds.has(p.id));
+  if(!players.length){root.textContent='No non-admin players found.';return;}
+  for(const player of players){
+    const row=element('div','moderation-row');
+    const header=element('div');header.append(element('strong','',player.username));
+    if(banned.has(player.id))header.append(' ',element('span','tag rejected','Submission banned'));
+    row.append(header);
+    const actions=element('div','button-row');
+    const banBtn=element('button','action-btn',banned.has(player.id)?'Unban submissions':'Ban submissions');banBtn.type='button';
+    banBtn.addEventListener('click',async()=>{
+      const isBanned=banned.has(player.id);
+      let reason=null;
+      if(isBanned){if(!confirm(`Unban ${player.username} from submitting completions?`))return;}
+      else{reason=prompt(`Reason for banning ${player.username} from submissions (optional):`);if(reason===null)return;if(reason.length>500){showStatus('moderation-status','Ban reason must be 500 characters or less.',true);return;}}
+      banBtn.disabled=true;showStatus('moderation-status','Updating submission ban…');
+      const {error}=isBanned
+        ?await supabase.rpc('unban_player',{p_user_id:player.id})
+        :await supabase.rpc('ban_player',{p_user_id:player.id,p_reason:reason||null});
+      showStatus('moderation-status',error?errorText(error):`${player.username}: submission ban updated.`,!!error);
+      if(!error)await loadAdminPlayers();else banBtn.disabled=false;
+    });
+    const resetBtn=element('button','action-btn danger-btn','Revoke approved points');resetBtn.type='button';
+    resetBtn.addEventListener('click',async()=>{
+      const confirmation=prompt(`This will revoke ALL approved completions for ${player.username}.\n\nType RESET (all capital letters) to confirm:`);
+      if(confirmation===null)return;
+      if(confirmation.trim()!=='RESET'){showStatus('moderation-status','Points were not revoked. Type RESET in all capital letters to confirm.',true);return;}
+      resetBtn.disabled=true;showStatus('moderation-status','Revoking approved points…');
+      const {data,error}=await supabase.rpc('reset_player_points',{p_user_id:player.id});
+      showStatus('moderation-status',error?errorText(error):`Revoked ${data} approved completion(s) for ${player.username}.`,!!error);
+      if(!error){await Promise.all([loadAdminQueue(),loadLeaderboard()]);}resetBtn.disabled=false;
+    });
+    actions.append(banBtn,resetBtn);row.append(actions);root.append(row);
+  }
+}
+
+$('delete-account-form').addEventListener('submit',async e=>{
+  e.preventDefault();
+  if(!currentUser || isAdmin){showStatus('delete-account-status','Administrator accounts cannot be deleted here.',true);return;}
+  const form=e.currentTarget;
+  if(form.elements.namedItem('confirmation').value.trim()!=='DELETE'){
+    showStatus('delete-account-status','Type DELETE exactly to confirm.',true);return;
+  }
+  if(!confirm('Permanently delete your LVMC account and remove all leaderboard points? This cannot be undone.'))return;
+  const button=form.querySelector('[type="submit"]');button.disabled=true;
+  showStatus('delete-account-status','Deleting your account…');
+  try{
+    const {data:{session},error:sessionError}=await supabase.auth.getSession();
+    if(sessionError||!session?.access_token)throw new Error('Please log in again before deleting your account.');
+    const {data,error}=await supabase.functions.invoke('delete-account',{
+      method:'POST',body:{},headers:{Authorization:`Bearer ${session.access_token}`}
+    });
+    if(error)throw new Error(data?.message||errorText(error));
+    if(data?.message!=='Account deleted successfully')throw new Error(data?.message||'Unexpected server response.');
+    await supabase.auth.signOut({scope:'local'});
+    await refreshAuth(null);
+    form.reset();
+    switchTab('leaderboard');
+    await loadLeaderboard();
+    showStatus('global-status','Your account has been permanently deleted. Your username is available again.');
+  }catch(error){showStatus('delete-account-status',errorText(error),true);}
+  finally{button.disabled=false;}
+});
 supabase.auth.onAuthStateChange((event,session)=>{
   setTimeout(async()=>{
     try{
