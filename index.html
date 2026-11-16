@@ -71,6 +71,39 @@
   .stat{padding:9px 12px}
  }
  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+
+  /* LVMC 2.0 interactive features */
+  .navtabs{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin:22px 0 27px}
+  .navtab,.action-btn{appearance:none;border:1px solid #36506a;background:#192739;color:#d8e7fa;border-radius:10px;padding:10px 15px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+  .navtab[aria-selected="true"],.action-btn.primary{background:#28527b;border-color:#5286b7;color:#fff}
+  .navtab:hover,.action-btn:hover{border-color:#82b8e8}
+  .action-btn:disabled{opacity:.55;cursor:wait}
+  .feature{border:1px solid var(--border);border-radius:14px;background:#151b25;padding:20px;margin-bottom:16px}
+  .feature h2,.feature h3{margin:0 0 13px;font-size:19px}
+  .feature p{color:var(--muted);font-size:13px}
+  .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:13px}
+  .form-stack{display:grid;gap:11px;max-width:460px}
+  .form-stack label{display:grid;gap:5px;color:#c7d7e9;font-size:12px;font-weight:650}
+  .form-stack input,.form-stack select{width:100%;min-width:0;padding:11px 12px;border-radius:9px;background:#0d1521;border:1px solid #3a4b62;color:#f1f5fb;font:inherit;font-size:14px}
+  .form-stack input:focus,.form-stack select:focus{outline:2px solid #79b9ff;outline-offset:1px}
+  .button-row{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+  .status-line{font-size:13px;color:#b4d8ff;min-height:18px;overflow-wrap:anywhere}
+  .status-line.error{color:#ff9ca3}
+  .board-row{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:center;border-top:1px solid var(--border);padding:13px 4px}
+  .board-rank{color:#f4d35e;font-weight:800}
+  .board-name{font-weight:700;overflow-wrap:anywhere}
+  .board-sub{font-size:12px;color:var(--muted)}
+  .board-score{font-weight:800;text-align:right}
+  .submission-row{border-top:1px solid var(--border);padding:13px 0;display:grid;gap:8px}
+  .submission-row strong{font-size:14px}
+  .submission-meta{font-size:12px;color:var(--muted);overflow-wrap:anywhere}
+  .tag{display:inline-block;border:1px solid #536378;padding:2px 8px;border-radius:99px;color:#dce8f6;font-size:11px}
+  .tag.approved{color:#a3dbb1;border-color:#477b60}
+  .tag.rejected{color:#ff9ca3;border-color:#a94755}
+  .tag.pending{color:#ffe59a;border-color:#9e7a2d}
+  .safe-link{color:#91c6ff;overflow-wrap:anywhere}
+  [hidden]{display:none!important}
+  @media(max-width:480px){.feature{padding:14px}.navtab{flex:1 1 40%}.board-row{grid-template-columns:29px minmax(0,1fr) auto;gap:7px}}
 </style>
 </head>
 <body>
@@ -85,9 +118,68 @@
     <div class="stat"><strong>Official</strong> LVMC Rankings</div>
   </div>
 </header>
+
+<nav class="navtabs" aria-label="Website sections">
+  <button class="navtab" type="button" data-tab="rankings" aria-selected="true">Rankings</button>
+  <button class="navtab" type="button" data-tab="leaderboard" aria-selected="false">Leaderboard</button>
+  <button class="navtab" type="button" data-tab="account" aria-selected="false">My account</button>
+  <button class="navtab" type="button" data-tab="admin" aria-selected="false" id="admin-tab" hidden>Admin</button>
+</nav>
+<div id="global-status" class="status-line" role="status" aria-live="polite"></div>
+<div id="rankings-panel" data-panel="rankings">
 <section aria-label="Ranked Geometry Dash main levels">
   <div class="section-title"><h2>Level rankings</h2><span>Click a level for details</span></div>
   <div class="list" id="list"></div>
+</section>
+</div>
+<section class="feature" data-panel="leaderboard" hidden aria-label="LVMC leaderboard">
+  <div class="section-title"><h2>LVMC Leaderboard</h2><span>Approved completions only</span></div>
+  <p>Everyone can view the rankings. Only approved levels award points.</p>
+  <div id="leaderboard-list" aria-live="polite">Loading leaderboard…</div>
+  <div class="button-row" style="margin-top:14px"><button type="button" class="action-btn" id="refresh-leaderboard">Refresh leaderboard</button></div>
+</section>
+<section data-panel="account" hidden aria-label="Player account">
+  <div class="feature" id="signed-out">
+    <h2>Join the LVMC</h2>
+    <p>Sign up to submit level completions and compete on the leaderboard. Email confirmation is required for new accounts.</p>
+    <div class="feature-grid">
+      <form id="signup-form" class="form-stack">
+        <h3>Create an account</h3>
+        <label>Email <input type="email" name="email" autocomplete="email" required maxlength="254"></label>
+        <label>Password <input type="password" name="password" autocomplete="new-password" required minlength="8"></label>
+        <button class="action-btn primary" type="submit">Sign up</button>
+      </form>
+      <form id="login-form" class="form-stack">
+        <h3>Log in</h3>
+        <label>Email <input type="email" name="email" autocomplete="email" required></label>
+        <label>Password <input type="password" name="password" autocomplete="current-password" required></label>
+        <button class="action-btn primary" type="submit">Log in</button>
+        <button class="action-btn" type="button" id="reset-password">Send password reset email</button>
+      </form>
+    </div>
+    <p id="auth-status" class="status-line" role="status" aria-live="polite"></p>
+  </div>
+  <div class="feature" id="signed-in" hidden>
+    <div class="section-title"><h2 id="welcome">My player profile</h2><button type="button" class="action-btn" id="logout">Log out</button></div>
+    <p id="profile-info">Loading your profile…</p>
+    <h3>Submit a completion</h3>
+    <p>Pick a level you've beaten. Video evidence is optional. Your points count only after an admin approves the submission.</p>
+    <form id="completion-form" class="form-stack">
+      <label>Level <select name="level" id="completion-level" required><option value="">Loading levels…</option></select></label>
+      <label>Video link (optional) <input type="url" name="video" placeholder="https://..." maxlength="2000" inputmode="url"></label>
+      <button type="submit" class="action-btn primary">Submit completion</button>
+    </form>
+    <p id="submission-status" class="status-line" role="status" aria-live="polite"></p>
+    <h3 style="margin-top:25px">My submissions</h3>
+    <div id="my-submissions">Loading…</div>
+  </div>
+</section>
+<section class="feature" data-panel="admin" hidden aria-label="Administrator dashboard">
+  <h2>Completion review · Admin</h2>
+  <p>Approve or reject submitted completions. Approved levels automatically count toward the public leaderboard.</p>
+  <button type="button" class="action-btn" id="refresh-admin">Refresh submissions</button>
+  <p id="admin-status" class="status-line" role="status" aria-live="polite"></p>
+  <div id="admin-queue">Loading…</div>
 </section>
 <footer>
   <p>Made for the LVMC gang · Not affiliated with actual RobTop or Geometry Dash</p>
@@ -292,6 +384,189 @@ levels.forEach((level,i)=>{
  const source=document.createElement('a');source.className='img-source';source.href=level.source;source.target='_blank';source.rel='noopener noreferrer';source.textContent=level.sourceLabel || 'View screenshot source ↗';
  content.append(label,value,desc,source);body.append(preview,content);details.append(summary,body);list.append(details);
 });
+</script>
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+// Publishable key only. Never place a service-role/secret key in this file.
+const SUPABASE_URL = 'https://rhgehmrfhdhgjqkpjrnf.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_TbCInOpQXXeSlapQCgEvWA_lopVYmt_';
+const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+const $ = (id) => document.getElementById(id);
+let currentUser = null;
+let isAdmin = false;
+let dbLevels = [];
+const nameForLevel = (id) => dbLevels.find(l => String(l.id) === String(id))?.name || `Level #${id}`;
+function showStatus(id, message, error=false) { const el=$(id); el.textContent=message; el.classList.toggle('error',error); }
+function errorText(error) { return error?.message || 'Something went wrong. Please try again.'; }
+function element(tag, cls, text) { const el=document.createElement(tag); if(cls)el.className=cls; if(text!==undefined)el.textContent=String(text); return el; }
+function clear(el){el.replaceChildren();}
+function switchTab(tab) {
+  if(tab==='admin' && !isAdmin) tab='rankings';
+  document.querySelectorAll('[data-panel]').forEach(el => el.hidden=el.dataset.panel!==tab);
+  document.querySelectorAll('[data-tab]').forEach(el=>el.setAttribute('aria-selected',String(el.dataset.tab===tab)));
+  if(tab==='leaderboard') loadLeaderboard();
+  if(tab==='account' && currentUser) loadMySubmissions();
+  if(tab==='admin' && isAdmin) loadAdminQueue();
+}
+document.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>switchTab(btn.dataset.tab)));
+
+async function loadLeaderboard(){
+  const root=$('leaderboard-list'); root.textContent='Loading leaderboard…';
+  const {data,error}=await supabase.rpc('get_leaderboard');
+  if(error){root.textContent='Could not load leaderboard: '+errorText(error);return;}
+  clear(root);
+  if(!data?.length){root.textContent='No players yet. Be the first!';return;}
+  data.forEach((player,i)=>{
+    const row=element('div','board-row');
+    const rank=element('span','board-rank',`#${i+1}`);
+    const middle=element('div');
+    middle.append(element('div','board-name',player.username),element('div','board-sub',`${player.completed_levels} / 23 levels completed`));
+    const right=element('div','board-score',`${player.total_points} pts`);
+    row.append(rank,middle,right);root.append(row);
+  });
+}
+$('refresh-leaderboard').addEventListener('click',loadLeaderboard);
+
+async function loadLevels(){
+  // Fetch IDs from Supabase rather than assuming rank numbers equal database IDs.
+  const {data,error}=await supabase.from('levels').select('id,name,points');
+  const select=$('completion-level'); clear(select);
+  if(error){select.append(element('option','', 'Could not load levels'));showStatus('submission-status',errorText(error),true);return;}
+  dbLevels=data||[];
+  const byName=new Map(dbLevels.map(l=>[String(l.name).toLowerCase(),l]));
+  const sorted=levels.map(l=>byName.get(l.name.toLowerCase())).filter(Boolean);
+  const remaining=dbLevels.filter(l=>!sorted.some(x=>x.id===l.id));
+  select.append(element('option','', 'Choose a level…'));
+  for(const l of [...sorted,...remaining]){const option=element('option','',`${l.name} · ${l.points} pts`);option.value=String(l.id);select.append(option);}
+  if(sorted.length!==levels.length) showStatus('submission-status',`Heads up: matched ${sorted.length} of ${levels.length} website levels to the database. Check level names before submitting.`,true);
+}
+async function loadProfile(){
+  if(!currentUser)return;
+  const {data,error}=await supabase.from('profiles').select('username').eq('id',currentUser.id).maybeSingle();
+  $('welcome').textContent=data?.username?`${data.username}'s profile`:'My player profile';
+  $('profile-info').textContent=error?'Signed in. Could not load profile: '+errorText(error):`Signed in as ${data?.username||'player'}. Your submissions need admin approval to earn points.`;
+}
+async function loadMySubmissions(){
+  if(!currentUser)return;
+  const root=$('my-submissions');root.textContent='Loading…';
+  const {data,error}=await supabase.from('completions').select('id,level_id,status,submitted_at').eq('user_id',currentUser.id).order('submitted_at',{ascending:false});
+  if(error){root.textContent='Could not load submissions: '+errorText(error);return;}
+  clear(root);
+  if(!data?.length){root.textContent='No submissions yet.';return;}
+  for(const c of data){const row=element('div','submission-row');const line=element('div');line.append(element('strong','',nameForLevel(c.level_id)),' ',element('span','tag '+c.status,c.status));row.append(line,element('div','submission-meta',new Date(c.submitted_at).toLocaleString()));root.append(row);}
+}
+async function loadAdminStatus(){
+  isAdmin=false;
+  if(currentUser){
+    const {data,error}=await supabase.from('admins').select('user_id').eq('user_id',currentUser.id).maybeSingle();
+    if(error) showStatus('global-status','Could not check admin permissions: '+errorText(error),true);
+    isAdmin=!!data;
+  }
+  $('admin-tab').hidden=!isAdmin;
+  if(!isAdmin && !document.querySelector('[data-panel="admin"]').hidden)switchTab('rankings');
+}
+async function refreshAuth(user){
+  currentUser=user;
+  $('signed-out').hidden=!!user;
+  $('signed-in').hidden=!user;
+  if(user){await Promise.all([loadProfile(),loadAdminStatus(),loadMySubmissions()]);}
+  else{isAdmin=false;$('admin-tab').hidden=true;$('profile-info').textContent='';}
+}
+$('signup-form').addEventListener('submit',async(e)=>{
+  e.preventDefault();const form=e.currentTarget;const btn=form.querySelector('[type="submit"]');btn.disabled=true;
+  showStatus('auth-status','Creating your account…');
+  try{
+    const {error}=await supabase.auth.signUp({email:form.elements.namedItem('email').value.trim(),password:form.elements.namedItem('password').value,options:{emailRedirectTo:window.location.origin+window.location.pathname}});
+    if(error)throw error;
+    showStatus('auth-status','Check your inbox for a confirmation email, then return here and log in.');form.reset();
+  }catch(err){showStatus('auth-status',errorText(err),true);}finally{btn.disabled=false;}
+});
+$('login-form').addEventListener('submit',async(e)=>{
+  e.preventDefault();const form=e.currentTarget;const btn=form.querySelector('[type="submit"]');btn.disabled=true;
+  showStatus('auth-status','Signing in…');
+  try{
+    const {error}=await supabase.auth.signInWithPassword({email:form.elements.namedItem('email').value.trim(),password:form.elements.namedItem('password').value});
+    if(error)throw error;
+    showStatus('auth-status','Signed in!');form.reset();
+  }catch(err){showStatus('auth-status',errorText(err),true);}finally{btn.disabled=false;}
+});
+$('reset-password').addEventListener('click',async()=>{
+  const email=$('login-form').elements.namedItem('email').value.trim();
+  if(!email){showStatus('auth-status','Enter your email in the login form first.',true);return;}
+  const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:window.location.origin+window.location.pathname});
+  showStatus('auth-status',error?errorText(error):'If the email belongs to an account, a reset link will be sent.',!!error);
+});
+$('logout').addEventListener('click',async()=>{const {error}=await supabase.auth.signOut();if(error)showStatus('global-status',errorText(error),true);else switchTab('rankings');});
+$('completion-form').addEventListener('submit',async(e)=>{
+  e.preventDefault();if(!currentUser)return;
+  const form=e.currentTarget;const btn=form.querySelector('[type="submit"]');
+  const id=Number(form.elements.namedItem('level').value);if(!dbLevels.some(l=>l.id===id)){showStatus('submission-status','Choose a valid level.',true);return;}
+  const video=form.elements.namedItem('video').value.trim();
+  if(video){try{const url=new URL(video);if(url.protocol!=='https:')throw Error();}catch{showStatus('submission-status','Video links must begin with https://',true);return;}}
+  btn.disabled=true;showStatus('submission-status','Submitting…');
+  const {error}=await supabase.from('completions').insert({user_id:currentUser.id,level_id:id,video_url:video||null});
+  showStatus('submission-status',error?errorText(error):'Completion submitted! Awaiting admin review.',!!error);
+  if(!error){form.reset();await loadMySubmissions();}btn.disabled=false;
+});
+async function loadAdminQueue(){
+  if(!isAdmin)return;
+  const root=$('admin-queue');root.textContent='Loading…';
+  const {data,error}=await supabase.from('completions').select('id,user_id,level_id,video_url,status,submitted_at').order('submitted_at',{ascending:false}).limit(200);
+  if(error){root.textContent='Could not load submissions: '+errorText(error);return;}
+  clear(root);
+  if(!data?.length){root.textContent='No submissions yet.';return;}
+  // Admins can see user IDs. Profile names are retrieved separately when permitted by profile RLS.
+  const ids=[...new Set(data.map(c=>c.user_id))];
+  const {data:profiles}=await supabase.from('profiles').select('id,username').in('id',ids);
+  const names=new Map((profiles||[]).map(p=>[p.id,p.username]));
+  for(const c of data){
+    const row=element('div','submission-row');
+    const top=element('div');top.append(element('strong','',nameForLevel(c.level_id)),' ',element('span','tag '+c.status,c.status));
+    const name=names.get(c.user_id)||`Player ${c.user_id.slice(0,8)}…`;
+    row.append(top,element('div','submission-meta',`${name} · ${new Date(c.submitted_at).toLocaleString()}`));
+    if(c.video_url){try{const u=new URL(c.video_url);if(u.protocol==='https:'){const link=element('a','safe-link','View submitted video ↗');link.href=u.href;link.target='_blank';link.rel='noopener noreferrer';row.append(link);}}catch{}}
+    const actions=element('div','button-row');
+    for(const decision of ['approved','rejected']){
+      const btn=element('button','action-btn'+(decision==='approved'?' primary':''),decision==='approved'?'Approve':'Reject');btn.type='button';
+      btn.addEventListener('click',async()=>{
+        if(!confirm(`${decision==='approved'?'Approve':'Reject'} ${name}'s ${nameForLevel(c.level_id)} completion?`))return;
+        btn.disabled=true;showStatus('admin-status','Saving review…');
+        const {error}=await supabase.rpc('review_completion',{p_completion_id:c.id,p_decision:decision});
+        showStatus('admin-status',error?errorText(error):`Completion ${decision}.`,!!error);
+        if(!error){await loadAdminQueue();}else btn.disabled=false;
+      });actions.append(btn);
+    }
+    row.append(actions);root.append(row);
+  }
+}
+$('refresh-admin').addEventListener('click',loadAdminQueue);
+supabase.auth.onAuthStateChange((event,session)=>{
+  setTimeout(async()=>{
+    try{
+      await refreshAuth(session?.user||null);
+      if($('global-status').textContent.startsWith('Session check: Auth session missing!')) showStatus('global-status','');
+      if(event==='PASSWORD_RECOVERY'){
+        switchTab('account');
+        const newPassword=prompt('Password reset: enter a new password (at least 8 characters). Cancel to skip.');
+        if(newPassword!==null){
+          if(newPassword.length<8){showStatus('global-status','Password must be at least 8 characters.',true);return;}
+          const {error}=await supabase.auth.updateUser({password:newPassword});
+          showStatus('global-status',error?errorText(error):'Password updated successfully.',!!error);
+        }
+      }
+    }catch(err){showStatus('global-status',errorText(err),true);}
+  },0);
+});
+try{
+  await Promise.all([loadLeaderboard(),loadLevels()]);
+  // A visitor without a session is normal, not an authentication error.
+  // Supabase RLS and the server-side review function enforce real permissions.
+  const {data:{session},error}=await supabase.auth.getSession();
+  if(error)showStatus('global-status','Could not restore login session: '+errorText(error),true);
+  await refreshAuth(session?.user || null);
+}catch(err){showStatus('global-status','Supabase connection error: '+errorText(err),true);}
 </script>
 </body>
 </html>
