@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <meta name="theme-color" content="#0d1118" />
-<meta name="description" content="The official LVMC Main Levels List, ranked by Bermune with 200 completion points across 22 Geometry Dash main levels plus RobTop Travel." />
+<meta name="description" content="The official LVMC Main Levels List, ranked by Bermune with 202 completion points across 22 Geometry Dash main levels, RobTop Travel, and The Challenge." />
 <title>Main Levels List. — Official LVMC Rankings</title>
 <style>
  :root{color-scheme:dark;--bg:#0d1118;--panel:#151b25;--panel-active:#192333;--border:#293241;--muted:#99a7ba;--text:#f1f5fb;--accent:#79b9ff}
@@ -130,10 +130,10 @@
 <header>
   <div class="eyebrow">Geometry Dash · LVMC Rankings</div>
   <h1>Main Levels List<span style="color:#79b9ff">.</span></h1>
-  <p>A Bermune-made ranking of the 22 classic Geometry Dash main levels plus RobTop Travel, from hardest to easiest.</p>
+  <p>A Bermune-made ranking of the 22 classic Geometry Dash main levels plus RobTop Travel and The Challenge, from hardest to easiest.</p>
   <div class="stats">
-    <div class="stat"><strong id="count">23</strong> Levels</div>
-    <div class="stat"><strong id="total">200</strong> Total points</div>
+    <div class="stat"><strong id="count">24</strong> Levels</div>
+    <div class="stat"><strong id="total">202</strong> Total points</div>
     <div class="stat"><strong>Official</strong> LVMC Rankings</div>
   </div>
 </header>
@@ -236,7 +236,7 @@ const levels = [
     "image": "https://i.ytimg.com/vi/CaoUIkQ3QuI/hqdefault.jpg",
     "source": "https://www.youtube.com/watch?v=CaoUIkQ3QuI",
     "sourceLabel": "Thumbnail art credit: Lairon GD showcase ↗",
-    "description": "Completing RobTop Travel proves you have truly mastered this game, and you may finally call yourself a Geometry Dash pro. Completion earns 50 points toward the 200-point maximum.",
+    "description": "Completing RobTop Travel proves you have truly mastered this game, and you may finally call yourself a Geometry Dash pro. Completion earns 50 points toward the 202-point maximum.",
     "special": true
   },
   {
@@ -358,6 +358,13 @@ const levels = [
     "points": 2,
     "image": "https://stpkukaif.github.io/GeometryDash/img/Polargeist.webp",
     "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "The Challenge",
+    "points": 2,
+    "image": "https://static.wikia.nocookie.net/geometry-dash/images/f/f2/TheChallenge.png/revision/latest?cb=20240111003405",
+    "source": "https://geometry-dash.fandom.com/wiki/The_Challenge",
+    "description": "Completing RobTop's secret \"The Challenge\" earns 2 point toward the 202-point maximum."
   },
   {
     "name": "Back On Track",
@@ -496,7 +503,7 @@ async function loadLeaderboard(){
     const row=element('div','board-row');
     const rank=element('span','board-rank',`#${i+1}`);
     const middle=element('div');
-    middle.append(element('div','board-name',player.username),element('div','board-sub',`${player.completed_levels} / 23 levels completed`));
+    middle.append(element('div','board-name',player.username),element('div','board-sub',`${player.completed_levels} / 24 levels completed`));
     const right=element('div','board-score',`${player.total_points} pts`);
     row.append(rank,middle,right);root.append(row);
   });
