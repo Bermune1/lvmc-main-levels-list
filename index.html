@@ -587,7 +587,7 @@ $('signup-form').addEventListener('submit',async(e)=>{
     if(!/^[A-Za-z0-9_]{3,20}$/.test(username))throw new Error('Username must be 3–20 letters, numbers, or underscores.');
     const {error}=await supabase.auth.signUp({email:form.elements.namedItem('email').value.trim(),password:form.elements.namedItem('password').value,options:{data:{username},emailRedirectTo:window.location.origin+window.location.pathname}});
     if(error)throw error;
-    showStatus('auth-status',"Check your inbox for a confirmation email (check spam if you can't find it).");form.reset();
+    showStatus('auth-status',"Check your inbox for a confirmation email, then come back here and log in (check spam if you can't find it).");form.reset();
   }catch(err){showStatus('auth-status',errorText(err),true);}finally{btn.disabled=false;}
 });
 $('username-form').addEventListener('submit',async(e)=>{
