@@ -111,9 +111,21 @@
   .safe-link{color:#91c6ff;overflow-wrap:anywhere}
   [hidden]{display:none!important}
   @media(max-width:480px){.feature{padding:14px}.navtab{flex:1 1 40%}.board-row{grid-template-columns:29px minmax(0,1fr) auto;gap:7px}}
+
+  /* LVMC V6: static, full-frame cinematic Geometry Dash background */
+  body{background:#080d16;isolation:isolate}
+  .lvmc-backdrop{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:#090f19}
+  .lvmc-backdrop-image{position:absolute;inset:0;background-image:url("https://www.charlieintel.com/cdn-image/wp-content/uploads/2023/01/all-levels-in-geometry-dash-toughest-levels.jpg?width=1200&quality=60&format=auto");background-size:contain;background-repeat:no-repeat;background-position:center center;filter:blur(7px) saturate(1.12);transform:none}
+  .lvmc-backdrop-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,12,22,.72),rgba(7,12,22,.65) 48%,rgba(7,12,22,.82)),linear-gradient(115deg,rgba(15,45,85,.47),rgba(40,15,70,.24) 55%,rgba(7,14,25,.3))}
+  .lvmc-backdrop:after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 8%,rgba(57,103,164,.24),transparent 65%)}
+  .wrap{position:relative;z-index:1}
+  details,.feature{background:rgba(18,26,39,.89);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+  details:hover,details[open]{background:rgba(24,36,55,.94)}
+  @media(max-width:600px){.lvmc-backdrop-image{filter:blur(6px) saturate(1.1)}details,.feature{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(18,26,39,.95)}}
 </style>
 </head>
 <body>
+<div class="lvmc-backdrop" aria-hidden="true"><div class="lvmc-backdrop-image"></div><div class="lvmc-backdrop-shade"></div></div>
 <main class="wrap">
 <header>
   <div class="eyebrow">Geometry Dash · LVMC Rankings</div>
@@ -211,9 +223,10 @@
 </section>
 <footer>
   <p>Made for the LVMC gang · Not affiliated with actual RobTop or Geometry Dash</p>
-  <p class="credit">Gameplay screenshots: <a href="https://stpkukaif.github.io/GeometryDash/" target="_blank" rel="noopener noreferrer">GD screenshot collection</a> &amp; <a href="https://www.bluestacks.com/blog/updates/geometry-dash-lite/gd-latest-update-en.html" target="_blank" rel="noopener noreferrer">BlueStacks (Dash)</a>. RobTop Travel thumbnail art: <a href="https://www.youtube.com/watch?v=CaoUIkQ3QuI" target="_blank" rel="noopener noreferrer">Lairon GD showcase</a>.</p>
+  <p class="credit">Background image: <a href="https://www.charlieintel.com/" target="_blank" rel="noopener noreferrer">CharlieIntel</a>. Gameplay screenshots: <a href="https://stpkukaif.github.io/GeometryDash/" target="_blank" rel="noopener noreferrer">GD screenshot collection</a> &amp; <a href="https://store.steampowered.com/app/322170/Geometry_Dash/" target="_blank" rel="noopener noreferrer">Steam (Dash)</a>. RobTop Travel thumbnail art: <a href="https://www.youtube.com/watch?v=CaoUIkQ3QuI" target="_blank" rel="noopener noreferrer">Lairon GD showcase</a>.</p>
 </footer>
 </main>
+
 <script>
 // --- LVMC DATA: You can reorder levels and edit their points later. ---
 const levels = [
@@ -295,8 +308,8 @@ const levels = [
   {
     "name": "Dash",
     "points": 6,
-    "image": "https://cdn-www.bluestacks.com/bs-images/Geometry-Dash_2.2-Update_EN_4-1024x576.png",
-    "source": "https://www.bluestacks.com/blog/updates/geometry-dash-lite/gd-latest-update-en.html"
+    "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/322170/ss_05cb182b93131a5faf0516232a7ad27c83f2c0e8.1920x1080.jpg?t=1775300400",
+    "source": "https://store.steampowered.com/app/322170/Geometry_Dash/"
   },
   {
     "name": "xStep",
