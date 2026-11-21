@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <meta name="theme-color" content="#0d1118" />
-<meta name="description" content="The official LVMC Main Levels List, ranked by Bermune with 202 completion points across 22 Geometry Dash main levels, RobTop Travel, and The Challenge." />
+<meta name="description" content="The official LVMC Main Levels List, ranked by Bermune with 247 completion points across 25 Geometry Dash levels, including community-voted entries." />
 <title>Main Levels List. — Official LVMC Rankings</title>
 <style>
  :root{color-scheme:dark;--bg:#0d1118;--panel:#151b25;--panel-active:#192333;--border:#293241;--muted:#99a7ba;--text:#f1f5fb;--accent:#79b9ff}
@@ -33,7 +33,7 @@
  .thumb{width:92px;height:53px;flex:0 0 92px;border-radius:8px;object-fit:cover;object-position:center;border:1px solid #ffffff24;background:#253348;box-shadow:0 2px 10px #0003}
  .name{font-weight:670;flex:1;min-width:0;line-height:1.3;letter-spacing:-.008em}
  .points{color:#b2d6ff;background:#20384f;border:1px solid #365979;padding:5px 10px;border-radius:8px;font-size:12px;font-weight:740;white-space:nowrap;font-variant-numeric:tabular-nums}
- /* Rank colors: #1 red, #2–4 gold, #5–10 green, #11+ default blue. */
+ /* Rank colors: #1–2 red, #3–5 gold, #6–10 green, #11+ default blue. */
  .name.tier-red{color:#ff626b;text-shadow:0 0 15px rgba(255,82,92,.16)}
  .points.tier-red{color:#ff9ca3;background:#4c2029;border-color:#a94755}
  .name.tier-gold{color:#f4d35e}
@@ -130,10 +130,10 @@
 <header>
   <div class="eyebrow">Geometry Dash · LVMC Rankings</div>
   <h1>Main Levels List<span style="color:#79b9ff">.</span></h1>
-  <p>A Bermune-made ranking of the 22 classic Geometry Dash main levels plus RobTop Travel and The Challenge, from hardest to easiest.</p>
+  <p>A Bermune-made ranking of the 22 classic Geometry Dash main levels plus The Challenge, along with a few community-voted levels, from hardest to easiest.</p>
   <div class="stats">
-    <div class="stat"><strong id="count">24</strong> Levels</div>
-    <div class="stat"><strong id="total">202</strong> Total points</div>
+    <div class="stat"><strong id="count">25</strong> Levels</div>
+    <div class="stat"><strong id="total">247</strong> Total points</div>
     <div class="stat"><strong>Official</strong> LVMC Rankings</div>
   </div>
 </header>
@@ -223,7 +223,7 @@
 </section>
 <footer>
   <p>Made for the LVMC gang · Not affiliated with actual RobTop or Geometry Dash</p>
-  <p class="credit">Background image: <a href="https://www.charlieintel.com/" target="_blank" rel="noopener noreferrer">CharlieIntel</a>. Gameplay screenshots: <a href="https://stpkukaif.github.io/GeometryDash/" target="_blank" rel="noopener noreferrer">GD screenshot collection</a> &amp; <a href="https://store.steampowered.com/app/322170/Geometry_Dash/" target="_blank" rel="noopener noreferrer">Steam (Dash)</a>. RobTop Travel thumbnail art: <a href="https://www.youtube.com/watch?v=CaoUIkQ3QuI" target="_blank" rel="noopener noreferrer">Lairon GD showcase</a>.</p>
+  <p class="credit">Background image: <a href="https://www.charlieintel.com/" target="_blank" rel="noopener noreferrer">CharlieIntel</a>. Gameplay screenshots: <a href="https://stpkukaif.github.io/GeometryDash/" target="_blank" rel="noopener noreferrer">GD screenshot collection</a> &amp; <a href="https://store.steampowered.com/app/322170/Geometry_Dash/" target="_blank" rel="noopener noreferrer">Steam (Dash)</a>. RobTop Travel thumbnail art: <a href="https://www.youtube.com/watch?v=CaoUIkQ3QuI" target="_blank" rel="noopener noreferrer">Lairon GD showcase</a>. Sweater Weather thumbnail: <a href="https://www.youtube.com/watch?v=y3Kk0ZvDqUM" target="_blank" rel="noopener noreferrer">credited showcase</a>.</p>
 </footer>
 </main>
 
@@ -236,8 +236,15 @@ const levels = [
     "image": "https://i.ytimg.com/vi/CaoUIkQ3QuI/hqdefault.jpg",
     "source": "https://www.youtube.com/watch?v=CaoUIkQ3QuI",
     "sourceLabel": "Thumbnail art credit: Lairon GD showcase ↗",
-    "description": "Completing RobTop Travel proves you have truly mastered this game, and you may finally call yourself a Geometry Dash pro. Completion earns 50 points toward the 202-point maximum.",
+    "description": "Completing RobTop Travel proves you have truly mastered this game, and you may finally call yourself a Geometry Dash pro. Completion earns 50 points toward the 247-point maximum.",
     "special": true
+  },
+  {
+    "name": "Sweater Weather",
+    "points": 45,
+    "image": "sweater-weather.png",
+    "source": "https://www.youtube.com/watch?v=y3Kk0ZvDqUM",
+    "sourceLabel": "Thumbnail image credit: Sweater Weather showcase ↗"
   },
   {
     "name": "Deadlocked",
@@ -364,7 +371,7 @@ const levels = [
     "points": 2,
     "image": "the-challenge.png",
     "source": "https://geometry-dash.fandom.com/wiki/The_Challenge",
-    "description": "Completing RobTop's secret \"The Challenge\" earns 2 point toward the 202-point maximum."
+    "description": "Completing RobTop's secret \"The Challenge\" earns 2 point toward the 247-point maximum."
   },
   {
     "name": "Back On Track",
@@ -417,7 +424,7 @@ levels.forEach((level,i)=>{
  const details=document.createElement('details');
  const summary=document.createElement('summary');
  const rank=document.createElement('span');rank.className='rank';rank.textContent='#'+(i+1);
- const tier=i===0?'tier-red':i<4?'tier-gold':i<10?'tier-green':'';
+ const tier=i<2?'tier-red':i<5?'tier-gold':i<10?'tier-green':'';
  const title=document.createElement('span');title.className='name'+(tier?' '+tier:'');title.textContent=level.name;
  const pill=document.createElement('span');pill.className='points'+(tier?' '+tier:'');pill.textContent=level.points+' '+(level.points===1?'pt':'pts');
  const chev=document.createElement('span');chev.className='chev';chev.textContent='⌄';chev.setAttribute('aria-hidden','true');
@@ -503,7 +510,7 @@ async function loadLeaderboard(){
     const row=element('div','board-row');
     const rank=element('span','board-rank',`#${i+1}`);
     const middle=element('div');
-    middle.append(element('div','board-name',player.username),element('div','board-sub',`${player.completed_levels} / 24 levels completed`));
+    middle.append(element('div','board-name',player.username),element('div','board-sub',`${player.completed_levels} / ${levels.length} levels completed`));
     const right=element('div','board-score',`${player.total_points} pts`);
     row.append(rank,middle,right);root.append(row);
   });
@@ -587,7 +594,7 @@ $('signup-form').addEventListener('submit',async(e)=>{
     if(!/^[A-Za-z0-9_]{3,20}$/.test(username))throw new Error('Username must be 3–20 letters, numbers, or underscores.');
     const {error}=await supabase.auth.signUp({email:form.elements.namedItem('email').value.trim(),password:form.elements.namedItem('password').value,options:{data:{username},emailRedirectTo:window.location.origin+window.location.pathname}});
     if(error)throw error;
-    showStatus('auth-status',"Check your inbox for a confirmation email, then come back here and log in (check spam if you can't find it).");form.reset();
+    showStatus('auth-status',"Check your inbox for a confirmation email (check spam if you can't find it).");form.reset();
   }catch(err){showStatus('auth-status',errorText(err),true);}finally{btn.disabled=false;}
 });
 $('username-form').addEventListener('submit',async(e)=>{
