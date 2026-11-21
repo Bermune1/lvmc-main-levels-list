@@ -229,7 +229,7 @@
   <div class="feature" id="signed-in" hidden>
     <div class="section-title"><h2 id="welcome">My player profile</h2><button type="button" class="action-btn" id="logout">Log out</button></div>
     <p id="profile-info">Loading your profile…</p>
-    <div class="notification-center" id="account-notification-center" aria-label="My account notifications">
+    <div class="notification-center" id="account-notification-center" hidden aria-label="My account notifications">
       <div class="notification-heading">
         <div><h3>Notifications</h3><p>Updates about your completion reviews.</p></div>
         <button type="button" class="action-btn" id="mark-account-notifications-read" disabled>Mark all as read</button>
@@ -278,7 +278,7 @@
   <div id="admin-reviews-panel" role="tabpanel" aria-labelledby="admin-reviews-tab" data-admin-panel="reviews">
     <h3>Completion Reviews</h3>
     <p>Approve or reject submitted completions. Approved levels automatically count toward the public leaderboard.</p>
-    <div class="notification-center" id="admin-notification-center" aria-label="Admin notifications">
+    <div class="notification-center" id="admin-notification-center" hidden aria-label="Admin notifications">
       <div class="notification-heading">
         <div><h3>Review notifications</h3><p>New and resubmitted completion requests.</p></div>
         <button type="button" class="action-btn" id="mark-admin-notifications-read" disabled>Mark all as read</button>
@@ -624,6 +624,9 @@ function setNotificationStatus(kind,message,error=false){
 }
 function updateNotificationBadges(kind,count){
   notificationCounts[kind]=count;
+  // Keep the completion form and review queue unobstructed once caught up.
+  // A future unread notification automatically reveals this section again.
+  $(kind+'-notification-center').hidden=count===0;
   const targets=kind==='admin'
     ?[['admin-notification-badge','admin-tab'],['admin-reviews-notification-badge','admin-reviews-tab']]
     :[['account-notification-badge','account-tab']];
@@ -661,6 +664,7 @@ async function refreshNotificationBadges(){
   for(let i=0;i<kinds.length;i++){
     const kind=kinds[i],result=results[i];
     if(result.error){
+      $(kind+'-notification-center').hidden=false;
       setNotificationStatus(kind,'Could not check unread notifications: '+errorText(result.error),true);
       continue;
     }
@@ -676,14 +680,20 @@ async function loadNotifications(kind){
   const {data,error}=await supabase.from('notifications')
     .select('id,completion_id,event_type,created_at,read_at')
     .eq('recipient_id',uid).in('event_type',NOTIFICATION_TYPES[kind])
+    .is('read_at',null)
     .order('created_at',{ascending:false}).order('id',{ascending:false}).limit(limit+1);
   if(uid!==currentUser?.id||token!==notificationLoadToken[kind])return;
-  if(error){root.textContent='Could not load notifications.';setNotificationStatus(kind,errorText(error),true);return;}
+  if(error){
+    root.textContent='Could not load notifications.';
+    $(kind+'-notification-center').hidden=false;
+    setNotificationStatus(kind,errorText(error),true);
+    return;
+  }
   setNotificationStatus(kind,'');
   const records=(data||[]).slice(0,limit);
   $('more-'+kind+'-notifications').hidden=(data||[]).length<=limit;
   clear(root);
-  if(!records.length){root.append(element('div','notification-empty','No notifications yet. You’re all caught up!'));return;}
+  if(!records.length){root.append(element('div','notification-empty','You’re all caught up!'));return;}
   // Completion and profile lookups use the same existing RLS permissions as the website.
   const completionIds=[...new Set(records.map(n=>n.completion_id))];
   const {data:completions,error:completionError}=await supabase.from('completions')
@@ -715,7 +725,6 @@ async function loadNotifications(kind){
     else message.append(element('strong','',player),' submitted ',element('strong','',level),'.');
     const time=element('div','notification-meta',new Date(n.created_at).toLocaleString());
     if(kind==='admin'&&c)time.append(' · '+(c.status==='pending'?'Still pending':'Now '+c.status));
-    if(!unread)time.append(' · Read');
     body.append(message,time);
     row.append(symbol,body);
     if(unread){
