@@ -114,6 +114,14 @@
    .rejection-reason-field textarea::placeholder{color:#8191a7}
    .rejection-counter{font-size:11px;color:#99a7ba;text-align:right}
    .rejection-panel .button-row{margin-top:0}
+   /* V7.1: admin dashboard sub-navigation */
+   .admin-subtabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding:5px;margin:18px 0 23px;border:1px solid #304158;border-radius:13px;background:#0d1521}
+   .admin-subtab{min-width:0;appearance:none;border:1px solid transparent;background:transparent;color:#a7bad0;border-radius:9px;padding:12px 9px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
+   .admin-subtab:hover{color:#f1f5fb;background:#1c3046}
+   .admin-subtab[aria-selected="true"]{color:#fff;background:#28527b;border-color:#5286b7;box-shadow:0 2px 8px #0003}
+   .admin-subtab:focus-visible{outline:2px solid #79b9ff;outline-offset:2px}
+   [data-admin-panel]>h3{font-size:17px;margin:0 0 9px}
+   @media(max-width:480px){.admin-subtab{font-size:12px;padding:11px 5px}}
    .moderation-row{border-top:1px solid var(--border);padding:14px 0;display:grid;gap:9px}
    .moderation-row .button-row{margin-top:3px}
    .muted-note{font-size:12px;color:var(--muted)}
@@ -219,16 +227,26 @@
   </div>
 </section>
 <section class="feature" data-panel="admin" hidden aria-label="Administrator dashboard">
-  <h2>Completion review · Admin</h2>
-  <p>Approve or reject submitted completions. Approved levels automatically count toward the public leaderboard.</p>
-  <button type="button" class="action-btn" id="refresh-admin">Refresh submissions</button>
-  <p id="admin-status" class="status-line" role="status" aria-live="polite"></p>
-  <div id="admin-queue">Loading…</div>
-  <h3 style="margin-top:26px">Player moderation</h3>
-  <p>Ban or unban submissions, or revoke a non-admin player's approved points. Revoked completions cannot be resubmitted.</p>
-  <button type="button" class="action-btn" id="refresh-players">Refresh players</button>
-  <p id="moderation-status" class="status-line" role="status" aria-live="polite"></p>
-  <div id="admin-players">Loading players…</div>
+  <h2>Admin Dashboard</h2>
+  <p>Manage LVMC completion reviews and player moderation.</p>
+  <div class="admin-subtabs" role="tablist" aria-label="Admin dashboard sections">
+    <button type="button" class="admin-subtab" role="tab" id="admin-reviews-tab" aria-controls="admin-reviews-panel" aria-selected="true" tabindex="0" data-admin-view="reviews">Completion Reviews</button>
+    <button type="button" class="admin-subtab" role="tab" id="admin-players-tab" aria-controls="admin-players-panel" aria-selected="false" tabindex="-1" data-admin-view="players">Player Moderation</button>
+  </div>
+  <div id="admin-reviews-panel" role="tabpanel" aria-labelledby="admin-reviews-tab" data-admin-panel="reviews">
+    <h3>Completion Reviews</h3>
+    <p>Approve or reject submitted completions. Approved levels automatically count toward the public leaderboard.</p>
+    <button type="button" class="action-btn" id="refresh-admin">Refresh submissions</button>
+    <p id="admin-status" class="status-line" role="status" aria-live="polite"></p>
+    <div id="admin-queue">Loading…</div>
+  </div>
+  <div id="admin-players-panel" role="tabpanel" aria-labelledby="admin-players-tab" data-admin-panel="players" hidden>
+    <h3>Player Moderation</h3>
+    <p>Ban or unban submissions, or revoke a non-admin player's approved points. Revoked completions cannot be resubmitted.</p>
+    <button type="button" class="action-btn" id="refresh-players">Refresh players</button>
+    <p id="moderation-status" class="status-line" role="status" aria-live="polite"></p>
+    <div id="admin-players">Loading players…</div>
+  </div>
 </section>
 <footer>
   <p>Made for the LVMC gang · Not affiliated with actual RobTop or Geometry Dash</p>
@@ -507,9 +525,33 @@ function switchTab(tab) {
   document.querySelectorAll('[data-tab]').forEach(el=>el.setAttribute('aria-selected',String(el.dataset.tab===tab)));
   if(tab==='leaderboard') loadLeaderboard();
   if(tab==='account' && currentUser) loadMySubmissions();
-  if(tab==='admin' && isAdmin) {loadAdminQueue();loadAdminPlayers();}
+  if(tab==='admin' && isAdmin) {if(adminView==='players')loadAdminPlayers();else loadAdminQueue();}
 }
 document.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>switchTab(btn.dataset.tab)));
+// Admin sub-tabs keep player moderation accessible without scrolling through reviews.
+let adminView='reviews';
+function switchAdminView(view){
+  if(view!=='reviews' && view!=='players')return;
+  adminView=view;
+  document.querySelectorAll('[data-admin-panel]').forEach(panel=>{panel.hidden=panel.dataset.adminPanel!==view;});
+  document.querySelectorAll('[data-admin-view]').forEach(btn=>{
+    const selected=btn.dataset.adminView===view;
+    btn.setAttribute('aria-selected',String(selected));
+    btn.tabIndex=selected?0:-1;
+  });
+  if(isAdmin){if(view==='players')loadAdminPlayers();else loadAdminQueue();}
+}
+document.querySelectorAll('[data-admin-view]').forEach(btn=>{
+  btn.addEventListener('click',()=>switchAdminView(btn.dataset.adminView));
+  btn.addEventListener('keydown',event=>{
+    if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+    event.preventDefault();
+    const next=event.key==='Home'?'reviews':event.key==='End'?'players':adminView==='reviews'?'players':'reviews';
+    switchAdminView(next);
+    document.querySelector(`[data-admin-view="${next}"]`).focus();
+  });
+});
+
 
 async function loadLeaderboard(){
   const root=$('leaderboard-list'); root.textContent='Loading leaderboard…';
