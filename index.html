@@ -471,6 +471,8 @@ function errorText(error) {
   if(/banned from submitting completions/i.test(message))return 'You are banned from submitting completions. Contact an LVMC administrator if you think this is a mistake.';
   if(/row.level security|permission denied|not allowed|42501/i.test(message)||code==='42501')return 'This action is not permitted for your account. Please check your permissions or contact an LVMC administrator.';
   if(/failed to fetch|networkerror|fetch failed/i.test(message))return 'Could not connect to the server. Check your internet connection and try again.';
+  if(/rejection reason cannot exceed 500 characters/i.test(message))return 'Rejection reason must be 500 characters or less.';
+  if(/could not choose the best candidate function|function .* is not unique|PGRST203/i.test(message))return 'Database review functions need the V7.1 cleanup step. Contact an LVMC administrator.';
   if(/invalid video url/i.test(message))return 'Video links must begin with https://';
   if(/no existing completion found/i.test(message))return 'We could not find that completion. Refresh your submissions and try again.';
   console.warn('LVMC unrecognized error:',error);
@@ -523,9 +525,10 @@ async function loadLevels(){
   const select=$('completion-level'); clear(select);
   if(error){select.append(element('option','', 'Could not load levels'));showStatus('submission-status',errorText(error),true);return;}
   dbLevels=data||[];
-  const byName=new Map(dbLevels.map(l=>[String(l.name).toLowerCase(),l]));
-  const sorted=levels.map(l=>byName.get(l.name.toLowerCase())).filter(Boolean);
-  const remaining=dbLevels.filter(l=>!sorted.some(x=>x.id===l.id));
+  const normalizeName=name=>String(name).normalize('NFKC').trim().replace(/\s+/g,' ').toLowerCase();
+  const byName=new Map(dbLevels.map(l=>[normalizeName(l.name),l]));
+  const sorted=levels.map(l=>byName.get(normalizeName(l.name))).filter(Boolean);
+  const remaining=dbLevels.filter(l=>!sorted.some(x=>String(x.id)===String(l.id)));
   select.append(element('option','', 'Choose a level…'));
   for(const l of [...sorted,...remaining]){const option=element('option','',`${l.name} · ${l.points} pts`);option.value=String(l.id);select.append(option);}
   if(sorted.length!==levels.length) showStatus('submission-status',`Heads up: matched ${sorted.length} of ${levels.length} website levels to the database. Check level names before submitting.`,true);
@@ -539,7 +542,7 @@ async function loadProfile(){
 async function loadMySubmissions(){
   if(!currentUser)return;
   const root=$('my-submissions');root.textContent='Loading…';
-  const {data,error}=await supabase.from('completions').select('id,level_id,status,submitted_at').eq('user_id',currentUser.id).order('submitted_at',{ascending:false});
+  const {data,error}=await supabase.from('completions').select('id,level_id,status,submitted_at,rejection_reason').eq('user_id',currentUser.id).order('submitted_at',{ascending:false});
   if(error){root.textContent='Could not load submissions: '+errorText(error);return;}
   clear(root);
   if(!data?.length){root.textContent='No submissions yet.';return;}
@@ -548,6 +551,11 @@ async function loadMySubmissions(){
     line.append(element('strong','',nameForLevel(c.level_id)),' ',element('span','tag '+c.status,c.status));
     row.append(line,element('div','submission-meta',new Date(c.submitted_at).toLocaleString()));
     if(c.status==='rejected'){
+      if(c.rejection_reason?.trim()){
+        const note=element('div','rejection-note');
+        note.append(element('strong','','Reason: '),document.createTextNode(c.rejection_reason));
+        row.append(note);
+      }
       const form=element('form','form-stack');
       const label=element('label','', 'New evidence link (optional)');
       const input=element('input');input.type='url';input.placeholder='https://...';input.maxLength=2000;
@@ -661,13 +669,27 @@ async function loadAdminQueue(){
     const name=names.get(c.user_id)||`Player ${c.user_id.slice(0,8)}…`;
     row.append(top,element('div','submission-meta',`${name} · ${new Date(c.submitted_at).toLocaleString()}`));
     if(c.video_url){try{const u=new URL(c.video_url);if(u.protocol==='https:'){const link=element('a','safe-link','View submitted video ↗');link.href=u.href;link.target='_blank';link.rel='noopener noreferrer';row.append(link);}}catch{}}
+    // Admins may explain a rejection; blank reasons are allowed.
+    let reasonInput=null;
+    if(c.status!=='revoked'){
+      const reasonLabel=element('label','rejection-reason-field','Rejection reason (optional, max 500 characters)');
+      reasonInput=element('textarea');
+      reasonInput.maxLength=500;
+      reasonInput.rows=3;
+      reasonInput.placeholder='Explain why this completion was rejected (optional)…';
+      reasonInput.setAttribute('aria-label',`Rejection reason for ${name}'s ${nameForLevel(c.level_id)} completion`);
+      reasonLabel.append(reasonInput);
+      row.append(reasonLabel);
+    }
     const actions=element('div','button-row');
     for(const decision of (c.status==='revoked'?[]:['approved','rejected'])){
       const btn=element('button','action-btn'+(decision==='approved'?' primary':''),decision==='approved'?'Approve':'Reject');btn.type='button';
       btn.addEventListener('click',async()=>{
+        const reason=decision==='rejected'?(reasonInput?.value.trim()||null):null;
+        if(reason && reason.length>500){showStatus('admin-status','Rejection reason must be 500 characters or less.',true);return;}
         if(!confirm(`${decision==='approved'?'Approve':'Reject'} ${name}'s ${nameForLevel(c.level_id)} completion?`))return;
         btn.disabled=true;showStatus('admin-status','Saving review…');
-        const {error}=await supabase.rpc('review_completion',{p_completion_id:c.id,p_decision:decision});
+        const {error}=await supabase.rpc('review_completion',{p_completion_id:c.id,p_decision:decision,p_rejection_reason:reason});
         showStatus('admin-status',error?errorText(error):`Completion ${decision}.`,!!error);
         if(!error){await loadAdminQueue();}else btn.disabled=false;
       });actions.append(btn);
