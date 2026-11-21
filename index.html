@@ -105,6 +105,15 @@
    .danger-zone{border:1px solid #85404b;background:#261b25;border-radius:12px;padding:17px;margin-top:25px}
    .danger-zone h3{color:#ffacb5;margin:0 0 8px}
    .danger-btn{border-color:#a94755;color:#ffc3c9;background:#43242c}
+   /* V7.1: compact, expandable rejection form */
+   .rejection-panel{display:grid;gap:12px;width:100%;max-width:560px;margin-top:5px;padding:15px;border:1px solid #3a4b62;border-radius:12px;background:#192739}
+   .rejection-panel-title{font-size:14px;font-weight:750;color:#f1f5fb}
+   .rejection-reason-field{display:grid;gap:7px;width:100%;min-width:0;color:#c7d7e9;font-size:12px;font-weight:650}
+   .rejection-reason-field textarea{display:block;width:100%;min-width:0;min-height:92px;resize:vertical;padding:11px 12px;border:1px solid #3a4b62;border-radius:9px;background:#0d1521;color:#f1f5fb;font:inherit;font-size:13px;line-height:1.5}
+   .rejection-reason-field textarea:focus{outline:2px solid #79b9ff;outline-offset:1px}
+   .rejection-reason-field textarea::placeholder{color:#8191a7}
+   .rejection-counter{font-size:11px;color:#99a7ba;text-align:right}
+   .rejection-panel .button-row{margin-top:0}
    .moderation-row{border-top:1px solid var(--border);padding:14px 0;display:grid;gap:9px}
    .moderation-row .button-row{margin-top:3px}
    .muted-note{font-size:12px;color:var(--muted)}
@@ -669,32 +678,70 @@ async function loadAdminQueue(){
     const name=names.get(c.user_id)||`Player ${c.user_id.slice(0,8)}…`;
     row.append(top,element('div','submission-meta',`${name} · ${new Date(c.submitted_at).toLocaleString()}`));
     if(c.video_url){try{const u=new URL(c.video_url);if(u.protocol==='https:'){const link=element('a','safe-link','View submitted video ↗');link.href=u.href;link.target='_blank';link.rel='noopener noreferrer';row.append(link);}}catch{}}
-    // Admins may explain a rejection; blank reasons are allowed.
-    let reasonInput=null;
+    // Only expand the optional reason editor after an admin chooses Reject.
     if(c.status!=='revoked'){
-      const reasonLabel=element('label','rejection-reason-field','Rejection reason (optional, max 500 characters)');
-      reasonInput=element('textarea');
-      reasonInput.maxLength=500;
-      reasonInput.rows=3;
-      reasonInput.placeholder='Explain why this completion was rejected (optional)…';
+      const actions=element('div','button-row');
+      const approveBtn=element('button','action-btn primary','Approve');approveBtn.type='button';
+      const rejectBtn=element('button','action-btn','Reject');rejectBtn.type='button';
+      actions.append(approveBtn,rejectBtn);
+      row.append(actions);
+
+      const panel=element('div','rejection-panel');panel.hidden=true;
+      const panelTitle=element('div','rejection-panel-title','Reject completion');
+      const reasonLabel=element('label','rejection-reason-field','Reason (optional)');
+      const reasonInput=element('textarea');reasonInput.maxLength=500;reasonInput.rows=3;
+      reasonInput.placeholder='Explain why this completion was rejected…';
       reasonInput.setAttribute('aria-label',`Rejection reason for ${name}'s ${nameForLevel(c.level_id)} completion`);
       reasonLabel.append(reasonInput);
-      row.append(reasonLabel);
-    }
-    const actions=element('div','button-row');
-    for(const decision of (c.status==='revoked'?[]:['approved','rejected'])){
-      const btn=element('button','action-btn'+(decision==='approved'?' primary':''),decision==='approved'?'Approve':'Reject');btn.type='button';
-      btn.addEventListener('click',async()=>{
-        const reason=decision==='rejected'?(reasonInput?.value.trim()||null):null;
-        if(reason && reason.length>500){showStatus('admin-status','Rejection reason must be 500 characters or less.',true);return;}
-        if(!confirm(`${decision==='approved'?'Approve':'Reject'} ${name}'s ${nameForLevel(c.level_id)} completion?`))return;
-        btn.disabled=true;showStatus('admin-status','Saving review…');
-        const {error}=await supabase.rpc('review_completion',{p_completion_id:c.id,p_decision:decision,p_rejection_reason:reason});
+      const counter=element('div','rejection-counter','0 / 500 characters');
+      reasonInput.addEventListener('input',()=>{counter.textContent=`${reasonInput.value.length} / 500 characters`;});
+      const panelActions=element('div','button-row');
+      const confirmBtn=element('button','action-btn danger-btn','Confirm rejection');confirmBtn.type='button';
+      const cancelBtn=element('button','action-btn','Cancel');cancelBtn.type='button';
+      panelActions.append(confirmBtn,cancelBtn);
+      panel.append(panelTitle,reasonLabel,counter,panelActions);
+      row.append(panel);
+      rejectBtn.setAttribute('aria-expanded','false');
+      rejectBtn.addEventListener('click',()=>{
+        panel.hidden=false;
+        rejectBtn.setAttribute('aria-expanded','true');
+        actions.hidden=true;
+        reasonInput.focus();
+      });
+      cancelBtn.addEventListener('click',()=>{
+        panel.hidden=true;
+        actions.hidden=false;
+        rejectBtn.setAttribute('aria-expanded','false');
+        reasonInput.value='';counter.textContent='0 / 500 characters';
+        rejectBtn.focus();
+      });
+      async function saveReview(decision,reason,button){
+        button.disabled=true;
+        approveBtn.disabled=true;rejectBtn.disabled=true;
+        confirmBtn.disabled=true;cancelBtn.disabled=true;
+        showStatus('admin-status','Saving review…');
+        const {error}=await supabase.rpc('review_completion',{
+          p_completion_id:c.id,p_decision:decision,p_rejection_reason:reason
+        });
         showStatus('admin-status',error?errorText(error):`Completion ${decision}.`,!!error);
-        if(!error){await loadAdminQueue();}else btn.disabled=false;
-      });actions.append(btn);
+        if(!error){await loadAdminQueue();}
+        else{
+          button.disabled=false;
+          approveBtn.disabled=false;rejectBtn.disabled=false;
+          confirmBtn.disabled=false;cancelBtn.disabled=false;
+        }
+      }
+      approveBtn.addEventListener('click',async()=>{
+        if(!confirm(`Approve ${name}'s ${nameForLevel(c.level_id)} completion?`))return;
+        await saveReview('approved',null,approveBtn);
+      });
+      confirmBtn.addEventListener('click',async()=>{
+        const reason=reasonInput.value.trim()||null;
+        if(reason && reason.length>500){showStatus('admin-status','Rejection reason must be 500 characters or less.',true);return;}
+        await saveReview('rejected',reason,confirmBtn);
+      });
     }
-    row.append(actions);root.append(row);
+    root.append(row);
   }
 }
 $('refresh-admin').addEventListener('click',loadAdminQueue);
