@@ -122,6 +122,36 @@
    .admin-subtab:focus-visible{outline:2px solid #79b9ff;outline-offset:2px}
    [data-admin-panel]>h3{font-size:17px;margin:0 0 9px}
    @media(max-width:480px){.admin-subtab{font-size:12px;padding:11px 5px}}
+
+    /* V7.2: persistent, Discord-style notification badges and inboxes */
+    .navtab{display:inline-flex;align-items:center;justify-content:center;gap:7px}
+    .admin-subtab{display:inline-flex;align-items:center;justify-content:center;gap:7px}
+    .notification-badge{display:inline-flex;align-items:center;justify-content:center;flex:none;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:#ed4755;color:#fff;font-size:10px;font-weight:850;line-height:1;letter-spacing:0;font-variant-numeric:tabular-nums;box-shadow:0 2px 8px #ed475555}
+    .notification-center{margin:17px 0 23px;padding:16px;border:1px solid #34485e;border-radius:13px;background:#111e2d}
+    .notification-heading{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+    .notification-heading h3{font-size:16px;margin:0 0 3px}
+    .notification-heading p{font-size:12px;margin:0;color:#99a7ba}
+    .notification-heading .action-btn{font-size:12px;padding:8px 11px}
+    .notification-list{display:grid;gap:8px;margin-top:13px}
+    .notification-item{display:flex;align-items:flex-start;gap:10px;padding:11px;border:1px solid #293b50;border-radius:10px;background:#152233}
+    .notification-item.unread{background:#1b3046;border-color:#466b8d}
+    .notification-symbol{display:flex;align-items:center;justify-content:center;flex:0 0 27px;width:27px;height:27px;border-radius:8px;background:#29435c;color:#b4d8ff;font-weight:850;font-size:16px}
+    .notification-symbol.approved{background:#203c2f;color:#a3dbb1}
+    .notification-symbol.rejected{background:#4c2029;color:#ff9ca3}
+    .notification-symbol.resubmitted{background:#3d3153;color:#d5b6ff}
+    .notification-content{min-width:0;flex:1}
+    .notification-message{font-size:13px;line-height:1.45;color:#f1f5fb;overflow-wrap:anywhere}
+    .notification-meta{font-size:11px;color:#99a7ba;margin-top:4px;overflow-wrap:anywhere}
+    .notification-read-btn{appearance:none;flex:none;align-self:center;border:1px solid #4b6887;background:#20344b;color:#c5e2ff;border-radius:8px;padding:6px 9px;font:inherit;font-size:11px;font-weight:700;cursor:pointer}
+    .notification-read-btn:hover{border-color:#82b8e8}
+    .notification-read-btn:disabled{opacity:.55;cursor:wait}
+    .notification-footer{display:flex;align-items:center;justify-content:space-between;gap:9px;flex-wrap:wrap;margin-top:10px}
+    .notification-footer .action-btn{font-size:12px;padding:7px 10px}
+    .notification-hint{font-size:11px;color:#99a7ba}
+    .notification-empty{color:#a4b2c4;font-size:13px;padding:10px 2px}
+    .notification-status{font-size:12px;color:#b4d8ff;margin-top:8px;min-height:0}
+    .notification-status.error{color:#ff9ca3}
+    @media(max-width:480px){.notification-center{padding:12px}.notification-item{gap:8px;padding:9px}.notification-read-btn{font-size:10px;padding:6px 7px}.notification-badge{min-width:19px;height:19px}}
    .moderation-row{border-top:1px solid var(--border);padding:14px 0;display:grid;gap:9px}
    .moderation-row .button-row{margin-top:3px}
    .muted-note{font-size:12px;color:var(--muted)}
@@ -158,8 +188,8 @@
 <nav class="navtabs" aria-label="Website sections">
   <button class="navtab" type="button" data-tab="rankings" aria-selected="true">Rankings</button>
   <button class="navtab" type="button" data-tab="leaderboard" aria-selected="false">Leaderboard</button>
-  <button class="navtab" type="button" data-tab="account" aria-selected="false">My account</button>
-  <button class="navtab" type="button" data-tab="admin" aria-selected="false" id="admin-tab" hidden>Admin</button>
+  <button class="navtab" type="button" data-tab="account" aria-selected="false" id="account-tab">My account <span class="notification-badge" id="account-notification-badge" aria-hidden="true" hidden></span></button>
+  <button class="navtab" type="button" data-tab="admin" aria-selected="false" id="admin-tab" hidden>Admin <span class="notification-badge" id="admin-notification-badge" aria-hidden="true" hidden></span></button>
 </nav>
 <div id="global-status" class="status-line" role="status" aria-live="polite"></div>
 <div id="rankings-panel" data-panel="rankings">
@@ -199,6 +229,18 @@
   <div class="feature" id="signed-in" hidden>
     <div class="section-title"><h2 id="welcome">My player profile</h2><button type="button" class="action-btn" id="logout">Log out</button></div>
     <p id="profile-info">Loading your profile…</p>
+    <div class="notification-center" id="account-notification-center" aria-label="My account notifications">
+      <div class="notification-heading">
+        <div><h3>Notifications</h3><p>Updates about your completion reviews.</p></div>
+        <button type="button" class="action-btn" id="mark-account-notifications-read" disabled>Mark all as read</button>
+      </div>
+      <div class="notification-list" id="account-notifications" aria-live="polite">Loading notifications…</div>
+      <div class="notification-footer">
+        <span class="notification-hint">Opening this tab won't mark notifications as read.</span>
+        <button type="button" class="action-btn" id="more-account-notifications" hidden>Show older</button>
+      </div>
+      <div class="notification-status" id="account-notifications-status" role="status" aria-live="polite"></div>
+    </div>
     <h3>Submit a completion</h3>
     <p>Pick a level you've beaten. Video evidence is optional. Your points count only after an admin approves the submission.</p>
     <form id="completion-form" class="form-stack">
@@ -230,12 +272,24 @@
   <h2>Admin Dashboard</h2>
   <p>Manage LVMC completion reviews and player moderation.</p>
   <div class="admin-subtabs" role="tablist" aria-label="Admin dashboard sections">
-    <button type="button" class="admin-subtab" role="tab" id="admin-reviews-tab" aria-controls="admin-reviews-panel" aria-selected="true" tabindex="0" data-admin-view="reviews">Completion Reviews</button>
+    <button type="button" class="admin-subtab" role="tab" id="admin-reviews-tab" aria-controls="admin-reviews-panel" aria-selected="true" tabindex="0" data-admin-view="reviews">Completion Reviews <span class="notification-badge" id="admin-reviews-notification-badge" aria-hidden="true" hidden></span></button>
     <button type="button" class="admin-subtab" role="tab" id="admin-players-tab" aria-controls="admin-players-panel" aria-selected="false" tabindex="-1" data-admin-view="players">Player Moderation</button>
   </div>
   <div id="admin-reviews-panel" role="tabpanel" aria-labelledby="admin-reviews-tab" data-admin-panel="reviews">
     <h3>Completion Reviews</h3>
     <p>Approve or reject submitted completions. Approved levels automatically count toward the public leaderboard.</p>
+    <div class="notification-center" id="admin-notification-center" aria-label="Admin notifications">
+      <div class="notification-heading">
+        <div><h3>Review notifications</h3><p>New and resubmitted completion requests.</p></div>
+        <button type="button" class="action-btn" id="mark-admin-notifications-read" disabled>Mark all as read</button>
+      </div>
+      <div class="notification-list" id="admin-notifications" aria-live="polite">Loading notifications…</div>
+      <div class="notification-footer">
+        <span class="notification-hint">Read status is separate from whether a submission is pending.</span>
+        <button type="button" class="action-btn" id="more-admin-notifications" hidden>Show older</button>
+      </div>
+      <div class="notification-status" id="admin-notifications-status" role="status" aria-live="polite"></div>
+    </div>
     <button type="button" class="action-btn" id="refresh-admin">Refresh submissions</button>
     <p id="admin-status" class="status-line" role="status" aria-live="polite"></p>
     <div id="admin-queue">Loading…</div>
@@ -524,8 +578,8 @@ function switchTab(tab) {
   document.querySelectorAll('[data-panel]').forEach(el => el.hidden=el.dataset.panel!==tab);
   document.querySelectorAll('[data-tab]').forEach(el=>el.setAttribute('aria-selected',String(el.dataset.tab===tab)));
   if(tab==='leaderboard') loadLeaderboard();
-  if(tab==='account' && currentUser) loadMySubmissions();
-  if(tab==='admin' && isAdmin) {if(adminView==='players')loadAdminPlayers();else loadAdminQueue();}
+  if(tab==='account' && currentUser) {loadMySubmissions();loadNotifications('account');}
+  if(tab==='admin' && isAdmin) {if(adminView==='players')loadAdminPlayers();else{loadAdminQueue();loadNotifications('admin');}}
 }
 document.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>switchTab(btn.dataset.tab)));
 // Admin sub-tabs keep player moderation accessible without scrolling through reviews.
@@ -539,7 +593,7 @@ function switchAdminView(view){
     btn.setAttribute('aria-selected',String(selected));
     btn.tabIndex=selected?0:-1;
   });
-  if(isAdmin){if(view==='players')loadAdminPlayers();else loadAdminQueue();}
+  if(isAdmin){if(view==='players')loadAdminPlayers();else{loadAdminQueue();loadNotifications('admin');}}
 }
 document.querySelectorAll('[data-admin-view]').forEach(btn=>{
   btn.addEventListener('click',()=>switchAdminView(btn.dataset.adminView));
@@ -552,6 +606,202 @@ document.querySelectorAll('[data-admin-view]').forEach(btn=>{
   });
 });
 
+
+
+// --- LVMC V7.2: private, persistent notifications (polling, not browser push) ---
+const NOTIFICATION_TYPES={account:['approved','rejected'],admin:['new_submission','resubmitted']};
+const notificationVisible={account:5,admin:5};
+const notificationCounts={account:0,admin:0};
+const notificationLoadToken={account:0,admin:0};
+let notificationPollTimer=null;
+let notificationCountToken=0;
+let notificationBulkBusy=false;
+const notificationRoot=kind=>$(kind+'-notifications');
+const notificationStatus=kind=>$(kind+'-notifications-status');
+const notificationBadgeText=count=>count>9?'9+':String(count);
+function setNotificationStatus(kind,message,error=false){
+  const node=notificationStatus(kind);node.textContent=message;node.classList.toggle('error',error);
+}
+function updateNotificationBadges(kind,count){
+  notificationCounts[kind]=count;
+  const targets=kind==='admin'
+    ?[['admin-notification-badge','admin-tab'],['admin-reviews-notification-badge','admin-reviews-tab']]
+    :[['account-notification-badge','account-tab']];
+  for(const [badgeId,buttonId] of targets){
+    const badge=$(badgeId),button=$(buttonId);
+    badge.hidden=count===0;
+    badge.textContent=count?notificationBadgeText(count):'';
+    const base=buttonId==='admin-reviews-tab'?'Completion Reviews':kind==='admin'?'Admin':'My account';
+    button.setAttribute('aria-label',count?`${base}, ${count} unread notification${count===1?'':'s'}`:base);
+  }
+  $('mark-'+kind+'-notifications-read').disabled=count===0||notificationBulkBusy;
+}
+function clearNotificationSession(){
+  if(notificationPollTimer!==null){clearInterval(notificationPollTimer);notificationPollTimer=null;}
+  notificationCountToken++;
+  for(const kind of ['account','admin']){
+    notificationLoadToken[kind]++;
+    notificationVisible[kind]=5;
+    updateNotificationBadges(kind,0);
+    notificationRoot(kind).textContent='Sign in to view notifications.';
+    $('more-'+kind+'-notifications').hidden=true;
+    setNotificationStatus(kind,'');
+  }
+}
+async function refreshNotificationBadges(){
+  const uid=currentUser?.id;
+  if(!uid)return;
+  const token=++notificationCountToken;
+  const kinds=isAdmin?['account','admin']:['account'];
+  const results=await Promise.all(kinds.map(kind=>
+    supabase.from('notifications').select('id',{count:'exact',head:true})
+      .eq('recipient_id',uid).in('event_type',NOTIFICATION_TYPES[kind]).is('read_at',null)
+  ));
+  if(uid!==currentUser?.id||token!==notificationCountToken)return;
+  for(let i=0;i<kinds.length;i++){
+    const kind=kinds[i],result=results[i];
+    if(result.error){
+      setNotificationStatus(kind,'Could not check unread notifications: '+errorText(result.error),true);
+      continue;
+    }
+    updateNotificationBadges(kind,result.count||0);
+  }
+  if(!isAdmin)updateNotificationBadges('admin',0);
+}
+async function loadNotifications(kind){
+  if(!currentUser||(kind==='admin'&&!isAdmin))return;
+  const uid=currentUser.id,token=++notificationLoadToken[kind];
+  const root=notificationRoot(kind),limit=notificationVisible[kind];
+  if(!root.querySelector('.notification-item')&&!root.querySelector('.notification-empty'))root.textContent='Loading notifications…';
+  const {data,error}=await supabase.from('notifications')
+    .select('id,completion_id,event_type,created_at,read_at')
+    .eq('recipient_id',uid).in('event_type',NOTIFICATION_TYPES[kind])
+    .order('created_at',{ascending:false}).order('id',{ascending:false}).limit(limit+1);
+  if(uid!==currentUser?.id||token!==notificationLoadToken[kind])return;
+  if(error){root.textContent='Could not load notifications.';setNotificationStatus(kind,errorText(error),true);return;}
+  setNotificationStatus(kind,'');
+  const records=(data||[]).slice(0,limit);
+  $('more-'+kind+'-notifications').hidden=(data||[]).length<=limit;
+  clear(root);
+  if(!records.length){root.append(element('div','notification-empty','No notifications yet. You’re all caught up!'));return;}
+  // Completion and profile lookups use the same existing RLS permissions as the website.
+  const completionIds=[...new Set(records.map(n=>n.completion_id))];
+  const {data:completions,error:completionError}=await supabase.from('completions')
+    .select('id,user_id,level_id,status').in('id',completionIds);
+  if(uid!==currentUser?.id||token!==notificationLoadToken[kind])return;
+  const completionMap=new Map((completions||[]).map(c=>[String(c.id),c]));
+  let names=new Map();
+  if(kind==='admin'&&completions?.length){
+    const userIds=[...new Set(completions.map(c=>c.user_id))];
+    const {data:profiles}=await supabase.from('profiles').select('id,username').in('id',userIds);
+    if(uid!==currentUser?.id||token!==notificationLoadToken[kind])return;
+    names=new Map((profiles||[]).map(p=>[p.id,p.username]));
+  }
+  if(completionError)setNotificationStatus(kind,'Some level details could not be loaded.',true);
+  for(const n of records){
+    const c=completionMap.get(String(n.completion_id));
+    const level=c?nameForLevel(c.level_id):'A completion';
+    const player=c?(names.get(c.user_id)||'A player'):'A player';
+    const unread=n.read_at===null;
+    const row=element('div','notification-item'+(unread?' unread':''));
+    const symbol=element('span','notification-symbol '+n.event_type,
+      ({approved:'✓',rejected:'×',new_submission:'!',resubmitted:'↻'})[n.event_type]||'•');
+    symbol.setAttribute('aria-hidden','true');
+    const body=element('div','notification-content');
+    const message=element('div','notification-message');
+    if(n.event_type==='approved')message.append(element('strong','',level),' was approved!');
+    else if(n.event_type==='rejected')message.append(element('strong','',level),' was rejected.');
+    else if(n.event_type==='resubmitted')message.append(element('strong','',player),' resubmitted ',element('strong','',level),'.');
+    else message.append(element('strong','',player),' submitted ',element('strong','',level),'.');
+    const time=element('div','notification-meta',new Date(n.created_at).toLocaleString());
+    if(kind==='admin'&&c)time.append(' · '+(c.status==='pending'?'Still pending':'Now '+c.status));
+    if(!unread)time.append(' · Read');
+    body.append(message,time);
+    row.append(symbol,body);
+    if(unread){
+      const mark=element('button','notification-read-btn','Mark read');mark.type='button';
+      mark.setAttribute('aria-label',`Mark ${level} notification as read`);
+      mark.addEventListener('click',async()=>{
+        if(!currentUser||currentUser.id!==uid)return;
+        mark.disabled=true;
+        const {error:readError}=await supabase.rpc('mark_notifications_read',{p_notification_id:n.id});
+        if(uid!==currentUser?.id)return;
+        if(readError){setNotificationStatus(kind,'Could not mark notification as read: '+errorText(readError),true);mark.disabled=false;return;}
+        await Promise.all([refreshNotificationBadges(),loadNotifications(kind)]);
+      });
+      row.append(mark);
+    }
+    root.append(row);
+  }
+}
+async function markAllCategoryNotificationsRead(kind){
+  if(!currentUser||(kind==='admin'&&!isAdmin)||notificationBulkBusy)return;
+  const uid=currentUser.id;
+  notificationBulkBusy=true;
+  $('mark-account-notifications-read').disabled=true;
+  $('mark-admin-notifications-read').disabled=true;
+  setNotificationStatus(kind,'Marking notifications as read…');
+  let outcomeMessage='',outcomeError=false;
+  try{
+    // The existing RPC marks all types if called without an ID. Use individual IDs
+    // so an admin's review notifications never clear their account notifications.
+    let total=0;
+    for(;;){
+      if(uid!==currentUser?.id)break;
+      const {data,error}=await supabase.from('notifications').select('id')
+        .eq('recipient_id',uid).in('event_type',NOTIFICATION_TYPES[kind])
+        .is('read_at',null).order('id',{ascending:true}).limit(100);
+      if(error)throw error;
+      if(!data?.length)break;
+      for(let i=0;i<data.length;i+=8){
+        if(uid!==currentUser?.id)break;
+        const results=await Promise.all(data.slice(i,i+8).map(n=>
+          supabase.rpc('mark_notifications_read',{p_notification_id:n.id})
+        ));
+        const failed=results.find(result=>result.error);
+        if(failed)throw failed.error;
+      }
+      total+=data.length;
+      if(total>=1000){
+        outcomeMessage='Marked 1,000 notifications as read. Click again if more remain.';
+        break;
+      }
+    }
+    if(!outcomeMessage)outcomeMessage=total?`${total} notification${total===1?'':'s'} marked as read.`:'All caught up!';
+  }catch(error){
+    outcomeMessage='Could not finish marking notifications as read: '+errorText(error);outcomeError=true;
+  }finally{
+    notificationBulkBusy=false;
+    if(uid===currentUser?.id){
+      await Promise.all([refreshNotificationBadges(),loadNotifications(kind)]);
+      if(outcomeMessage)setNotificationStatus(kind,outcomeMessage,outcomeError);
+    }
+  }
+}
+for(const kind of ['account','admin']){
+  $('mark-'+kind+'-notifications-read').addEventListener('click',()=>markAllCategoryNotificationsRead(kind));
+  $('more-'+kind+'-notifications').addEventListener('click',()=>{
+    notificationVisible[kind]+=5;
+    loadNotifications(kind);
+  });
+}
+async function refreshNotificationUI(){
+  if(!currentUser||notificationBulkBusy)return;
+  const selected=document.querySelector('[data-tab][aria-selected="true"]')?.dataset.tab;
+  const jobs=[refreshNotificationBadges()];
+  if(selected==='account')jobs.push(loadNotifications('account'));
+  if(selected==='admin'&&isAdmin&&adminView==='reviews')jobs.push(loadNotifications('admin'));
+  await Promise.all(jobs);
+}
+function startNotificationPolling(){
+  if(notificationPollTimer!==null)clearInterval(notificationPollTimer);
+  notificationPollTimer=setInterval(()=>{
+    if(!document.hidden&&currentUser)refreshNotificationUI();
+  },30000);
+}
+document.addEventListener('visibilitychange',()=>{
+  if(!document.hidden&&currentUser)refreshNotificationUI();
+});
 
 async function loadLeaderboard(){
   const root=$('leaderboard-list'); root.textContent='Loading leaderboard…';
@@ -639,11 +889,20 @@ async function loadAdminStatus(){
   if(!isAdmin && !document.querySelector('[data-panel="admin"]').hidden)switchTab('rankings');
 }
 async function refreshAuth(user){
+  const previousId=currentUser?.id;
   currentUser=user;
   $('signed-out').hidden=!!user;
   $('signed-in').hidden=!user;
-  if(user){await Promise.all([loadProfile(),loadAdminStatus(),loadMySubmissions()]);}
-   else{isAdmin=false;$('admin-tab').hidden=true;$('delete-account-zone').hidden=false;$('profile-info').textContent='';}
+  if(previousId!==user?.id)clearNotificationSession();
+  if(user){
+    await Promise.all([loadProfile(),loadAdminStatus(),loadMySubmissions()]);
+    if(currentUser?.id!==user.id)return;
+    startNotificationPolling();
+    await refreshNotificationUI();
+  }else{
+    clearNotificationSession();
+    isAdmin=false;$('admin-tab').hidden=true;$('delete-account-zone').hidden=false;$('profile-info').textContent='';
+  }
 }
 $('signup-form').addEventListener('submit',async(e)=>{
   e.preventDefault();const form=e.currentTarget;const btn=form.querySelector('[type="submit"]');btn.disabled=true;
