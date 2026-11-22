@@ -1058,17 +1058,34 @@ $('refresh-admin').addEventListener('click',loadAdminQueue);
 $('refresh-players').addEventListener('click',loadAdminPlayers);
 
 async function loadAdminPlayers(){
-  if(!isAdmin)return;
+  if(!isAdmin||!currentUser)return;
   const root=$('admin-players');root.textContent='Loading players…';
-  const [profilesResult,bansResult,adminsResult]=await Promise.all([
-    supabase.from('profiles').select('id,username').order('username'),
-    supabase.from('submission_bans').select('user_id,reason'),
-    supabase.from('admins').select('user_id')
-  ]);
+  const requestingAdminId=currentUser.id;
+  let profilesResult,bansResult,adminsResult;
+  try{
+    [profilesResult,bansResult,adminsResult]=await Promise.all([
+      supabase.from('profiles').select('id,username').order('username'),
+      supabase.from('submission_bans').select('user_id,reason'),
+      // V7.2.2: an admin-only RPC returns ALL admin IDs despite self-only RLS on admins.
+      supabase.rpc('list_admin_user_ids')
+    ]);
+  }catch(error){
+    root.textContent='Could not load players. Check your connection and refresh.';
+    return;
+  }
+  // Fail closed: never display moderation actions without a complete admin list.
+  if(!isAdmin||currentUser?.id!==requestingAdminId){root.textContent='';return;}
   const error=profilesResult.error||bansResult.error||adminsResult.error;
   if(error){root.textContent='Could not load players: '+errorText(error);return;}
+  const adminRows=adminsResult.data;
+  if(!Array.isArray(adminRows)||!adminRows.length||
+     !adminRows.every(a=>typeof a?.user_id==='string')||
+     !adminRows.some(a=>a.user_id===requestingAdminId)){
+    root.textContent='Could not verify the complete admin list. Player moderation is unavailable; refresh to retry.';
+    return;
+  }
   const banned=new Map((bansResult.data||[]).map(b=>[b.user_id,b]));
-  const adminIds=new Set((adminsResult.data||[]).map(a=>a.user_id));
+  const adminIds=new Set(adminRows.map(a=>a.user_id));
   clear(root);
   const players=(profilesResult.data||[]).filter(p=>!adminIds.has(p.id));
   if(!players.length){root.textContent='No non-admin players found.';return;}
