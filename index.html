@@ -4,8 +4,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <meta name="theme-color" content="#0d1118" />
-<meta name="description" content="The official LVMC Main Levels List, ranked by Bermune with 247 completion points across 25 Geometry Dash levels, including community-voted entries." />
-<title>Main Levels List. — Official LVMC Rankings</title>
+<meta name="description" content="LVMC Geometry Dash rankings: a Main Levels List and separate Discord Community Voted Levels, with independent scores and a main-first leaderboard." />
+<title>LVMC Rankings — Main Levels & Community Voted Levels</title>
 <style>
  :root{color-scheme:dark;--bg:#0d1118;--panel:#151b25;--panel-active:#192333;--border:#293241;--muted:#99a7ba;--text:#f1f5fb;--accent:#79b9ff}
  *{box-sizing:border-box}
@@ -33,7 +33,7 @@
  .thumb{width:92px;height:53px;flex:0 0 92px;border-radius:8px;object-fit:cover;object-position:center;border:1px solid #ffffff24;background:#253348;box-shadow:0 2px 10px #0003}
  .name{font-weight:670;flex:1;min-width:0;line-height:1.3;letter-spacing:-.008em}
  .points{color:#b2d6ff;background:#20384f;border:1px solid #365979;padding:5px 10px;border-radius:8px;font-size:12px;font-weight:740;white-space:nowrap;font-variant-numeric:tabular-nums}
- /* Rank colors: #1–2 red, #3–5 gold, #6–10 green, #11+ default blue. */
+ /* Main list: RobTop Travel red, the three RobTop demons gold, #5–10 green. Community list retains its own tier colors. */
  .name.tier-red{color:#ff626b;text-shadow:0 0 15px rgba(255,82,92,.16)}
  .points.tier-red{color:#ff9ca3;background:#4c2029;border-color:#a94755}
  .name.tier-gold{color:#f4d35e}
@@ -86,6 +86,9 @@
   .form-stack label{display:grid;gap:5px;color:#c7d7e9;font-size:12px;font-weight:650}
   .form-stack input,.form-stack select{width:100%;min-width:0;padding:11px 12px;border-radius:9px;background:#0d1521;border:1px solid #3a4b62;color:#f1f5fb;font:inherit;font-size:14px}
   .form-stack input:focus,.form-stack select:focus{outline:2px solid #79b9ff;outline-offset:1px}
+  /* V8.1: optional search below the existing level selector */
+  .level-search-status{font-size:12px;color:var(--muted);line-height:1.4}
+  .level-search-status:empty{display:none}
   .button-row{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
   .status-line{font-size:13px;color:#b4d8ff;min-height:18px;overflow-wrap:anywhere}
   .status-line.error{color:#ff9ca3}
@@ -169,6 +172,45 @@
   details,.feature{background:rgba(18,26,39,.89);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
   details:hover,details[open]{background:rgba(24,36,55,.94)}
   @media(max-width:600px){.lvmc-backdrop-image{filter:blur(6px) saturate(1.1)}details,.feature{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(18,26,39,.95)}}
+
+  /* LVMC V8.0: independent main and Discord-voted rankings */
+  .wrap{max-width:1180px}
+  .feature{max-width:980px;margin-left:auto;margin-right:auto}
+  .rankings-intro{display:flex;justify-content:space-between;align-items:end;gap:18px;flex-wrap:wrap;margin:0 0 20px}
+  .rankings-intro h2{font-size:23px;letter-spacing:-.035em;margin:0 0 3px}
+  .rankings-intro p{color:var(--muted);font-size:13px;margin:0;max-width:650px}
+  .rankings-grid{display:grid;grid-template-columns:minmax(0,1.16fr) minmax(0,1fr);gap:20px;align-items:start}
+  .rankings-column{min-width:0;border:1px solid #32445a;background:rgba(13,21,33,.88);border-radius:17px;padding:15px;scroll-margin-top:18px}
+  .rankings-column-heading{padding:6px 5px 17px;min-height:150px}
+  .rankings-eyebrow{color:#e7c96d;font-size:10px;font-weight:800;letter-spacing:.15em}
+  .community-rankings .rankings-eyebrow{color:#8ec5ff}
+  .rankings-column-heading h2{font-size:clamp(22px,2.3vw,29px);line-height:1.18;letter-spacing:-.04em;margin:7px 0 8px}
+  .rankings-column-heading p{font-size:12px;color:var(--muted);margin:0 0 12px;line-height:1.5}
+  .rankings-category-stats{display:inline-flex;align-items:center;gap:5px;color:#b9c8da;font-size:12px;border-radius:7px;background:#1b2a3c;border:1px solid #30475f;padding:5px 9px}
+  .rankings-category-stats strong{color:#fff}
+  .rankings-column .list{gap:9px}
+  .rankings-column details{background:rgba(20,30,45,.95)}
+  .rankings-column summary{gap:10px;padding:10px 11px;min-height:73px}
+  .rankings-column .rank{width:28px;flex:0 0 28px;font-size:13px}
+  .rankings-column .thumb{width:82px;height:49px;flex:0 0 82px}
+  .rankings-column .name{font-size:14px}
+  .rankings-column .points{font-size:11px;padding:5px 7px}
+  .rankings-column .detail-panel{grid-template-columns:1fr;gap:12px;padding:13px}
+  .rankings-column .detail-image{max-height:225px}
+  .community-rankings{position:sticky;top:18px}
+  .community-vote-note{margin-top:15px;padding:13px 14px;border-radius:11px;border:1px dashed #426182;background:#15263b;color:#b3cde9;font-size:12px;line-height:1.55}
+  .community-vote-note span{color:#79b9ff;margin-right:5px}
+  .board-row-v8{grid-template-columns:42px minmax(0,1fr) minmax(160px,auto);gap:14px;padding:17px 6px}
+  .board-row-v8 .board-player{min-width:0}
+  .board-row-v8 .board-name{font-size:15px}
+  .board-row-v8 .board-sub{font-size:12px;margin-top:4px;line-height:1.5}
+  .board-scores{text-align:right;white-space:nowrap}
+  .board-row-v8 .board-rank{color:#f4d35e}
+  .board-main-score{color:#f1f5fb;font-size:19px;font-weight:800;font-variant-numeric:tabular-nums}
+  .board-community-score{color:#9aa7b7;font-size:12px;font-weight:550;font-variant-numeric:tabular-nums;margin-top:2px}
+  @media(max-width:980px){.rankings-grid{grid-template-columns:1fr}.community-rankings{position:static}.rankings-column-heading{min-height:0}.rankings-column .detail-panel{grid-template-columns:180px 1fr;align-items:center}}
+  @media(max-width:600px){.rankings-column{padding:11px}.rankings-column .detail-panel{grid-template-columns:1fr}.rankings-column .thumb{width:73px;height:45px;flex-basis:73px}.rankings-column .rank{width:26px;flex-basis:26px}.rankings-column .name{font-size:13px}.rankings-column summary{gap:9px;padding:9px;min-height:67px}.rankings-intro h2{font-size:21px}.board-row-v8{grid-template-columns:30px minmax(0,1fr);gap:10px}.board-scores{grid-column:2;text-align:left;white-space:normal}.board-main-score{font-size:18px}}
+  @media(max-width:360px){.rankings-column .thumb{width:62px;height:41px;flex-basis:62px}.rankings-column .rank{width:23px;flex-basis:23px}.rankings-column .points{font-size:10px;padding:4px 5px}.rankings-column summary{gap:7px}}
 </style>
 </head>
 <body>
@@ -177,11 +219,11 @@
 <header>
   <div class="eyebrow">Geometry Dash · LVMC Rankings</div>
   <h1>Main Levels List<span style="color:#79b9ff">.</span></h1>
-  <p>A Bermune-made ranking of the 22 classic Geometry Dash main levels plus The Challenge, along with a few community-voted levels, from hardest to easiest.</p>
+  <p>A Bermune-made ranking of the 22 classic Geometry Dash main levels, The Challenge, and RobTop Travel — plus levels voted in by the LVMC Discord community.</p>
   <div class="stats">
-    <div class="stat"><strong id="count">25</strong> Levels</div>
-    <div class="stat"><strong id="total">247</strong> Total points</div>
-    <div class="stat"><strong>Official</strong> LVMC Rankings</div>
+    <div class="stat"><strong id="main-count">24</strong> Main levels · <span id="main-total">202 pts</span></div>
+    <div class="stat"><strong id="community-count">1</strong> Community voted · <span id="community-total">45 pts</span></div>
+    <div class="stat"><strong id="count">25</strong> Levels total</div>
   </div>
 </header>
 
@@ -193,14 +235,37 @@
 </nav>
 <div id="global-status" class="status-line" role="status" aria-live="polite"></div>
 <div id="rankings-panel" data-panel="rankings">
-<section aria-label="Ranked Geometry Dash main levels">
-  <div class="section-title"><h2>Level rankings</h2><span>Click a level for details</span></div>
-  <div class="list" id="list"></div>
-</section>
+  <div class="rankings-intro">
+    <div>
+      <h2>Level rankings</h2>
+      <p>Two separate lists. Main Levels lead the competition; Community Voted Levels add a second challenge.</p>
+    </div>
+  </div>
+  <div class="rankings-grid">
+    <section class="rankings-column main-rankings" id="main-levels-list" aria-label="Main Levels List">
+      <div class="rankings-column-heading">
+        <div class="rankings-eyebrow">THE MAIN COMPETITION</div>
+        <h2>Main Levels List</h2>
+        <p>22 classic levels, The Challenge, and RobTop Travel.</p>
+        <div class="rankings-category-stats"><strong id="main-count-card">24</strong> levels <span aria-hidden="true">·</span> <strong id="main-points-card">202</strong> possible points</div>
+      </div>
+      <div class="list" id="main-list"></div>
+    </section>
+    <section class="rankings-column community-rankings" id="community-voted-list" aria-label="Community Voted Levels">
+      <div class="rankings-column-heading">
+        <div class="rankings-eyebrow">CHOSEN BY THE LVMC DISCORD</div>
+        <h2>Community Voted Levels</h2>
+        <p>All other levels selected through community polls.</p>
+        <div class="rankings-category-stats"><strong id="community-count-card">1</strong> level<span id="community-level-plural"></span> <span aria-hidden="true">·</span> <strong id="community-points-card">45</strong> possible points</div>
+      </div>
+      <div class="list" id="community-list"></div>
+      <div class="community-vote-note"><span aria-hidden="true">✦</span> New levels join this list when the LVMC Discord votes them in.</div>
+    </section>
+  </div>
 </div>
 <section class="feature" data-panel="leaderboard" hidden aria-label="LVMC leaderboard">
   <div class="section-title"><h2>LVMC Leaderboard</h2><span>Approved completions only</span></div>
-  <p>Everyone can view the rankings. Only approved levels award points.</p>
+  <p>Only approved completions count. <strong>Main Level points determine rank first</strong>; Community Voted points break every Main Level points tie.</p>
   <div id="leaderboard-list" aria-live="polite">Loading leaderboard…</div>
   <div class="button-row" style="margin-top:14px"><button type="button" class="action-btn" id="refresh-leaderboard">Refresh leaderboard</button></div>
 </section>
@@ -245,6 +310,8 @@
     <p>Pick a level you've beaten. Video evidence is optional. Your points count only after an admin approves the submission.</p>
     <form id="completion-form" class="form-stack">
       <label>Level <select name="level" id="completion-level" required><option value="">Loading levels…</option></select></label>
+      <label>Search levels <input type="search" id="completion-level-search" autocomplete="off" placeholder="Search by level name…" aria-controls="completion-level" aria-describedby="completion-level-search-status" disabled></label>
+      <div id="completion-level-search-status" class="level-search-status" role="status" aria-live="polite"></div>
       <label>Video link (optional) <input type="url" name="video" placeholder="https://..." maxlength="2000" inputmode="url"></label>
       <button type="submit" class="action-btn primary">Submit completion</button>
     </form>
@@ -317,12 +384,13 @@ const levels = [
     "image": "https://i.ytimg.com/vi/CaoUIkQ3QuI/hqdefault.jpg",
     "source": "https://www.youtube.com/watch?v=CaoUIkQ3QuI",
     "sourceLabel": "Thumbnail art credit: Lairon GD showcase ↗",
-    "description": "Completing RobTop Travel proves you have truly mastered this game, and you may finally call yourself a Geometry Dash pro. Completion earns 50 points toward the 247-point maximum.",
+    "description": "Completing RobTop Travel proves you have truly mastered this game, and you may finally call yourself a Geometry Dash pro. Completion earns 50 Main Level points toward the 202-point Main Level maximum.",
     "special": true
   },
   {
     "name": "Sweater Weather",
     "points": 45,
+    "category": "community",
     "image": "sweater-weather.png",
     "source": "https://www.youtube.com/watch?v=y3Kk0ZvDqUM",
     "sourceLabel": "Thumbnail image credit: Sweater Weather showcase ↗"
@@ -452,7 +520,7 @@ const levels = [
     "points": 2,
     "image": "the-challenge.png",
     "source": "https://geometry-dash.fandom.com/wiki/The_Challenge",
-    "description": "Completing RobTop's secret \"The Challenge\" earns 2 point toward the 247-point maximum."
+    "description": "Completing RobTop's secret \"The Challenge\" earns 2 Main Level points toward the 202-point Main Level maximum."
   },
   {
     "name": "Back On Track",
@@ -497,29 +565,49 @@ function levelImage(level,i,klass){
  img.addEventListener('error',()=>{img.src=fallbackThumbnail(i);img.alt='Illustrated fallback thumbnail for '+level.name;},{once:true});
  return img;
 }
-const list=document.getElementById('list');
-const totalPoints=levels.reduce((sum,l)=>sum+l.points,0);
-document.getElementById('total').textContent=totalPoints;
+// V8: Keep RobTop Travel and The Challenge with the 22 official main levels.
+// Discord-voted entries have category "community"; all others default to "main".
+const mainLevels=levels.filter(l=>l.category!=='community');
+const communityLevels=levels.filter(l=>l.category==='community');
+const mainTotalPoints=mainLevels.reduce((sum,l)=>sum+l.points,0);
+const communityTotalPoints=communityLevels.reduce((sum,l)=>sum+l.points,0);
 document.getElementById('count').textContent=levels.length;
-levels.forEach((level,i)=>{
- const details=document.createElement('details');
- const summary=document.createElement('summary');
- const rank=document.createElement('span');rank.className='rank';rank.textContent='#'+(i+1);
- const tier=i<2?'tier-red':i<5?'tier-gold':i<10?'tier-green':'';
- const title=document.createElement('span');title.className='name'+(tier?' '+tier:'');title.textContent=level.name;
- const pill=document.createElement('span');pill.className='points'+(tier?' '+tier:'');pill.textContent=level.points+' '+(level.points===1?'pt':'pts');
- const chev=document.createElement('span');chev.className='chev';chev.textContent='⌄';chev.setAttribute('aria-hidden','true');
- summary.append(rank,levelImage(level,i,'thumb'),title,pill,chev);
- const body=document.createElement('div');body.className='detail-panel';
- const preview=levelImage(level,i,'detail-image');
- const content=document.createElement('div');
- const label=document.createElement('div');label.className='small-label';label.textContent='Completion reward · Rank #'+(i+1);
- const value=document.createElement('div');value.className='detail-value';value.textContent=String(level.points)+' ';
- const unit=document.createElement('span');unit.textContent=level.points===1?'point':'points';value.append(unit);
- const desc=document.createElement('p');desc.className='detail-description';desc.textContent=level.description || ('Completing '+level.name+' earns '+level.points+' '+(level.points===1?'point':'points')+' toward the '+totalPoints+'-point maximum.');
- const source=document.createElement('a');source.className='img-source';source.href=level.source;source.target='_blank';source.rel='noopener noreferrer';source.textContent=level.sourceLabel || 'View screenshot source ↗';
- content.append(label,value,desc,source);body.append(preview,content);details.append(summary,body);list.append(details);
-});
+document.getElementById('main-count').textContent=mainLevels.length;
+document.getElementById('community-count').textContent=communityLevels.length;
+document.getElementById('main-total').textContent=mainTotalPoints+' pts';
+document.getElementById('community-total').textContent=communityTotalPoints+' pts';
+document.getElementById('main-count-card').textContent=mainLevels.length;
+document.getElementById('community-count-card').textContent=communityLevels.length;
+document.getElementById('community-level-plural').textContent=communityLevels.length===1?'':'s';
+document.getElementById('main-points-card').textContent=mainTotalPoints;
+document.getElementById('community-points-card').textContent=communityTotalPoints;
+function renderRankedLevels(group,listId,categoryName,categoryTotal){
+ const list=document.getElementById(listId);
+ group.forEach((level,i)=>{
+  const originalIndex=levels.indexOf(level);
+  const details=document.createElement('details');
+  const summary=document.createElement('summary');
+  const rank=document.createElement('span');rank.className='rank';rank.textContent='#'+(i+1);
+  const tier=listId==='main-list'
+    ? (i===0?'tier-red':i<4?'tier-gold':i<10?'tier-green':'')
+    : (i<2?'tier-red':i<5?'tier-gold':i<10?'tier-green':'');
+  const title=document.createElement('span');title.className='name'+(tier?' '+tier:'');title.textContent=level.name;
+  const pill=document.createElement('span');pill.className='points'+(tier?' '+tier:'');pill.textContent=level.points+' '+(level.points===1?'pt':'pts');
+  const chev=document.createElement('span');chev.className='chev';chev.textContent='⌄';chev.setAttribute('aria-hidden','true');
+  summary.append(rank,levelImage(level,originalIndex,'thumb'),title,pill,chev);
+  const body=document.createElement('div');body.className='detail-panel';
+  const preview=levelImage(level,originalIndex,'detail-image');
+  const content=document.createElement('div');
+  const label=document.createElement('div');label.className='small-label';label.textContent=categoryName+' · Rank #'+(i+1);
+  const value=document.createElement('div');value.className='detail-value';value.textContent=String(level.points)+' ';
+  const unit=document.createElement('span');unit.textContent=level.points===1?'point':'points';value.append(unit);
+  const desc=document.createElement('p');desc.className='detail-description';desc.textContent=level.description || ('Completing '+level.name+' earns '+level.points+' '+(level.points===1?'point':'points')+' toward the '+categoryTotal+'-point '+categoryName+' maximum.');
+  const source=document.createElement('a');source.className='img-source';source.href=level.source;source.target='_blank';source.rel='noopener noreferrer';source.textContent=level.sourceLabel || 'View screenshot source ↗';
+  content.append(label,value,desc,source);body.append(preview,content);details.append(summary,body);list.append(details);
+ });
+}
+renderRankedLevels(mainLevels,'main-list','Main Level',mainTotalPoints);
+renderRankedLevels(communityLevels,'community-list','Community Voted Level',communityTotalPoints);
 </script>
 
 <script type="module">
@@ -533,6 +621,7 @@ const $ = (id) => document.getElementById(id);
 let currentUser = null;
 let isAdmin = false;
 let dbLevels = [];
+let orderedSubmissionLevels = [];
 const nameForLevel = (id) => dbLevels.find(l => String(l.id) === String(id))?.name || `Level #${id}`;
 function showStatus(id, message, error=false) { const el=$(id); el.textContent=message; el.classList.toggle('error',error); }
 function errorText(error) {
@@ -814,34 +903,83 @@ document.addEventListener('visibilitychange',()=>{
 
 async function loadLeaderboard(){
   const root=$('leaderboard-list'); root.textContent='Loading leaderboard…';
-  const {data,error}=await supabase.rpc('get_leaderboard');
+  // V8 uses the separate function so the old V7 leaderboard remains available.
+  const {data,error}=await supabase.rpc('get_leaderboard_v8');
   if(error){root.textContent='Could not load leaderboard: '+errorText(error);return;}
   clear(root);
   if(!data?.length){root.textContent='No players yet. Be the first!';return;}
   data.forEach((player,i)=>{
-    const row=element('div','board-row');
+    const row=element('div','board-row board-row-v8');
     const rank=element('span','board-rank',`#${i+1}`);
-    const middle=element('div');
-    middle.append(element('div','board-name',player.username),element('div','board-sub',`${player.completed_levels} / ${levels.length} levels completed`));
-    const right=element('div','board-score',`${player.total_points} pts`);
+    const middle=element('div','board-player');
+    middle.append(
+      element('div','board-name',player.username),
+      element('div','board-sub',`${player.main_completed} / ${mainLevels.length} main levels · ${player.community_completed} / ${communityLevels.length} community levels`)
+    );
+    const right=element('div','board-scores');
+    right.append(
+      element('div','board-main-score',`${player.main_points} pts`),
+      element('div','board-community-score',`${player.community_points} community pts`)
+    );
     row.append(rank,middle,right);root.append(row);
   });
 }
 $('refresh-leaderboard').addEventListener('click',loadLeaderboard);
 
+// Filter the existing Supabase level IDs without changing the submission workflow.
+const normalizeLevelSearch=value=>String(value).normalize('NFKC').trim().replace(/\s+/g,' ').toLowerCase();
+function renderCompletionLevelOptions(){
+  const select=$('completion-level');
+  const search=normalizeLevelSearch($('completion-level-search').value);
+  const previouslySelected=select.value;
+  const matches=orderedSubmissionLevels.filter(level=>normalizeLevelSearch(level.name).includes(search));
+  clear(select);
+  const placeholder=element('option','',matches.length?(search?'Choose a matching level…':'Choose a level…'):'No matching levels');
+  placeholder.value='';
+  select.append(placeholder);
+  const mainGroup=document.createElement('optgroup');mainGroup.label='Main Levels List';
+  const communityGroup=document.createElement('optgroup');communityGroup.label='Community Voted Levels';
+  for(const level of matches){
+    const option=element('option','',`${level.name} · ${level.points} pts`);
+    option.value=String(level.id);
+    (level.category==='community'?communityGroup:mainGroup).append(option);
+  }
+  if(mainGroup.children.length)select.append(mainGroup);
+  if(communityGroup.children.length)select.append(communityGroup);
+  // Never silently submit a level hidden by a new search.
+  select.value=matches.some(level=>String(level.id)===previouslySelected)?previouslySelected:'';
+  const status=$('completion-level-search-status');
+  status.textContent=search?(matches.length?`${matches.length} matching level${matches.length===1?'':'s'}. Choose one from the level dropdown above.`:'No matching levels. Try another search.'):'';
+}
+$('completion-level-search').addEventListener('input',renderCompletionLevelOptions);
+$('completion-level-search').addEventListener('keydown',event=>{
+  // Enter while searching should focus the selector, not submit the form.
+  if(event.key==='Enter'){
+    event.preventDefault();
+    $('completion-level').focus();
+  }
+});
 async function loadLevels(){
   // Fetch IDs from Supabase rather than assuming rank numbers equal database IDs.
-  const {data,error}=await supabase.from('levels').select('id,name,points');
+  const {data,error}=await supabase.from('levels').select('id,name,points,category');
   const select=$('completion-level'); clear(select);
-  if(error){select.append(element('option','', 'Could not load levels'));showStatus('submission-status',errorText(error),true);return;}
+  const searchInput=$('completion-level-search');
+  if(error){
+    searchInput.disabled=true;
+    select.append(element('option','', 'Could not load levels'));
+    showStatus('submission-status',errorText(error),true);
+    return;
+  }
   dbLevels=data||[];
-  const normalizeName=name=>String(name).normalize('NFKC').trim().replace(/\s+/g,' ').toLowerCase();
-  const byName=new Map(dbLevels.map(l=>[normalizeName(l.name),l]));
-  const sorted=levels.map(l=>byName.get(normalizeName(l.name))).filter(Boolean);
+  const byName=new Map(dbLevels.map(l=>[normalizeLevelSearch(l.name),l]));
+  const sorted=levels.map(l=>byName.get(normalizeLevelSearch(l.name))).filter(Boolean);
   const remaining=dbLevels.filter(l=>!sorted.some(x=>String(x.id)===String(l.id)));
-  select.append(element('option','', 'Choose a level…'));
-  for(const l of [...sorted,...remaining]){const option=element('option','',`${l.name} · ${l.points} pts`);option.value=String(l.id);select.append(option);}
+  orderedSubmissionLevels=[...sorted,...remaining];
+  searchInput.disabled=false;
+  renderCompletionLevelOptions();
   if(sorted.length!==levels.length) showStatus('submission-status',`Heads up: matched ${sorted.length} of ${levels.length} website levels to the database. Check level names before submitting.`,true);
+  const mismatched=levels.filter(l=>{const db=byName.get(normalizeLevelSearch(l.name));return db&&db.category!==(l.category||'main');});
+  if(mismatched.length)showStatus('submission-status','Some website level categories differ from Supabase. Contact an LVMC administrator before submitting.',true);
 }
 async function loadProfile(){
   if(!currentUser)return;
@@ -969,7 +1107,7 @@ $('completion-form').addEventListener('submit',async(e)=>{
   btn.disabled=true;showStatus('submission-status','Submitting…');
   const {error}=await supabase.from('completions').insert({user_id:currentUser.id,level_id:id,video_url:video||null});
   showStatus('submission-status',error?await submissionErrorText(error):'Completion submitted! Awaiting admin review.',!!error);
-  if(!error){form.reset();await loadMySubmissions();}btn.disabled=false;
+  if(!error){form.reset();renderCompletionLevelOptions();await loadMySubmissions();}btn.disabled=false;
 });
 async function loadAdminQueue(){
   if(!isAdmin)return;
