@@ -229,6 +229,13 @@
   .coin-breakdown{color:#9daec3;font-size:11px;margin:7px 0 0}
   .coin-review-note{font-size:12px;color:#b2c2d5}
   .coin-review-note.waiting{color:#e9c56a}
+  /* V8.2 moderation: keep approved coin claims accessible for later rejection. */
+  .coin-review-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin:12px 0 3px}
+  .coin-review-filter{display:flex;align-items:center;gap:8px;color:#b8c9dc;font-size:12px;font-weight:650}
+  .coin-review-filter select{min-width:140px;padding:9px 11px;border-radius:9px;background:#0d1521;border:1px solid #3a4b62;color:#f1f5fb;font:inherit;font-size:13px}
+  .coin-review-filter select:focus-visible{outline:2px solid #79b9ff;outline-offset:2px}
+  .coin-review-note.approved{color:#a3dbb1}
+  .coin-review-note.rejected{color:#ff9ca3}
   .coin-status{font-size:12px;color:#b6c6d7}
   .coin-status.approved{color:#a3dbb1}
   .coin-status.rejected{color:#ff9ca3}
@@ -393,8 +400,18 @@
   </div>
   <div id="admin-coins-panel" role="tabpanel" aria-labelledby="admin-coins-tab" data-admin-panel="coins" hidden>
     <h3>Coin Reviews</h3>
-    <p>Review all-coins requests for eligible Main Levels. Each approved claim awards +3 Main points after the base completion is approved.</p>
-    <button type="button" class="action-btn" id="refresh-coins">Refresh coin requests</button>
+    <p>Review all-coins requests for eligible Main Levels. Approved claims remain here so admins can reject a bonus later if needed, without changing the base level completion.</p>
+    <div class="coin-review-toolbar">
+      <button type="button" class="action-btn" id="refresh-coins">Refresh coin requests</button>
+      <label class="coin-review-filter" for="coin-review-filter">Show
+        <select id="coin-review-filter">
+          <option value="all">All requests</option>
+          <option value="pending">Pending</option>
+          <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
+        </select>
+      </label>
+    </div>
     <p id="coin-admin-status" class="status-line" role="status" aria-live="polite"></p>
     <div id="coin-admin-queue">Loading…</div>
   </div>
@@ -695,7 +712,7 @@ function errorText(error) {
   if(/invalid video url/i.test(message))return 'Video links must begin with https://';
   if(/no existing completion found/i.test(message))return 'We could not find that completion. Refresh your submissions and try again.';
   if(/submit the level completion first/i.test(message))return 'Submit the level completion before requesting coin points.';
-  if(/only pending coin claims can be reviewed/i.test(message))return 'This coin request is no longer pending. Refresh the queue.';
+  if(/only pending or approved coin claims can be reviewed|approved coin claims can only be rejected|only pending coin claims can be reviewed/i.test(message))return 'This coin request has changed status. Refresh the queue.';
   if(/approve the level completion first/i.test(message))return 'Approve the base level completion before approving its coin bonus.';
   if(/not eligible for coin bonuses|not coin.eligible/i.test(message))return 'This level is not eligible for coin bonuses.';
   if(/already.*coin|coin claim.*pending|coin claim.*approved/i.test(message))return 'A coin claim already exists for this level. Check My Submissions.';
@@ -1367,19 +1384,24 @@ async function loadAdminQueue(){
 }
 $('refresh-admin').addEventListener('click',loadAdminQueue);
 $('refresh-coins').addEventListener('click',loadAdminCoinQueue);
+$('coin-review-filter').addEventListener('change',loadAdminCoinQueue);
 $('refresh-players').addEventListener('click',loadAdminPlayers);
 
 async function loadAdminCoinQueue(){
   if(!isAdmin||!currentUser)return;
   const uid=currentUser.id,root=$('coin-admin-queue');root.textContent='Loading coin requests…';
-  const {data,error}=await supabase.from('coin_claims')
-    .select('id,completion_id,video_url,status,submitted_at')
-    .eq('status','pending').order('submitted_at',{ascending:false}).limit(200);
+  const filter=$('coin-review-filter').value;
+  // Show approved claims too: admins may need to remove a previously granted +3 bonus.
+  let query=supabase.from('coin_claims')
+    .select('id,completion_id,video_url,status,submitted_at,reviewed_at,rejection_reason')
+    .order('submitted_at',{ascending:false}).limit(200);
+  if(filter!=='all')query=query.eq('status',filter);
+  const {data,error}=await query;
   if(uid!==currentUser?.id||!isAdmin)return;
   if(error){root.textContent='Could not load coin requests: '+errorText(error);return;}
   clear(root);
-  if(!data?.length){root.textContent='No pending coin requests. All caught up!';return;}
-  if(data.length===200)root.append(element('p','muted-note','Showing the 200 most recent pending coin requests.'));
+  if(!data?.length){root.textContent=filter==='all'?'No coin requests yet. All caught up!':`No ${filter} coin requests.`;return;}
+  if(data.length===200)root.append(element('p','muted-note','Showing the 200 most recently submitted requests in this view. Use the status filter to narrow the list.'));
   const ids=[...new Set(data.map(claim=>claim.completion_id))];
   const {data:completions,error:completionError}=await supabase.from('completions')
     .select('id,user_id,level_id,status').in('id',ids);
@@ -1399,30 +1421,46 @@ async function loadAdminCoinQueue(){
     if(!c){row.append(element('div','coin-review-note','Linked completion is unavailable; cannot review this request.'));root.append(row);continue;}
     const level=dbLevels.find(l=>String(l.id)===String(c.level_id));
     const name=names.get(c.user_id)||`Player ${c.user_id.slice(0,8)}…`;
-    const top=element('div');top.append(element('strong','',nameForLevel(c.level_id)+' · All 3 coins (+3 pts)'),' ',element('span','tag pending','pending'));
-    row.append(top,element('div','submission-meta',`${name} · ${new Date(claim.submitted_at).toLocaleString()}`));
+    const top=element('div');
+    top.append(element('strong','',nameForLevel(c.level_id)+' · All 3 coins (+3 pts)'),' ',element('span','tag '+claim.status,claim.status));
+    row.append(top,element('div','submission-meta',`${name} · Submitted ${new Date(claim.submitted_at).toLocaleString()}`));
     row.append(element('div','coin-review-note'+(c.status==='pending'?' waiting':''),`Base completion: ${c.status}`));
+    if(claim.status==='approved'){
+      row.append(element('div','coin-review-note approved',c.status==='approved'?'Bonus active: +3 Main points. Rejecting this claim removes those 3 points.':'Coin bonus is currently inactive because the base completion is not approved.'));
+    }else if(claim.status==='rejected'){
+      row.append(element('div','coin-review-note rejected','Coin claim rejected. The player may resubmit new evidence.'));
+      if(claim.rejection_reason?.trim()){
+        const note=element('div','rejection-note');
+        note.append(element('strong','','Reason: '),document.createTextNode(claim.rejection_reason));
+        row.append(note);
+      }
+    }
     if(claim.video_url){try{const u=new URL(claim.video_url);if(u.protocol==='https:'){const link=element('a','safe-link','View coin evidence ↗');link.href=u.href;link.target='_blank';link.rel='noopener noreferrer';row.append(link);}}catch{}}
     if(level?.category!=='main'||level.coin_eligible!==true){
       row.append(element('div','coin-review-note waiting','Coin eligibility could not be verified. Refresh levels or reject this claim.'));
     }
+    // Rejected claims are retained for reference, but require player resubmission.
+    if(claim.status==='rejected'){root.append(row);continue;}
     const actions=element('div','button-row');
     const approve=element('button','action-btn primary','Approve +3 pts');approve.type='button';
     approve.disabled=c.status!=='approved'||level?.category!=='main'||level.coin_eligible!==true;
-    const reject=element('button','action-btn','Reject');reject.type='button';
-    actions.append(approve,reject);row.append(actions);
-    if(c.status==='pending')row.append(element('div','coin-review-note waiting','Approve the base level completion first to enable coin approval.'));
+    if(claim.status==='pending')actions.append(approve);
+    const isRevocation=claim.status==='approved';
+    const reject=element('button',isRevocation?'action-btn danger-btn':'action-btn',isRevocation?'Reject (−3 pts)':'Reject');reject.type='button';
+    actions.append(reject);row.append(actions);
+    if(claim.status==='pending'&&c.status==='pending')row.append(element('div','coin-review-note waiting','Approve the base level completion first to enable coin approval.'));
     const panel=element('div','rejection-panel');panel.hidden=true;
-    const title=element('div','rejection-panel-title','Reject coin request');
+    const title=element('div','rejection-panel-title',isRevocation?'Reject approved coin bonus':'Reject coin request');
+    if(isRevocation)panel.append(element('div','coin-review-note','This removes the +3 Main point bonus, but keeps the original level completion and its base points. The player can submit a new coin claim.'));
     const label=element('label','rejection-reason-field','Reason (optional)');
-    const reason=element('textarea');reason.rows=3;reason.maxLength=500;reason.placeholder='Explain why the all-coins claim was rejected…';
+    const reason=element('textarea');reason.rows=3;reason.maxLength=500;reason.placeholder=isRevocation?'Explain why this previously approved coin bonus is being removed…':'Explain why the all-coins claim was rejected…';
     label.append(reason);
     const counter=element('div','rejection-counter','0 / 500 characters');
     reason.addEventListener('input',()=>counter.textContent=`${reason.value.length} / 500 characters`);
     const panelActions=element('div','button-row');
-    const confirmReject=element('button','action-btn danger-btn','Confirm rejection');confirmReject.type='button';
+    const confirmReject=element('button','action-btn danger-btn',isRevocation?'Confirm removal of +3 pts':'Confirm rejection');confirmReject.type='button';
     const cancel=element('button','action-btn','Cancel');cancel.type='button';
-    panelActions.append(confirmReject,cancel);panel.append(title,label,counter,panelActions);row.append(panel);
+    panelActions.append(confirmReject,cancel);panel.prepend(title);panel.append(label,counter,panelActions);row.append(panel);
     reject.setAttribute('aria-expanded','false');
     reject.addEventListener('click',()=>{actions.hidden=true;panel.hidden=false;reject.setAttribute('aria-expanded','true');reason.focus();});
     cancel.addEventListener('click',()=>{panel.hidden=true;actions.hidden=false;reject.setAttribute('aria-expanded','false');reason.value='';counter.textContent='0 / 500 characters';reject.focus();});
@@ -1433,16 +1471,15 @@ async function loadAdminCoinQueue(){
         p_coin_claim_id:claim.id,p_decision:decision,p_rejection_reason:rejectionReason
       });
       if(uid!==currentUser?.id)return;
-      showStatus('coin-admin-status',error?errorText(error):`Coin claim ${decision}.`,!!error);
+      showStatus('coin-admin-status',error?errorText(error):(isRevocation?'Approved coin bonus rejected. The 3 points have been removed.':`Coin claim ${decision}.`),!!error);
       if(error){approve.disabled=c.status!=='approved'||level?.category!=='main'||level.coin_eligible!==true;reject.disabled=false;confirmReject.disabled=false;cancel.disabled=false;}
       else await Promise.all([loadAdminCoinQueue(),loadLeaderboard(),refreshNotificationBadges()]);
     }
-    approve.addEventListener('click',async()=>{if(!confirm(`Approve ${name}'s all-coins claim for ${nameForLevel(c.level_id)} (+3 pts)?`))return;await save('approved',null);});
+    if(claim.status==='pending')approve.addEventListener('click',async()=>{if(!confirm(`Approve ${name}'s all-coins claim for ${nameForLevel(c.level_id)} (+3 pts)?`))return;await save('approved',null);});
     confirmReject.addEventListener('click',async()=>{await save('rejected',reason.value.trim()||null);});
     root.append(row);
   }
 }
-
 
 async function loadAdminPlayers(){
   if(!isAdmin||!currentUser)return;
