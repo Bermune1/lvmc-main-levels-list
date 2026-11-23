@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <meta name="theme-color" content="#0d1118" />
 <meta name="description" content="LVMC Geometry Dash rankings: a Main Levels List and separate Discord Community Voted Levels, with independent scores and a main-first leaderboard." />
-<title>LVMC Rankings — Main Levels & Community Voted Levels</title>
+<title>LVMC Rankings V8.2 — Main Levels & Community Voted Levels</title>
 <style>
  :root{color-scheme:dark;--bg:#0d1118;--panel:#151b25;--panel-active:#192333;--border:#293241;--muted:#99a7ba;--text:#f1f5fb;--accent:#79b9ff}
  *{box-sizing:border-box}
@@ -212,7 +212,30 @@
   @media(max-width:980px){.rankings-grid{grid-template-columns:1fr}.community-rankings{position:static}.rankings-column-heading{min-height:0}.rankings-column .detail-panel{grid-template-columns:180px 1fr;align-items:center}}
   @media(max-width:600px){.rankings-column{padding:11px}.rankings-column .detail-panel{grid-template-columns:1fr}.rankings-column .thumb{width:73px;height:45px;flex-basis:73px}.rankings-column .rank{width:26px;flex-basis:26px}.rankings-column .name{font-size:13px}.rankings-column summary{gap:9px;padding:9px;min-height:67px}.rankings-intro h2{font-size:21px}.board-row-v8{grid-template-columns:30px minmax(0,1fr);gap:10px}.board-scores{grid-column:2;text-align:left;white-space:normal}.board-main-score{font-size:18px}}
   @media(max-width:360px){.rankings-column .thumb{width:62px;height:41px;flex-basis:62px}.rankings-column .rank{width:23px;flex-basis:23px}.rankings-column .points{font-size:10px;padding:4px 5px}.rankings-column summary{gap:7px}}
-</style>
+
+  /* LVMC V8.2: subtle coin accents, compact review/upgrade controls */
+  .coin-summary{display:grid;gap:8px;padding:11px 13px;border:1px solid #3b4654;border-radius:10px;background:#182333;max-width:540px}
+  .coin-summary-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .coin-summary-head strong{font-size:13px}
+  .coin-symbol{color:#e9c56a;font-size:15px}
+  .coin-summary .form-stack{max-width:100%}
+  .coin-summary .status-line{margin:0}
+  .coin-checkbox-wrap{display:grid;gap:5px;padding:11px 13px;border:1px solid #4d4533;background:#282518;border-radius:10px;max-width:460px}
+  .coin-checkbox-wrap label{display:flex;align-items:center;gap:10px;font-size:13px;color:#f0dcaa;font-weight:700;cursor:pointer}
+  .coin-checkbox-wrap input{width:17px;height:17px;flex:none;accent-color:#e3bd55;cursor:pointer}
+  .coin-checkbox-wrap p{margin:0 0 0 27px;color:#b8b0a0;font-size:11px}
+  .coin-note{color:#d5bd80;font-size:12px;line-height:1.5;margin:7px 0 0}
+  .coin-note strong{color:#f3d98b}
+  .coin-breakdown{color:#9daec3;font-size:11px;margin:7px 0 0}
+  .coin-review-note{font-size:12px;color:#b2c2d5}
+  .coin-review-note.waiting{color:#e9c56a}
+  .coin-status{font-size:12px;color:#b6c6d7}
+  .coin-status.approved{color:#a3dbb1}
+  .coin-status.rejected{color:#ff9ca3}
+  .coin-status.pending{color:#ffe59a}
+  .admin-subtabs{grid-template-columns:repeat(3,minmax(0,1fr))}
+  @media(max-width:480px){.admin-subtab{font-size:11px;padding:10px 4px}.coin-checkbox-wrap{padding:10px}.coin-summary{padding:10px}}
+ </style>
 </head>
 <body>
 <div class="lvmc-backdrop" aria-hidden="true"><div class="lvmc-backdrop-image"></div><div class="lvmc-backdrop-shade"></div></div>
@@ -222,7 +245,7 @@
   <h1>Main Levels List<span style="color:#79b9ff">.</span></h1>
   <p>A Bermune-made ranking of the 22 classic Geometry Dash main levels, The Challenge, and RobTop Travel — plus levels voted in by the LVMC Discord community.</p>
   <div class="stats">
-    <div class="stat"><strong id="main-count">24</strong> Main levels · <span id="main-total">202 pts</span></div>
+    <div class="stat"><strong id="main-count">24</strong> Main levels · <span id="main-total">268 pts</span></div>
     <div class="stat"><strong id="community-count">1</strong> Community voted · <span id="community-total">45 pts</span></div>
     <div class="stat"><strong id="count">25</strong> Levels total</div>
   </div>
@@ -248,9 +271,10 @@
         <div class="rankings-eyebrow">THE MAIN COMPETITION</div>
         <h2>Main Levels List</h2>
         <p>22 classic levels, The Challenge, and RobTop Travel.</p>
-        <div class="rankings-category-stats"><strong id="main-count-card">24</strong> levels <span aria-hidden="true">·</span> <strong id="main-points-card">202</strong> possible points</div>
+        <div class="rankings-category-stats"><strong id="main-count-card">24</strong> levels <span aria-hidden="true">·</span> <strong id="main-points-card">268</strong> possible points</div>
       </div>
-      <div class="list" id="main-list"></div>
+      <p class="coin-breakdown" id="main-coin-breakdown">202 base points + 66 all-coins bonus points</p>
+       <div class="list" id="main-list"></div>
     </section>
     <section class="rankings-column community-rankings" id="community-voted-list" aria-label="Community Voted Levels">
       <div class="rankings-column-heading">
@@ -265,8 +289,8 @@
   </div>
 </div>
 <section class="feature" data-panel="leaderboard" hidden aria-label="LVMC leaderboard">
-  <div class="section-title"><h2>LVMC Leaderboard</h2><span>Approved completions only</span></div>
-  <p>Only approved completions count. <strong>Main Level points determine rank first</strong>; Community Voted points break every Main Level points tie.</p>
+  <div class="section-title"><h2>LVMC Leaderboard</h2><span>Approved completions and coin bonuses only</span></div>
+  <p>Only approved completions and approved all-coins claims earn points. <strong>Main Level points determine rank first</strong>; Community Voted points break every Main Level points tie.</p>
   <div id="leaderboard-list" aria-live="polite">Loading leaderboard…</div>
   <div class="button-row" style="margin-top:14px"><button type="button" class="action-btn" id="refresh-leaderboard">Refresh leaderboard</button></div>
 </section>
@@ -297,7 +321,7 @@
     <p id="profile-info">Loading your profile…</p>
     <div class="notification-center" id="account-notification-center" hidden aria-label="My account notifications">
       <div class="notification-heading">
-        <div><h3>Notifications</h3><p>Updates about your completion reviews.</p></div>
+        <div><h3>Notifications</h3><p>Updates about your completion and coin reviews.</p></div>
         <button type="button" class="action-btn" id="mark-account-notifications-read" disabled>Mark all as read</button>
       </div>
       <div class="notification-list" id="account-notifications" aria-live="polite">Loading notifications…</div>
@@ -308,12 +332,16 @@
       <div class="notification-status" id="account-notifications-status" role="status" aria-live="polite"></div>
     </div>
     <h3>Submit a completion</h3>
-    <p>Pick a level you've beaten. Video evidence is optional. Your points count only after an admin approves the submission.</p>
+    <p>Pick a level you've beaten. Video evidence is optional. Main Level coin bonuses are +3 points for all 3 coins; both completion and coin claim require admin approval.</p>
     <form id="completion-form" class="form-stack">
       <label>Level <select name="level" id="completion-level" required><option value="">Loading levels…</option></select></label>
       <label>Search levels <input type="search" id="completion-level-search" autocomplete="off" placeholder="Search by level name…" aria-controls="completion-level" aria-describedby="completion-level-search-status" disabled></label>
       <div id="completion-level-search-status" class="level-search-status" role="status" aria-live="polite"></div>
-      <label>Video link (optional) <input type="url" name="video" placeholder="https://..." maxlength="2000" inputmode="url"></label>
+       <div class="coin-checkbox-wrap" id="completion-coin-option" hidden>
+         <label><input type="checkbox" id="completion-all-coins" name="all_coins"> Completed with all 3 coins (+3 pts)</label>
+         <p>For eligible Main Levels only. Your optional video link below is also used as coin evidence. Coin points need separate admin approval.</p>
+       </div>
+       <label>Video link (optional) <input type="url" name="video" placeholder="https://..." maxlength="2000" inputmode="url"></label>
       <button type="submit" class="action-btn primary">Submit completion</button>
     </form>
     <p id="submission-status" class="status-line" role="status" aria-live="polite"></p>
@@ -323,7 +351,7 @@
       <button type="submit" class="action-btn">Save username</button>
     </form>
     <p id="username-status" class="status-line" role="status" aria-live="polite"></p>
-    <h3 style="margin-top:25px">My submissions</h3>
+    <h3 style="margin-top:25px">My submissions &amp; coin upgrades</h3>
     <div id="my-submissions">Loading…</div>
     <div class="danger-zone" id="delete-account-zone">
       <h3>Delete account</h3>
@@ -341,14 +369,12 @@
   <p>Manage LVMC completion reviews and player moderation.</p>
   <div class="admin-subtabs" role="tablist" aria-label="Admin dashboard sections">
     <button type="button" class="admin-subtab" role="tab" id="admin-reviews-tab" aria-controls="admin-reviews-panel" aria-selected="true" tabindex="0" data-admin-view="reviews">Completion Reviews <span class="notification-badge" id="admin-reviews-notification-badge" aria-hidden="true" hidden></span></button>
+    <button type="button" class="admin-subtab" role="tab" id="admin-coins-tab" aria-controls="admin-coins-panel" aria-selected="false" tabindex="-1" data-admin-view="coins">Coin Reviews <span class="notification-badge" id="admin-coins-notification-badge" aria-hidden="true" hidden></span></button>
     <button type="button" class="admin-subtab" role="tab" id="admin-players-tab" aria-controls="admin-players-panel" aria-selected="false" tabindex="-1" data-admin-view="players">Player Moderation</button>
   </div>
-  <div id="admin-reviews-panel" role="tabpanel" aria-labelledby="admin-reviews-tab" data-admin-panel="reviews">
-    <h3>Completion Reviews</h3>
-    <p>Approve or reject submitted completions. Approved levels automatically count toward the public leaderboard.</p>
-    <div class="notification-center" id="admin-notification-center" hidden aria-label="Admin notifications">
+  <div class="notification-center" id="admin-notification-center" hidden aria-label="Admin notifications">
       <div class="notification-heading">
-        <div><h3>Review notifications</h3><p>New and resubmitted completion requests.</p></div>
+        <div><h3>Review notifications</h3><p>New and resubmitted completion and all-coins requests.</p></div>
         <button type="button" class="action-btn" id="mark-admin-notifications-read" disabled>Mark all as read</button>
       </div>
       <div class="notification-list" id="admin-notifications" aria-live="polite">Loading notifications…</div>
@@ -358,9 +384,19 @@
       </div>
       <div class="notification-status" id="admin-notifications-status" role="status" aria-live="polite"></div>
     </div>
+  <div id="admin-reviews-panel" role="tabpanel" aria-labelledby="admin-reviews-tab" data-admin-panel="reviews">
+    <h3>Completion Reviews</h3>
+    <p>Approve or reject submitted completions. Approved levels automatically count toward the public leaderboard.</p>
     <button type="button" class="action-btn" id="refresh-admin">Refresh submissions</button>
     <p id="admin-status" class="status-line" role="status" aria-live="polite"></p>
     <div id="admin-queue">Loading…</div>
+  </div>
+  <div id="admin-coins-panel" role="tabpanel" aria-labelledby="admin-coins-tab" data-admin-panel="coins" hidden>
+    <h3>Coin Reviews</h3>
+    <p>Review all-coins requests for eligible Main Levels. Each approved claim awards +3 Main points after the base completion is approved.</p>
+    <button type="button" class="action-btn" id="refresh-coins">Refresh coin requests</button>
+    <p id="coin-admin-status" class="status-line" role="status" aria-live="polite"></p>
+    <div id="coin-admin-queue">Loading…</div>
   </div>
   <div id="admin-players-panel" role="tabpanel" aria-labelledby="admin-players-tab" data-admin-panel="players" hidden>
     <h3>Player Moderation</h3>
@@ -573,15 +609,20 @@ const mainLevels=levels.filter(l=>l.category!=='community');
 const communityLevels=levels.filter(l=>l.category==='community');
 const mainTotalPoints=mainLevels.reduce((sum,l)=>sum+l.points,0);
 const communityTotalPoints=communityLevels.reduce((sum,l)=>sum+l.points,0);
+// RobTop Travel and The Challenge do not have 3 collectible coins.
+const coinEligibleMainNames=new Set(mainLevels.filter(l=>!['RobTop Travel','The Challenge'].includes(l.name)).map(l=>l.name));
+const maxCoinBonus=coinEligibleMainNames.size*3;
+const mainTotalWithCoins=mainTotalPoints+maxCoinBonus;
 document.getElementById('count').textContent=levels.length;
 document.getElementById('main-count').textContent=mainLevels.length;
 document.getElementById('community-count').textContent=communityLevels.length;
-document.getElementById('main-total').textContent=mainTotalPoints+' pts';
+document.getElementById('main-total').textContent=mainTotalWithCoins+' pts';
 document.getElementById('community-total').textContent=communityTotalPoints+' pts';
 document.getElementById('main-count-card').textContent=mainLevels.length;
 document.getElementById('community-count-card').textContent=communityLevels.length;
 document.getElementById('community-level-plural').textContent=communityLevels.length===1?'':'s';
-document.getElementById('main-points-card').textContent=mainTotalPoints;
+document.getElementById('main-points-card').textContent=mainTotalWithCoins;
+document.getElementById('main-coin-breakdown').textContent=`${mainTotalPoints} base points + ${maxCoinBonus} all-coins bonus points`;
 document.getElementById('community-points-card').textContent=communityTotalPoints;
 function renderRankedLevels(group,listId,categoryName,categoryTotal){
  const list=document.getElementById(listId);
@@ -603,9 +644,15 @@ function renderRankedLevels(group,listId,categoryName,categoryTotal){
   const label=document.createElement('div');label.className='small-label';label.textContent=categoryName+' · Rank #'+(i+1);
   const value=document.createElement('div');value.className='detail-value';value.textContent=String(level.points)+' ';
   const unit=document.createElement('span');unit.textContent=level.points===1?'point':'points';value.append(unit);
-  const desc=document.createElement('p');desc.className='detail-description';desc.textContent=level.description || ('Completing '+level.name+' earns '+level.points+' '+(level.points===1?'point':'points')+' toward the '+categoryTotal+'-point '+categoryName+' maximum.');
+  const desc=document.createElement('p');desc.className='detail-description';
+   const eligibleForCoins=listId==='main-list'&&coinEligibleMainNames.has(level.name);
+   desc.textContent=level.description
+     ? level.description.replace('202-point Main Level maximum','268-point Main Level maximum (including coin bonuses)')
+     : ('Completing '+level.name+' earns '+level.points+' base '+(level.points===1?'point':'points')+' toward the '+categoryName+' rankings.');
   const source=document.createElement('a');source.className='img-source';source.href=level.source;source.target='_blank';source.rel='noopener noreferrer';source.textContent=level.sourceLabel || 'View screenshot source ↗';
-  content.append(label,value,desc,source);body.append(preview,content);details.append(summary,body);list.append(details);
+  content.append(label,value,desc);
+   if(eligibleForCoins){const note=document.createElement('p');note.className='coin-note';note.textContent='◈ All 3 coins: +3 Main points with an approved coin claim.';content.append(note);}
+   content.append(source);body.append(preview,content);details.append(summary,body);list.append(details);
  });
 }
 renderRankedLevels(mainLevels,'main-list','Main Level',mainTotalPoints);
@@ -647,6 +694,11 @@ function errorText(error) {
   if(/could not choose the best candidate function|function .* is not unique|PGRST203/i.test(message))return 'Database review functions need the V7.1 cleanup step. Contact an LVMC administrator.';
   if(/invalid video url/i.test(message))return 'Video links must begin with https://';
   if(/no existing completion found/i.test(message))return 'We could not find that completion. Refresh your submissions and try again.';
+  if(/submit the level completion first/i.test(message))return 'Submit the level completion before requesting coin points.';
+  if(/only pending coin claims can be reviewed/i.test(message))return 'This coin request is no longer pending. Refresh the queue.';
+  if(/approve the level completion first/i.test(message))return 'Approve the base level completion before approving its coin bonus.';
+  if(/not eligible for coin bonuses|not coin.eligible/i.test(message))return 'This level is not eligible for coin bonuses.';
+  if(/already.*coin|coin claim.*pending|coin claim.*approved/i.test(message))return 'A coin claim already exists for this level. Check My Submissions.';
   console.warn('LVMC unrecognized error:',error);
   return 'Something went wrong. Please try again or contact an LVMC administrator.';
 }
@@ -670,13 +722,13 @@ function switchTab(tab) {
   document.querySelectorAll('[data-tab]').forEach(el=>el.setAttribute('aria-selected',String(el.dataset.tab===tab)));
   if(tab==='leaderboard') loadLeaderboard();
   if(tab==='account' && currentUser) {loadMySubmissions();loadNotifications('account');}
-  if(tab==='admin' && isAdmin) {if(adminView==='players')loadAdminPlayers();else{loadAdminQueue();loadNotifications('admin');}}
+  if(tab==='admin' && isAdmin) {if(adminView==='players')loadAdminPlayers();else if(adminView==='coins')loadAdminCoinQueue();else loadAdminQueue();loadNotifications('admin');}
 }
 document.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>switchTab(btn.dataset.tab)));
 // Admin sub-tabs keep player moderation accessible without scrolling through reviews.
 let adminView='reviews';
 function switchAdminView(view){
-  if(view!=='reviews' && view!=='players')return;
+  if(!['reviews','coins','players'].includes(view))return;
   adminView=view;
   document.querySelectorAll('[data-admin-panel]').forEach(panel=>{panel.hidden=panel.dataset.adminPanel!==view;});
   document.querySelectorAll('[data-admin-view]').forEach(btn=>{
@@ -684,14 +736,16 @@ function switchAdminView(view){
     btn.setAttribute('aria-selected',String(selected));
     btn.tabIndex=selected?0:-1;
   });
-  if(isAdmin){if(view==='players')loadAdminPlayers();else{loadAdminQueue();loadNotifications('admin');}}
+  if(isAdmin){if(view==='players')loadAdminPlayers();else if(view==='coins')loadAdminCoinQueue();else loadAdminQueue();loadNotifications('admin');}
 }
 document.querySelectorAll('[data-admin-view]').forEach(btn=>{
   btn.addEventListener('click',()=>switchAdminView(btn.dataset.adminView));
   btn.addEventListener('keydown',event=>{
     if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
     event.preventDefault();
-    const next=event.key==='Home'?'reviews':event.key==='End'?'players':adminView==='reviews'?'players':'reviews';
+    const views=['reviews','coins','players'];
+    const index=views.indexOf(adminView);
+    const next=event.key==='Home'?views[0]:event.key==='End'?views[views.length-1]:views[(index+(event.key==='ArrowRight'?1:views.length-1))%views.length];
     switchAdminView(next);
     document.querySelector(`[data-admin-view="${next}"]`).focus();
   });
@@ -700,9 +754,12 @@ document.querySelectorAll('[data-admin-view]').forEach(btn=>{
 
 
 // --- LVMC V7.2: private, persistent notifications (polling, not browser push) ---
-const NOTIFICATION_TYPES={account:['approved','rejected'],admin:['new_submission','resubmitted']};
+const ADMIN_COMPLETION_TYPES=['new_submission','resubmitted'];
+const ADMIN_COIN_TYPES=['coin_new','coin_resubmitted'];
+const NOTIFICATION_TYPES={account:['approved','rejected','coin_approved','coin_rejected'],admin:[...ADMIN_COMPLETION_TYPES,...ADMIN_COIN_TYPES]};
 const notificationVisible={account:5,admin:5};
 const notificationCounts={account:0,admin:0};
+const adminNotificationSplit={completion:0,coin:0};
 const notificationLoadToken={account:0,admin:0};
 let notificationPollTimer=null;
 let notificationCountToken=0;
@@ -719,7 +776,7 @@ function updateNotificationBadges(kind,count){
   // A future unread notification automatically reveals this section again.
   $(kind+'-notification-center').hidden=count===0;
   const targets=kind==='admin'
-    ?[['admin-notification-badge','admin-tab'],['admin-reviews-notification-badge','admin-reviews-tab']]
+    ?[['admin-notification-badge','admin-tab']]
     :[['account-notification-badge','account-tab']];
   for(const [badgeId,buttonId] of targets){
     const badge=$(badgeId),button=$(buttonId);
@@ -729,6 +786,19 @@ function updateNotificationBadges(kind,count){
     button.setAttribute('aria-label',count?`${base}, ${count} unread notification${count===1?'':'s'}`:base);
   }
   $('mark-'+kind+'-notifications-read').disabled=count===0||notificationBulkBusy;
+  if(kind==='admin')updateAdminSubtabBadges();
+}
+function updateAdminSubtabBadges(){
+  for(const [id,tabId,count] of [
+    ['admin-reviews-notification-badge','admin-reviews-tab',adminNotificationSplit.completion],
+    ['admin-coins-notification-badge','admin-coins-tab',adminNotificationSplit.coin]
+  ]){
+    const badge=$(id),tab=$(tabId);
+    badge.hidden=count===0;
+    badge.textContent=count?notificationBadgeText(count):'';
+    const base=tabId==='admin-coins-tab'?'Coin Reviews':'Completion Reviews';
+    tab.setAttribute('aria-label',count?`${base}, ${count} unread notification${count===1?'':'s'}`:base);
+  }
 }
 function clearNotificationSession(){
   if(notificationPollTimer!==null){clearInterval(notificationPollTimer);notificationPollTimer=null;}
@@ -736,6 +806,7 @@ function clearNotificationSession(){
   for(const kind of ['account','admin']){
     notificationLoadToken[kind]++;
     notificationVisible[kind]=5;
+    if(kind==='admin'){adminNotificationSplit.completion=0;adminNotificationSplit.coin=0;}
     updateNotificationBadges(kind,0);
     notificationRoot(kind).textContent='Sign in to view notifications.';
     $('more-'+kind+'-notifications').hidden=true;
@@ -746,22 +817,31 @@ async function refreshNotificationBadges(){
   const uid=currentUser?.id;
   if(!uid)return;
   const token=++notificationCountToken;
-  const kinds=isAdmin?['account','admin']:['account'];
-  const results=await Promise.all(kinds.map(kind=>
+  const requests=[
+    ['account',NOTIFICATION_TYPES.account],
+    ...(isAdmin?[['completion',ADMIN_COMPLETION_TYPES],['coin',ADMIN_COIN_TYPES]]:[])
+  ];
+  const results=await Promise.all(requests.map(([,types])=>
     supabase.from('notifications').select('id',{count:'exact',head:true})
-      .eq('recipient_id',uid).in('event_type',NOTIFICATION_TYPES[kind]).is('read_at',null)
+      .eq('recipient_id',uid).in('event_type',types).is('read_at',null)
   ));
   if(uid!==currentUser?.id||token!==notificationCountToken)return;
-  for(let i=0;i<kinds.length;i++){
-    const kind=kinds[i],result=results[i];
-    if(result.error){
-      $(kind+'-notification-center').hidden=false;
-      setNotificationStatus(kind,'Could not check unread notifications: '+errorText(result.error),true);
-      continue;
-    }
-    updateNotificationBadges(kind,result.count||0);
+  const failures=results.filter(r=>r.error);
+  if(failures.length){
+    const kind=results[0].error?'account':'admin';
+    $(kind+'-notification-center').hidden=false;
+    setNotificationStatus(kind,'Could not check unread notifications: '+errorText(failures[0].error),true);
+    return;
   }
-  if(!isAdmin)updateNotificationBadges('admin',0);
+  updateNotificationBadges('account',results[0].count||0);
+  if(isAdmin){
+    adminNotificationSplit.completion=results[1].count||0;
+    adminNotificationSplit.coin=results[2].count||0;
+    updateNotificationBadges('admin',adminNotificationSplit.completion+adminNotificationSplit.coin);
+  }else{
+    adminNotificationSplit.completion=0;adminNotificationSplit.coin=0;
+    updateNotificationBadges('admin',0);
+  }
 }
 async function loadNotifications(kind){
   if(!currentUser||(kind==='admin'&&!isAdmin))return;
@@ -805,13 +885,18 @@ async function loadNotifications(kind){
     const player=c?(names.get(c.user_id)||'A player'):'A player';
     const unread=n.read_at===null;
     const row=element('div','notification-item'+(unread?' unread':''));
-    const symbol=element('span','notification-symbol '+n.event_type,
-      ({approved:'✓',rejected:'×',new_submission:'!',resubmitted:'↻'})[n.event_type]||'•');
+    const symbolClass=n.event_type==='coin_approved'?'approved':n.event_type==='coin_rejected'?'rejected':n.event_type==='coin_resubmitted'?'resubmitted':n.event_type;
+    const symbol=element('span','notification-symbol '+symbolClass,
+      ({approved:'✓',rejected:'×',new_submission:'!',resubmitted:'↻',coin_new:'◈',coin_resubmitted:'↻',coin_approved:'✓',coin_rejected:'×'})[n.event_type]||'•');
     symbol.setAttribute('aria-hidden','true');
     const body=element('div','notification-content');
     const message=element('div','notification-message');
     if(n.event_type==='approved')message.append(element('strong','',level),' was approved!');
     else if(n.event_type==='rejected')message.append(element('strong','',level),' was rejected.');
+    else if(n.event_type==='coin_approved')message.append('All coins for ',element('strong','',level),' were approved! (+3 Main pts)');
+    else if(n.event_type==='coin_rejected')message.append('All coins for ',element('strong','',level),' were rejected.');
+    else if(n.event_type==='coin_new')message.append(element('strong','',player),' requested all coins for ',element('strong','',level),'.');
+    else if(n.event_type==='coin_resubmitted')message.append(element('strong','',player),' resubmitted all coins for ',element('strong','',level),'.');
     else if(n.event_type==='resubmitted')message.append(element('strong','',player),' resubmitted ',element('strong','',level),'.');
     else message.append(element('strong','',player),' submitted ',element('strong','',level),'.');
     const time=element('div','notification-meta',new Date(n.created_at).toLocaleString());
@@ -890,7 +975,7 @@ async function refreshNotificationUI(){
   const selected=document.querySelector('[data-tab][aria-selected="true"]')?.dataset.tab;
   const jobs=[refreshNotificationBadges()];
   if(selected==='account')jobs.push(loadNotifications('account'));
-  if(selected==='admin'&&isAdmin&&adminView==='reviews')jobs.push(loadNotifications('admin'));
+  if(selected==='admin'&&isAdmin)jobs.push(loadNotifications('admin'));
   await Promise.all(jobs);
 }
 function startNotificationPolling(){
@@ -905,8 +990,8 @@ document.addEventListener('visibilitychange',()=>{
 
 async function loadLeaderboard(){
   const root=$('leaderboard-list'); root.textContent='Loading leaderboard…';
-  // V8 uses the separate function so the old V7 leaderboard remains available.
-  const {data,error}=await supabase.rpc('get_leaderboard_v8');
+  // V8.2 counts only approved coin claims on approved eligible Main Levels.
+  const {data,error}=await supabase.rpc('get_leaderboard_v82');
   if(error){root.textContent='Could not load leaderboard: '+errorText(error);return;}
   clear(root);
   if(!data?.length){root.textContent='No players yet. Be the first!';return;}
@@ -930,6 +1015,16 @@ $('refresh-leaderboard').addEventListener('click',loadLeaderboard);
 
 // Filter the existing Supabase level IDs without changing the submission workflow.
 const normalizeLevelSearch=value=>String(value).normalize('NFKC').trim().replace(/\s+/g,' ').toLowerCase();
+function selectedCoinEligible(){
+  const level=dbLevels.find(l=>String(l.id)===$('completion-level').value);
+  return !!(level&&level.category==='main'&&level.coin_eligible===true);
+}
+function updateCompletionCoinOption(){
+  const allowed=selectedCoinEligible();
+  $('completion-coin-option').hidden=!allowed;
+  if(!allowed)$('completion-all-coins').checked=false;
+}
+$('completion-level').addEventListener('change',updateCompletionCoinOption);
 function renderCompletionLevelOptions(){
   const select=$('completion-level');
   const search=normalizeLevelSearch($('completion-level-search').value);
@@ -952,6 +1047,7 @@ function renderCompletionLevelOptions(){
   select.value=matches.some(level=>String(level.id)===previouslySelected)?previouslySelected:'';
   const status=$('completion-level-search-status');
   status.textContent=search?(matches.length?`${matches.length} matching level${matches.length===1?'':'s'}. Choose one from the level dropdown above.`:'No matching levels. Try another search.'):'';
+  updateCompletionCoinOption();
 }
 $('completion-level-search').addEventListener('input',renderCompletionLevelOptions);
 $('completion-level-search').addEventListener('keydown',event=>{
@@ -963,7 +1059,7 @@ $('completion-level-search').addEventListener('keydown',event=>{
 });
 async function loadLevels(){
   // Fetch IDs from Supabase rather than assuming rank numbers equal database IDs.
-  const {data,error}=await supabase.from('levels').select('id,name,points,category');
+  const {data,error}=await supabase.from('levels').select('id,name,points,category,coin_eligible');
   const select=$('completion-level'); clear(select);
   const searchInput=$('completion-level-search');
   if(error){
@@ -992,10 +1088,19 @@ async function loadProfile(){
 async function loadMySubmissions(){
   if(!currentUser)return;
   const root=$('my-submissions');root.textContent='Loading…';
-  const {data,error}=await supabase.from('completions').select('id,level_id,status,submitted_at,rejection_reason').eq('user_id',currentUser.id).order('submitted_at',{ascending:false});
+  const uid=currentUser.id;
+  const {data,error}=await supabase.from('completions').select('id,level_id,status,submitted_at,rejection_reason').eq('user_id',uid).order('submitted_at',{ascending:false});
+  if(uid!==currentUser?.id)return;
   if(error){root.textContent='Could not load submissions: '+errorText(error);return;}
   clear(root);
   if(!data?.length){root.textContent='No submissions yet.';return;}
+  const ids=data.map(c=>c.id);
+  const {data:claims,error:coinError}=await supabase.from('coin_claims')
+    .select('id,completion_id,status,submitted_at,rejection_reason')
+    .in('completion_id',ids);
+  if(uid!==currentUser?.id)return;
+  const claimMap=new Map((claims||[]).map(c=>[String(c.completion_id),c]));
+  if(coinError)root.append(element('div','status-line error','Coin requests could not be loaded: '+errorText(coinError)));
   for(const c of data){
     const row=element('div','submission-row');const line=element('div');
     line.append(element('strong','',nameForLevel(c.level_id)),' ',element('span','tag '+c.status,c.status));
@@ -1022,6 +1127,58 @@ async function loadMySubmissions(){
         else{showStatus('submission-status','Completion resubmitted for admin review!');await loadMySubmissions();}
       });
       row.append(form);
+    }
+    // An existing completion can request or retry its +3 coin bonus separately.
+    const level=dbLevels.find(l=>String(l.id)===String(c.level_id));
+    if(!coinError&&level?.category==='main'&&level.coin_eligible===true){
+      const claim=claimMap.get(String(c.id));
+      const box=element('div','coin-summary');
+      const head=element('div','coin-summary-head');
+      head.append(element('span','coin-symbol','◈'),element('strong','','All 3 coins (+3 Main pts)'));
+      const state=claim?.status||'not claimed';
+      head.append(element('span','tag '+(claim?.status||''),state));
+      box.append(head);
+      if(claim?.status==='approved'){
+        box.append(element('div','coin-status approved',c.status==='approved'?'Coin bonus approved and counted.':'Coin bonus is inactive until the base completion is approved.'));
+      }else if(claim?.status==='pending'){
+        box.append(element('div','coin-status pending','Coin request awaiting admin review.'));
+      }else{
+        if(claim?.status==='rejected'&&claim.rejection_reason?.trim()){
+          const note=element('div','coin-status rejected');
+          note.append(element('strong','','Reason: '),document.createTextNode(claim.rejection_reason));box.append(note);
+        }
+        if(c.status==='pending'||c.status==='approved'){
+          // Keep long submission histories compact: show the evidence editor on demand.
+          const toggle=element('button','action-btn',claim?'Resubmit coin request':'Request +3 coin points');toggle.type='button';
+          toggle.setAttribute('aria-expanded','false');
+          const form=element('form','form-stack');form.hidden=true;
+          const label=element('label','', 'Coin evidence link (optional)');
+          const input=element('input');input.type='url';input.placeholder='https://...';input.maxLength=2000;
+          label.append(input);
+          const buttons=element('div','button-row');
+          const button=element('button','action-btn primary','Send coin request');button.type='submit';
+          const cancel=element('button','action-btn','Cancel');cancel.type='button';
+          buttons.append(button,cancel);
+          const status=element('div','status-line');
+          form.append(label,buttons,status);
+          toggle.addEventListener('click',()=>{form.hidden=false;toggle.hidden=true;toggle.setAttribute('aria-expanded','true');input.focus();});
+          cancel.addEventListener('click',()=>{form.hidden=true;toggle.hidden=false;toggle.setAttribute('aria-expanded','false');input.value='';status.textContent='';toggle.focus();});
+          form.addEventListener('submit',async event=>{
+            event.preventDefault();if(!currentUser||currentUser.id!==uid)return;
+            const video=input.value.trim();
+            if(video){try{if(new URL(video).protocol!=='https:')throw Error();}catch{status.textContent='Use an https:// video URL.';status.classList.add('error');return;}}
+            button.disabled=true;cancel.disabled=true;status.textContent='Sending coin request…';status.classList.remove('error');
+            const {error}=await supabase.rpc('submit_coin_claim',{p_level_id:c.level_id,p_video_url:video||null});
+            if(uid!==currentUser?.id)return;
+            if(error){status.textContent=await submissionErrorText(error);status.classList.add('error');button.disabled=false;cancel.disabled=false;}
+            else{showStatus('submission-status','All-coins request submitted for admin review!');await loadMySubmissions();}
+          });
+          box.append(toggle,form);
+        }else{
+          box.append(element('div','coin-status','Coin upgrades are available after you resubmit the base completion.'));
+        }
+      }
+      row.append(box);
     }
     root.append(row);
   }
@@ -1106,10 +1263,24 @@ $('completion-form').addEventListener('submit',async(e)=>{
   const id=Number(form.elements.namedItem('level').value);if(!dbLevels.some(l=>l.id===id)){showStatus('submission-status','Choose a valid level.',true);return;}
   const video=form.elements.namedItem('video').value.trim();
   if(video){try{const url=new URL(video);if(url.protocol!=='https:')throw Error();}catch{showStatus('submission-status','Video links must begin with https://',true);return;}}
+  const claimCoins=$('completion-all-coins').checked&&selectedCoinEligible();
   btn.disabled=true;showStatus('submission-status','Submitting…');
-  const {error}=await supabase.from('completions').insert({user_id:currentUser.id,level_id:id,video_url:video||null});
-  showStatus('submission-status',error?await submissionErrorText(error):'Completion submitted! Awaiting admin review.',!!error);
-  if(!error){form.reset();renderCompletionLevelOptions();await loadMySubmissions();}btn.disabled=false;
+  const uid=currentUser.id;
+  const {error}=await supabase.from('completions').insert({user_id:uid,level_id:id,video_url:video||null});
+  if(uid!==currentUser?.id){btn.disabled=false;return;}
+  if(error){showStatus('submission-status',await submissionErrorText(error),true);btn.disabled=false;return;}
+  let message='Completion submitted! Awaiting admin review.',partialError=false;
+  if(claimCoins){
+    showStatus('submission-status','Completion submitted. Sending all-coins request…');
+    const {error:coinError}=await supabase.rpc('submit_coin_claim',{p_level_id:id,p_video_url:video||null});
+    if(uid!==currentUser?.id){btn.disabled=false;return;}
+    if(coinError){
+      message='Completion submitted, but the coin request failed: '+await submissionErrorText(coinError)+' Request coins from My Submissions.';
+      partialError=true;
+    }else message='Completion and all-coins request submitted! Both await admin review.';
+  }
+  showStatus('submission-status',message,partialError);
+  form.reset();renderCompletionLevelOptions();await loadMySubmissions();btn.disabled=false;
 });
 async function loadAdminQueue(){
   if(!isAdmin)return;
@@ -1195,7 +1366,83 @@ async function loadAdminQueue(){
   }
 }
 $('refresh-admin').addEventListener('click',loadAdminQueue);
+$('refresh-coins').addEventListener('click',loadAdminCoinQueue);
 $('refresh-players').addEventListener('click',loadAdminPlayers);
+
+async function loadAdminCoinQueue(){
+  if(!isAdmin||!currentUser)return;
+  const uid=currentUser.id,root=$('coin-admin-queue');root.textContent='Loading coin requests…';
+  const {data,error}=await supabase.from('coin_claims')
+    .select('id,completion_id,video_url,status,submitted_at')
+    .eq('status','pending').order('submitted_at',{ascending:false}).limit(200);
+  if(uid!==currentUser?.id||!isAdmin)return;
+  if(error){root.textContent='Could not load coin requests: '+errorText(error);return;}
+  clear(root);
+  if(!data?.length){root.textContent='No pending coin requests. All caught up!';return;}
+  if(data.length===200)root.append(element('p','muted-note','Showing the 200 most recent pending coin requests.'));
+  const ids=[...new Set(data.map(claim=>claim.completion_id))];
+  const {data:completions,error:completionError}=await supabase.from('completions')
+    .select('id,user_id,level_id,status').in('id',ids);
+  if(uid!==currentUser?.id||!isAdmin)return;
+  if(completionError){root.textContent='Could not verify linked completions: '+errorText(completionError);return;}
+  const completionMap=new Map((completions||[]).map(c=>[String(c.id),c]));
+  const userIds=[...new Set((completions||[]).map(c=>c.user_id))];
+  const {data:profiles,error:profileError}=userIds.length
+    ?await supabase.from('profiles').select('id,username').in('id',userIds)
+    :{data:[],error:null};
+  if(uid!==currentUser?.id||!isAdmin)return;
+  if(profileError){root.textContent='Could not load player names: '+errorText(profileError);return;}
+  const names=new Map((profiles||[]).map(p=>[p.id,p.username]));
+  for(const claim of data){
+    const c=completionMap.get(String(claim.completion_id));
+    const row=element('div','submission-row');
+    if(!c){row.append(element('div','coin-review-note','Linked completion is unavailable; cannot review this request.'));root.append(row);continue;}
+    const level=dbLevels.find(l=>String(l.id)===String(c.level_id));
+    const name=names.get(c.user_id)||`Player ${c.user_id.slice(0,8)}…`;
+    const top=element('div');top.append(element('strong','',nameForLevel(c.level_id)+' · All 3 coins (+3 pts)'),' ',element('span','tag pending','pending'));
+    row.append(top,element('div','submission-meta',`${name} · ${new Date(claim.submitted_at).toLocaleString()}`));
+    row.append(element('div','coin-review-note'+(c.status==='pending'?' waiting':''),`Base completion: ${c.status}`));
+    if(claim.video_url){try{const u=new URL(claim.video_url);if(u.protocol==='https:'){const link=element('a','safe-link','View coin evidence ↗');link.href=u.href;link.target='_blank';link.rel='noopener noreferrer';row.append(link);}}catch{}}
+    if(level?.category!=='main'||level.coin_eligible!==true){
+      row.append(element('div','coin-review-note waiting','Coin eligibility could not be verified. Refresh levels or reject this claim.'));
+    }
+    const actions=element('div','button-row');
+    const approve=element('button','action-btn primary','Approve +3 pts');approve.type='button';
+    approve.disabled=c.status!=='approved'||level?.category!=='main'||level.coin_eligible!==true;
+    const reject=element('button','action-btn','Reject');reject.type='button';
+    actions.append(approve,reject);row.append(actions);
+    if(c.status==='pending')row.append(element('div','coin-review-note waiting','Approve the base level completion first to enable coin approval.'));
+    const panel=element('div','rejection-panel');panel.hidden=true;
+    const title=element('div','rejection-panel-title','Reject coin request');
+    const label=element('label','rejection-reason-field','Reason (optional)');
+    const reason=element('textarea');reason.rows=3;reason.maxLength=500;reason.placeholder='Explain why the all-coins claim was rejected…';
+    label.append(reason);
+    const counter=element('div','rejection-counter','0 / 500 characters');
+    reason.addEventListener('input',()=>counter.textContent=`${reason.value.length} / 500 characters`);
+    const panelActions=element('div','button-row');
+    const confirmReject=element('button','action-btn danger-btn','Confirm rejection');confirmReject.type='button';
+    const cancel=element('button','action-btn','Cancel');cancel.type='button';
+    panelActions.append(confirmReject,cancel);panel.append(title,label,counter,panelActions);row.append(panel);
+    reject.setAttribute('aria-expanded','false');
+    reject.addEventListener('click',()=>{actions.hidden=true;panel.hidden=false;reject.setAttribute('aria-expanded','true');reason.focus();});
+    cancel.addEventListener('click',()=>{panel.hidden=true;actions.hidden=false;reject.setAttribute('aria-expanded','false');reason.value='';counter.textContent='0 / 500 characters';reject.focus();});
+    async function save(decision,rejectionReason){
+      approve.disabled=true;reject.disabled=true;confirmReject.disabled=true;cancel.disabled=true;
+      showStatus('coin-admin-status','Saving coin review…');
+      const {error}=await supabase.rpc('review_coin_claim',{
+        p_coin_claim_id:claim.id,p_decision:decision,p_rejection_reason:rejectionReason
+      });
+      if(uid!==currentUser?.id)return;
+      showStatus('coin-admin-status',error?errorText(error):`Coin claim ${decision}.`,!!error);
+      if(error){approve.disabled=c.status!=='approved'||level?.category!=='main'||level.coin_eligible!==true;reject.disabled=false;confirmReject.disabled=false;cancel.disabled=false;}
+      else await Promise.all([loadAdminCoinQueue(),loadLeaderboard(),refreshNotificationBadges()]);
+    }
+    approve.addEventListener('click',async()=>{if(!confirm(`Approve ${name}'s all-coins claim for ${nameForLevel(c.level_id)} (+3 pts)?`))return;await save('approved',null);});
+    confirmReject.addEventListener('click',async()=>{await save('rejected',reason.value.trim()||null);});
+    root.append(row);
+  }
+}
+
 
 async function loadAdminPlayers(){
   if(!isAdmin||!currentUser)return;
