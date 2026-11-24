@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <meta name="theme-color" content="#0d1118" />
 <meta name="description" content="LVMC Geometry Dash rankings: a Main Levels List and separate Discord Community Voted Levels, with independent scores and a main-first leaderboard." />
-<title>LVMC Rankings V8.2 — Main Levels & Community Voted Levels</title>
+<title>LVMC Rankings V8.3 — Main Levels & Community Voted Levels</title>
 <style>
  :root{color-scheme:dark;--bg:#0d1118;--panel:#151b25;--panel-active:#192333;--border:#293241;--muted:#99a7ba;--text:#f1f5fb;--accent:#79b9ff}
  *{box-sizing:border-box}
@@ -259,6 +259,22 @@
   .coin-status.pending{color:#ffe59a}
   .admin-subtabs{grid-template-columns:repeat(3,minmax(0,1fr))}
   @media(max-width:480px){.admin-subtab{font-size:11px;padding:10px 4px}.coin-checkbox-wrap{padding:10px}.coin-summary{padding:10px}}
+  /* LVMC V8.3: cosmetic achievements and achievement notifications. */
+  .coin-master-title{display:inline-block;appearance:none;border:0;background:none;padding:0;margin:0 0 0 6px;color:#e9c65d;font:inherit;font-size:12px;font-weight:650;line-height:1.5;white-space:nowrap;vertical-align:baseline;cursor:pointer;text-shadow:0 0 9px #e9c65d40}
+  .coin-master-title:hover,.coin-master-title[aria-expanded="true"]{color:#ffe59a;text-shadow:0 0 12px #e9c65d70}
+  .coin-master-title:focus-visible{outline:2px solid #e9c65d;outline-offset:3px;border-radius:3px}
+  .coin-master-tooltip{position:fixed;z-index:1000;width:300px;max-width:calc(100vw - 24px);max-height:calc(100dvh - 24px);overflow:auto;padding:13px 15px;border:1px solid #786437;border-radius:11px;background:#18202b;color:#f1f5fb;box-shadow:0 8px 28px #0009;font-size:12px;line-height:1.5;overflow-wrap:anywhere}
+  .coin-master-tooltip-heading{display:flex;align-items:center;gap:8px;color:#f4d35e;font-size:13px;font-weight:750;margin-bottom:6px}
+  .coin-master-tooltip-heading .coin-symbol{font-size:17px;line-height:1}
+  .coin-master-tooltip-description{color:#c7d2e1}
+  .coin-master-tooltip-unlocked{color:#a3dbb1;font-weight:650;margin-top:9px}
+  .notification-item.achievement,.notification-item.achievement.unread{background:#24271f;border-color:#786437}
+  .notification-symbol.achievement_coin_master{background:#493915;color:#f4d35e}
+  .notification-symbol.achievement_coin_master svg{width:17px;height:17px}
+  .notification-achievement-title{display:block;color:#f4d35e;margin-bottom:4px}
+  .notification-item.achievement .notification-read-btn{border-color:#786437;background:#38331f;color:#f1d58a}
+  .notification-item.achievement .notification-read-btn:hover{border-color:#e9c65d}
+  @media(max-width:480px){.notification-item.achievement{flex-wrap:wrap}.notification-item.achievement .notification-content{flex:1 1 calc(100% - 35px)}.notification-item.achievement .notification-read-btn{margin-left:auto}}
  </style>
 </head>
 <body>
@@ -345,7 +361,7 @@
     <p id="profile-info">Loading your profile…</p>
     <div class="notification-center" id="account-notification-center" hidden aria-label="My account notifications">
       <div class="notification-heading">
-        <div><h3>Notifications</h3><p>Updates about your completion and coin reviews.</p></div>
+        <div><h3>Notifications</h3><p>Updates about your completion and coin reviews, and achievement unlocks.</p></div>
         <button type="button" class="action-btn" id="mark-account-notifications-read" disabled>Mark all as read</button>
       </div>
       <div class="notification-list" id="account-notifications" aria-live="polite">Loading notifications…</div>
@@ -789,6 +805,7 @@ function element(tag, cls, text) { const el=document.createElement(tag); if(cls)
 function clear(el){el.replaceChildren();}
 function switchTab(tab) {
   if(tab==='admin' && !isAdmin) tab='rankings';
+  closeCoinMasterTooltip();
   document.querySelectorAll('[data-panel]').forEach(el => el.hidden=el.dataset.panel!==tab);
   document.querySelectorAll('[data-tab]').forEach(el=>el.setAttribute('aria-selected',String(el.dataset.tab===tab)));
   if(tab==='leaderboard') loadLeaderboard();
@@ -827,7 +844,7 @@ document.querySelectorAll('[data-admin-view]').forEach(btn=>{
 // --- LVMC V7.2: private, persistent notifications (polling, not browser push) ---
 const ADMIN_COMPLETION_TYPES=['new_submission','resubmitted'];
 const ADMIN_COIN_TYPES=['coin_new','coin_resubmitted'];
-const NOTIFICATION_TYPES={account:['approved','rejected','coin_approved','coin_rejected'],admin:[...ADMIN_COMPLETION_TYPES,...ADMIN_COIN_TYPES]};
+const NOTIFICATION_TYPES={account:['approved','rejected','coin_approved','coin_rejected','achievement_coin_master'],admin:[...ADMIN_COMPLETION_TYPES,...ADMIN_COIN_TYPES]};
 const notificationVisible={account:5,admin:5};
 const notificationCounts={account:0,admin:0};
 const adminNotificationSplit={completion:0,coin:0};
@@ -937,9 +954,11 @@ async function loadNotifications(kind){
   clear(root);
   if(!records.length){root.append(element('div','notification-empty','You’re all caught up!'));return;}
   // Completion and profile lookups use the same existing RLS permissions as the website.
-  const completionIds=[...new Set(records.map(n=>n.completion_id))];
-  const {data:completions,error:completionError}=await supabase.from('completions')
-    .select('id,user_id,level_id,status').in('id',completionIds);
+  // Achievements are account events, not tied to a completion. Never query a null ID.
+  const completionIds=[...new Set(records.map(n=>n.completion_id).filter(id=>id!=null))];
+  const {data:completions,error:completionError}=completionIds.length
+    ? await supabase.from('completions').select('id,user_id,level_id,status').in('id',completionIds)
+    : {data:[],error:null};
   if(uid!==currentUser?.id||token!==notificationLoadToken[kind])return;
   const completionMap=new Map((completions||[]).map(c=>[String(c.id),c]));
   let names=new Map();
@@ -955,14 +974,29 @@ async function loadNotifications(kind){
     const level=c?nameForLevel(c.level_id):'A completion';
     const player=c?(names.get(c.user_id)||'A player'):'A player';
     const unread=n.read_at===null;
-    const row=element('div','notification-item'+(unread?' unread':''));
+    const achievement=n.event_type==='achievement_coin_master';
+    const row=element('div','notification-item'+(unread?' unread':'')+(achievement?' achievement':''));
     const symbolClass=n.event_type==='coin_approved'?'approved':n.event_type==='coin_rejected'?'rejected':n.event_type==='coin_resubmitted'?'resubmitted':n.event_type;
     const symbol=element('span','notification-symbol '+symbolClass,
       ({approved:'✓',rejected:'×',new_submission:'!',resubmitted:'↻',coin_new:'◈',coin_resubmitted:'↻',coin_approved:'✓',coin_rejected:'×'})[n.event_type]||'•');
     symbol.setAttribute('aria-hidden','true');
+    if(achievement){
+      // Static vector trophy, using the existing gold accent.
+      const ns='http://www.w3.org/2000/svg';
+      const svg=document.createElementNS(ns,'svg');
+      svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('fill','none');
+      svg.setAttribute('stroke','currentColor');svg.setAttribute('stroke-width','1.8');
+      svg.setAttribute('stroke-linecap','round');svg.setAttribute('stroke-linejoin','round');
+      const path=document.createElementNS(ns,'path');
+      path.setAttribute('d','M8 21h8M12 17v4M7 4h10v6a5 5 0 0 1-10 0V4ZM7 6H3v2a4 4 0 0 0 4 4M17 6h4v2a4 4 0 0 1-4 4');
+      svg.append(path);symbol.replaceChildren(svg);
+    }
     const body=element('div','notification-content');
     const message=element('div','notification-message');
-    if(n.event_type==='approved')message.append(element('strong','',level),' was approved!');
+    if(achievement){
+      message.append(element('strong','notification-achievement-title','Achievement unlocked: Coin Master!'),
+        "Congratulations! You've collected all 66 coins across the 22 official RobTop Main Levels and earned the exclusive golden Coin Master title on the leaderboard.");
+    }else if(n.event_type==='approved')message.append(element('strong','',level),' was approved!');
     else if(n.event_type==='rejected')message.append(element('strong','',level),' was rejected.');
     else if(n.event_type==='coin_approved')message.append('All coins for ',element('strong','',level),' were approved! (+3 Main pts)');
     else if(n.event_type==='coin_rejected')message.append('All coins for ',element('strong','',level),' were rejected.');
@@ -971,12 +1005,13 @@ async function loadNotifications(kind){
     else if(n.event_type==='resubmitted')message.append(element('strong','',player),' resubmitted ',element('strong','',level),'.');
     else message.append(element('strong','',player),' submitted ',element('strong','',level),'.');
     const time=element('div','notification-meta',new Date(n.created_at).toLocaleString());
+    if(achievement)time.append(' · Achievement');
     if(kind==='admin'&&c)time.append(' · '+(c.status==='pending'?'Still pending':'Now '+c.status));
     body.append(message,time);
     row.append(symbol,body);
     if(unread){
       const mark=element('button','notification-read-btn','Mark read');mark.type='button';
-      mark.setAttribute('aria-label',`Mark ${level} notification as read`);
+      mark.setAttribute('aria-label',achievement?'Mark Coin Master achievement notification as read':`Mark ${level} notification as read`);
       mark.addEventListener('click',async()=>{
         if(!currentUser||currentUser.id!==uid)return;
         mark.disabled=true;
@@ -1059,10 +1094,84 @@ document.addEventListener('visibilitychange',()=>{
   if(!document.hidden&&currentUser)refreshNotificationUI();
 });
 
+// V8.3: one shared, viewport-positioned tooltip avoids clipping in the leaderboard.
+const coinMasterTooltip=element('div','coin-master-tooltip');
+coinMasterTooltip.id='coin-master-tooltip';coinMasterTooltip.hidden=true;
+coinMasterTooltip.setAttribute('role','tooltip');
+const coinMasterHeading=element('div','coin-master-tooltip-heading');
+const coinMasterIcon=element('span','coin-symbol','◈');coinMasterIcon.setAttribute('aria-hidden','true');
+coinMasterHeading.append(coinMasterIcon,element('span','','Coin Master Achievement'));
+const coinMasterUnlocked=element('div','coin-master-tooltip-unlocked');
+coinMasterTooltip.append(coinMasterHeading,element('div','coin-master-tooltip-description',
+  'Obtain all 66 coins across all 22 official RobTop Main Levels.'),coinMasterUnlocked);
+document.body.append(coinMasterTooltip);
+let coinMasterAnchor=null,coinMasterPinned=false,coinMasterHideTimer=null;
+function cancelCoinMasterHide(){clearTimeout(coinMasterHideTimer);coinMasterHideTimer=null;}
+function closeCoinMasterTooltip(){
+  cancelCoinMasterHide();
+  if(coinMasterAnchor){coinMasterAnchor.setAttribute('aria-expanded','false');coinMasterAnchor.removeAttribute('aria-describedby');}
+  coinMasterAnchor=null;coinMasterPinned=false;coinMasterTooltip.hidden=true;
+}
+function positionCoinMasterTooltip(){
+  if(!coinMasterAnchor)return;
+  if(!coinMasterAnchor.isConnected||!coinMasterAnchor.getClientRects().length){closeCoinMasterTooltip();return;}
+  const rect=coinMasterAnchor.getBoundingClientRect(),w=document.documentElement.clientWidth,h=window.innerHeight;
+  if(rect.bottom<0||rect.top>h||rect.right<0||rect.left>w){closeCoinMasterTooltip();return;}
+  const margin=12,gap=7;
+  const width=coinMasterTooltip.offsetWidth,height=coinMasterTooltip.offsetHeight;
+  const left=Math.max(margin,Math.min(rect.left,w-width-margin));
+  const below=rect.bottom+gap,above=rect.top-height-gap;
+  const preferred=below+height<=h-margin||above<margin?below:above;
+  const top=Math.max(margin,Math.min(preferred,h-height-margin));
+  coinMasterTooltip.style.left=left+'px';coinMasterTooltip.style.top=top+'px';
+}
+function showCoinMasterTooltip(button,username,pinned=false){
+  if(coinMasterAnchor!==button)closeCoinMasterTooltip();
+  cancelCoinMasterHide();coinMasterAnchor=button;coinMasterPinned=pinned||coinMasterPinned;
+  coinMasterUnlocked.textContent='✓ Unlocked by '+username;
+  coinMasterTooltip.hidden=false;
+  button.setAttribute('aria-expanded','true');button.setAttribute('aria-describedby',coinMasterTooltip.id);
+  positionCoinMasterTooltip();
+}
+function scheduleCoinMasterHide(){
+  cancelCoinMasterHide();
+  if(!coinMasterAnchor||coinMasterPinned||coinMasterAnchor.matches(':focus-visible'))return;
+  coinMasterHideTimer=setTimeout(closeCoinMasterTooltip,180);
+}
+function createCoinMasterTitle(username){
+  const button=element('button','coin-master-title','· Coin Master');button.type='button';
+  button.setAttribute('aria-label','Coin Master achievement for '+username);
+  button.setAttribute('aria-expanded','false');
+  button.addEventListener('pointerenter',event=>{
+    if(event.pointerType!=='touch')showCoinMasterTooltip(button,username);
+  });
+  button.addEventListener('pointerleave',()=>{if(coinMasterAnchor===button)scheduleCoinMasterHide();});
+  button.addEventListener('focus',()=>{if(button.matches(':focus-visible'))showCoinMasterTooltip(button,username);});
+  button.addEventListener('blur',()=>{if(coinMasterAnchor===button)closeCoinMasterTooltip();});
+  button.addEventListener('click',()=>{
+    if(coinMasterAnchor===button&&coinMasterPinned)closeCoinMasterTooltip();
+    else showCoinMasterTooltip(button,username,true);
+  });
+  return button;
+}
+coinMasterTooltip.addEventListener('pointerenter',cancelCoinMasterHide);
+coinMasterTooltip.addEventListener('pointerleave',scheduleCoinMasterHide);
+document.addEventListener('pointerdown',event=>{
+  if(coinMasterAnchor&&!coinMasterAnchor.contains(event.target)&&!coinMasterTooltip.contains(event.target))closeCoinMasterTooltip();
+});
+document.addEventListener('keydown',event=>{
+  if(event.key==='Escape'&&coinMasterAnchor)closeCoinMasterTooltip();
+});
+window.addEventListener('resize',positionCoinMasterTooltip);
+window.addEventListener('scroll',positionCoinMasterTooltip,{passive:true,capture:true});
+let leaderboardLoadToken=0;
 async function loadLeaderboard(){
+  const token=++leaderboardLoadToken;
+  closeCoinMasterTooltip();
   const root=$('leaderboard-list'); root.textContent='Loading leaderboard…';
-  // V8.2 counts only approved coin claims on approved eligible Main Levels.
-  const {data,error}=await supabase.rpc('get_leaderboard_v82');
+  // Server calculates both the existing scores and current achievement eligibility.
+  const {data,error}=await supabase.rpc('get_leaderboard_v83');
+  if(token!==leaderboardLoadToken)return;
   if(error){root.textContent='Could not load leaderboard: '+errorText(error);return;}
   clear(root);
   if(!data?.length){root.textContent='No players yet. Be the first!';return;}
@@ -1070,8 +1179,10 @@ async function loadLeaderboard(){
     const row=element('div','board-row board-row-v8');
     const rank=element('span','board-rank',`#${i+1}`);
     const middle=element('div','board-player');
+    const name=element('div','board-name',player.username);
+    if(player.coin_master===true)name.append(createCoinMasterTitle(player.username));
     middle.append(
-      element('div','board-name',player.username),
+      name,
       element('div','board-sub',`${player.main_completed} / ${mainLevels.length} main levels · ${player.community_completed} / ${communityLevels.length} community levels`)
     );
     const right=element('div','board-scores');
