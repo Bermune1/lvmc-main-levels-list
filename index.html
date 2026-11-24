@@ -33,7 +33,7 @@
  .thumb{width:92px;height:53px;flex:0 0 92px;border-radius:8px;object-fit:cover;object-position:center;border:1px solid #ffffff24;background:#253348;box-shadow:0 2px 10px #0003}
  .name{font-weight:670;flex:1;min-width:0;line-height:1.3;letter-spacing:-.008em}
  .points{color:#b2d6ff;background:#20384f;border:1px solid #365979;padding:5px 10px;border-radius:8px;font-size:12px;font-weight:740;white-space:nowrap;font-variant-numeric:tabular-nums}
- /* Main list: RobTop Travel red, the three RobTop demons gold, #5–10 green. Community list retains its own tier colors. */
+ /* Both lists: #1 red, #2–4 gold, #5–10 green, remaining ranks default. */
  .name.tier-red{color:#ff626b;text-shadow:0 0 15px rgba(255,82,92,.16)}
  .points.tier-red{color:#ff9ca3;background:#4c2029;border-color:#a94755}
  .name.tier-gold{color:#f4d35e}
@@ -288,7 +288,7 @@
         <div class="rankings-eyebrow">CHOSEN BY THE LVMC DISCORD</div>
         <h2>Community Voted Levels</h2>
         <p>All other levels selected through community polls.</p>
-        <div class="rankings-category-stats"><strong id="community-count-card">2</strong> level<span id="community-level-plural">s</span> <span aria-hidden="true">·</span> <strong id="community-points-card">74</strong> possible points</div>
+        <div class="rankings-category-stats"><strong id="community-count-card">2</strong> <span id="community-level-label">levels</span> <span aria-hidden="true">·</span> <strong id="community-points-card">74</strong> possible points</div>
       </div>
       <div class="list" id="community-list"></div>
       <div class="community-vote-note"><span aria-hidden="true">✦</span> New levels join this list when the LVMC Discord votes them in.</div>
@@ -464,7 +464,6 @@ const levels = [
     "name": "Nine Circles",
     "points": 29,
     "category": "community",
-    "tier": "",
     "image": "nine-circles.jpg",
     "source": "https://www.youtube.com/watch?v=LPl51rdl6-o",
     "sourceLabel": "Thumbnail image credit: Nine Circles showcase ↗",
@@ -658,7 +657,7 @@ document.getElementById('main-total').textContent=mainTotalWithCoins+' pts';
 document.getElementById('community-total').textContent=communityTotalPoints+' pts';
 document.getElementById('main-count-card').textContent=mainLevels.length;
 document.getElementById('community-count-card').textContent=communityLevels.length;
-document.getElementById('community-level-plural').textContent=communityLevels.length===1?'':'s';
+document.getElementById('community-level-label').textContent=communityLevels.length===1?'level':'levels';
 document.getElementById('main-points-card').textContent=mainTotalWithCoins;
 document.getElementById('main-coin-breakdown').textContent=`${mainTotalPoints} base points + ${maxCoinBonus} all-coins bonus points`;
 document.getElementById('community-points-card').textContent=communityTotalPoints;
@@ -669,9 +668,7 @@ function renderRankedLevels(group,listId,categoryName,categoryTotal){
   const details=document.createElement('details');
   const summary=document.createElement('summary');
   const rank=document.createElement('span');rank.className='rank';rank.textContent='#'+(i+1);
-  const tier=listId==='main-list'
-    ? (i===0?'tier-red':i<4?'tier-gold':i<10?'tier-green':'')
-    : (level.tier ?? (i<2?'tier-red':i<5?'tier-gold':i<10?'tier-green':''));
+  const tier=i===0?'tier-red':i<4?'tier-gold':i<10?'tier-green':'';
   const title=document.createElement('span');title.className='name'+(tier?' '+tier:'');title.textContent=level.name;
   const pill=document.createElement('span');pill.className='points'+(tier?' '+tier:'');pill.textContent=level.points+' '+(level.points===1?'pt':'pts');
   const chev=document.createElement('span');chev.className='chev';chev.textContent='⌄';chev.setAttribute('aria-hidden','true');
