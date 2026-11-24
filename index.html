@@ -270,8 +270,8 @@
   <p>A Bermune-made ranking of the 22 classic Geometry Dash main levels, The Challenge, and RobTop Travel — plus levels voted in by the LVMC Discord community.</p>
   <div class="stats">
     <div class="stat"><strong id="main-count">24</strong> Main levels · <span id="main-total">268 pts</span></div>
-    <div class="stat"><strong id="community-count">2</strong> Community voted · <span id="community-total">74 pts</span></div>
-    <div class="stat"><strong id="count">26</strong> Levels total</div>
+    <div class="stat"><strong id="community-count">4</strong> Community voted · <span id="community-total">200 pts</span></div>
+    <div class="stat"><strong id="count">28</strong> Levels total</div>
   </div>
 </header>
 
@@ -305,7 +305,7 @@
         <div class="rankings-eyebrow">CHOSEN BY THE LVMC DISCORD</div>
         <h2>Community Voted Levels</h2>
         <p>All other levels selected through community polls.</p>
-        <div class="rankings-category-stats"><strong id="community-count-card">2</strong> <span id="community-level-label">levels</span> <span aria-hidden="true">·</span> <strong id="community-points-card">74</strong> possible points</div>
+        <div class="rankings-category-stats"><strong id="community-count-card">4</strong> <span id="community-level-label">levels</span> <span aria-hidden="true">·</span> <strong id="community-points-card">200</strong> possible points</div>
       </div>
       <div class="list" id="community-list"></div>
       <div class="community-vote-note"><span aria-hidden="true">✦</span> New levels join this list when the LVMC Discord votes them in.</div>
@@ -452,13 +452,22 @@
 </section>
 <footer>
   <p>Made for the LVMC gang · Not affiliated with actual RobTop or Geometry Dash</p>
-  <p class="credit">Background image: <a href="https://www.charlieintel.com/" target="_blank" rel="noopener noreferrer">CharlieIntel</a>. Gameplay screenshots: <a href="https://stpkukaif.github.io/GeometryDash/" target="_blank" rel="noopener noreferrer">GD screenshot collection</a> &amp; <a href="https://store.steampowered.com/app/322170/Geometry_Dash/" target="_blank" rel="noopener noreferrer">Steam (Dash)</a>. RobTop Travel thumbnail art: <a href="https://www.youtube.com/watch?v=CaoUIkQ3QuI" target="_blank" rel="noopener noreferrer">Lairon GD showcase</a>. Sweater Weather thumbnail: <a href="https://www.youtube.com/watch?v=y3Kk0ZvDqUM" target="_blank" rel="noopener noreferrer">credited showcase</a>. Nine Circles thumbnail: <a href="https://www.youtube.com/watch?v=LPl51rdl6-o" target="_blank" rel="noopener noreferrer">credited showcase</a>.</p>
+  <p class="credit">Background image: <a href="https://www.charlieintel.com/" target="_blank" rel="noopener noreferrer">CharlieIntel</a>. Gameplay screenshots: <a href="https://stpkukaif.github.io/GeometryDash/" target="_blank" rel="noopener noreferrer">GD screenshot collection</a> &amp; <a href="https://store.steampowered.com/app/322170/Geometry_Dash/" target="_blank" rel="noopener noreferrer">Steam (Dash)</a>. RobTop Travel thumbnail art: <a href="https://www.youtube.com/watch?v=CaoUIkQ3QuI" target="_blank" rel="noopener noreferrer">Lairon GD showcase</a>. Sweater Weather thumbnail: <a href="https://www.youtube.com/watch?v=y3Kk0ZvDqUM" target="_blank" rel="noopener noreferrer">credited showcase</a>. Nine Circles thumbnail: <a href="https://www.youtube.com/watch?v=LPl51rdl6-o" target="_blank" rel="noopener noreferrer">credited showcase</a>. Cataclysm thumbnail: <a href="https://www.reddit.com/r/geometrydash/comments/1lv9gxk/i_make_level_thumbnails/" target="_blank" rel="noopener noreferrer">Reddit thumbnail creator</a>. Bloodbath thumbnail: <a href="https://www.youtube.com/watch?v=JR981ToYoYA" target="_blank" rel="noopener noreferrer">credited showcase</a>.</p>
 </footer>
 </main>
 
 <script>
 // --- LVMC DATA: You can reorder levels and edit their points later. ---
 const levels = [
+  {
+    "name": "Bloodbath",
+    "points": 77,
+    "category": "community",
+    "image": "bloodbath.jpg",
+    "source": "https://www.youtube.com/watch?v=JR981ToYoYA",
+    "sourceLabel": "Thumbnail image credit: Bloodbath showcase ↗",
+    "description": "Bloodbath, hosted and verified by Riot, is a legendary Extreme Demon collaboration known for its demanding ship gameplay and tight timings. Completing this level earns 77 Community points toward the {categoryTotal}-point Community Voted Levels maximum."
+  },
   {
     "name": "RobTop Travel",
     "points": 50,
@@ -467,6 +476,15 @@ const levels = [
     "sourceLabel": "Thumbnail art credit: Lairon GD showcase ↗",
     "description": "Completing RobTop Travel proves you have truly mastered this game, and you may finally call yourself a Geometry Dash pro. Completion earns 50 Main Level points toward the 202-point Main Level maximum.",
     "special": true
+  },
+  {
+    "name": "Cataclysm",
+    "points": 49,
+    "category": "community",
+    "image": "cataclysm.png",
+    "source": "https://www.reddit.com/r/geometrydash/comments/1lv9gxk/i_make_level_thumbnails/",
+    "sourceLabel": "Thumbnail art credit: Reddit creator ↗",
+    "description": "Cataclysm by Ggb0y is a classic Extreme Demon known for its challenging wave and ship gameplay. Completing this level earns 49 Community points toward the {categoryTotal}-point Community Voted Levels maximum."
   },
   {
     "name": "Sweater Weather",
