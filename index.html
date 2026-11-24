@@ -158,6 +158,23 @@
     @media(max-width:480px){.notification-center{padding:12px}.notification-item{gap:8px;padding:9px}.notification-read-btn{font-size:10px;padding:6px 7px}.notification-badge{min-width:19px;height:19px}}
    .moderation-row{border-top:1px solid var(--border);padding:14px 0;display:grid;gap:9px}
    .moderation-row .button-row{margin-top:3px}
+   /* Player moderation: lazy, per-player approved completion management. */
+   .player-approved{min-width:0;background:#111d2b;border:1px solid #34485e;border-radius:11px;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+   .player-approved:hover,.player-approved[open]{background:#111d2b;border-color:#466485;box-shadow:none}
+   .player-approved>summary{min-height:0;padding:11px 13px;gap:9px;color:#d8e7fa;font-size:13px;font-weight:700}
+   .player-approved>summary .chev{margin-left:auto;flex:none}
+   .player-approved-body{display:grid;gap:12px;padding:12px;border-top:1px solid #304158}
+   .player-approved-group{display:grid;gap:7px;min-width:0}
+   .player-approved-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px;color:#b9c9dc;font-weight:700}
+   .player-approved-heading strong{color:#f1f5fb;font-size:13px}
+   .player-approved-item{display:grid;gap:7px;padding:11px 12px;border:1px solid #304158;border-radius:9px;background:#162233;min-width:0}
+   .player-approved-item-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+   .player-approved-item-head strong:first-child{min-width:0;overflow-wrap:anywhere;font-size:14px}
+   .player-approved-points{white-space:nowrap;font-variant-numeric:tabular-nums;font-size:13px}
+   .player-approved-item .action-btn{font-size:12px;padding:7px 10px}
+   .player-approved-item .rejection-panel{max-width:none;margin:2px 0 0;padding:12px}
+   .player-approved-status:empty{display:none}
+   @media(max-width:480px){.player-approved-body{padding:9px}.player-approved-item{padding:10px}.player-approved-item .button-row{gap:6px}.player-approved-item .action-btn{white-space:normal;text-align:left}}
    .muted-note{font-size:12px;color:var(--muted)}
   .safe-link{color:#91c6ff;overflow-wrap:anywhere}
   [hidden]{display:none!important}
@@ -427,7 +444,7 @@
   </div>
   <div id="admin-players-panel" role="tabpanel" aria-labelledby="admin-players-tab" data-admin-panel="players" hidden>
     <h3>Player Moderation</h3>
-    <p>Ban or unban submissions, or revoke a non-admin player's approved points. Revoked completions cannot be resubmitted.</p>
+    <p>Ban or unban submissions, view a non-admin player’s approved levels, remove individual completions or coin bonuses, or revoke all approved points. Individual removals are rejections and may be resubmitted; fully revoked completions cannot be resubmitted.</p>
     <button type="button" class="action-btn" id="refresh-players">Refresh players</button>
     <p id="moderation-status" class="status-line" role="status" aria-live="polite"></p>
     <div id="admin-players">Loading players…</div>
@@ -704,6 +721,7 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 const $ = (id) => document.getElementById(id);
 let currentUser = null;
 let isAdmin = false;
+let moderationLoadToken = 0;
 let dbLevels = [];
 let orderedSubmissionLevels = [];
 const nameForLevel = (id) => dbLevels.find(l => String(l.id) === String(id))?.name || `Level #${id}`;
@@ -1234,7 +1252,12 @@ async function refreshAuth(user){
   currentUser=user;
   $('signed-out').hidden=!!user;
   $('signed-in').hidden=!user;
-  if(previousId!==user?.id)clearNotificationSession();
+  if(previousId!==user?.id){
+    clearNotificationSession();
+    moderationLoadToken++;
+    $('admin-players').textContent='Loading players…';
+    showStatus('moderation-status','');
+  }
   if(user){
     await Promise.all([loadProfile(),loadAdminStatus(),loadMySubmissions()]);
     if(currentUser?.id!==user.id)return;
@@ -1506,35 +1529,209 @@ async function loadAdminCoinQueue(){
   }
 }
 
+// Approved-level moderation uses the same review RPCs as the review queues.
+// The database remains the authority for admin permissions, points and notifications.
+function verifiedAdminIds(result,uid){
+  const rows=result?.data;
+  if(result?.error||!Array.isArray(rows)||!rows.length||
+     !rows.every(a=>typeof a?.user_id==='string')||!rows.some(a=>a.user_id===uid))return null;
+  return new Set(rows.map(a=>a.user_id));
+}
+function createPlayerApprovedPanel(player,uid,banBtn,resetBtn){
+  const details=element('details','player-approved');
+  const summary=element('summary');
+  const title=element('span','','View approved levels');
+  const arrow=element('span','chev','⌄');arrow.setAttribute('aria-hidden','true');
+  summary.append(title,arrow);
+  const body=element('div','player-approved-body');
+  const status=element('div','status-line player-approved-status');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+  const content=element('div','player-approved-group');
+  body.append(status,content);details.append(summary,body);
+  let loadToken=0,busy=false,activeEditor=null;
+  const valid=()=>isAdmin&&currentUser?.id===uid&&details.isConnected;
+  function setStatus(message,error=false){status.textContent=message;status.classList.toggle('error',error);}
+  function setBusy(value){
+    busy=value;
+    if(value)loadToken++;
+    banBtn.disabled=value;resetBtn.disabled=value;
+    content.querySelectorAll('button').forEach(button=>button.disabled=value);
+  }
+  async function refreshApproved(){
+    if(!valid()||busy)return;
+    const token=++loadToken;
+    const live=()=>valid()&&token===loadToken;
+    activeEditor=null;
+    title.textContent='View approved levels';
+    content.textContent='Loading approved levels…';
+    try{
+      const {data:completions,error}=await supabase.from('completions')
+        .select('id,level_id,status').eq('user_id',player.id).eq('status','approved');
+      if(!live())return;
+      if(error)throw error;
+      const records=completions||[];
+      if(!records.length){title.textContent='View approved levels (0)';content.textContent='No approved completions.';return;}
+      const ids=records.map(c=>c.id);
+      const {data:claims,error:coinError}=await supabase.from('coin_claims')
+        .select('id,completion_id,status').in('completion_id',ids).eq('status','approved');
+      if(!live())return;
+      if(coinError)throw coinError;
+      const levelMap=new Map(dbLevels.map(l=>[String(l.id),l]));
+      if(records.some(c=>!levelMap.has(String(c.level_id)))){
+        content.textContent='Could not verify level details. Reload the website before moderating this player.';
+        return;
+      }
+      const claimMap=new Map((claims||[]).map(c=>[String(c.completion_id),c]));
+      const order=new Map(orderedSubmissionLevels.map((l,i)=>[String(l.id),i]));
+      const entries=records.map(c=>{
+        const level=levelMap.get(String(c.level_id));
+        const claim=level.category==='main'&&level.coin_eligible===true?claimMap.get(String(c.id)):null;
+        return {c,level,claim,points:Number(level.points)+(claim?3:0)};
+      }).sort((a,b)=>(order.get(String(a.level.id))??Infinity)-(order.get(String(b.level.id))??Infinity)||a.level.name.localeCompare(b.level.name));
+      title.textContent=`View approved levels (${entries.length})`;
+      clear(content);
+      for(const [category,label] of [['main','Main Levels'],['community','Community Voted Levels']]){
+        const group=entries.filter(e=>e.level.category===category);
+        const section=element('div','player-approved-group');
+        const heading=element('div','player-approved-heading');
+        heading.append(element('span','',`${label} (${group.length})`),element('strong','',`${group.reduce((sum,e)=>sum+e.points,0)} pts`));
+        section.append(heading);
+        if(!group.length)section.append(element('div','muted-note','No approved levels in this category.'));
+        for(const entry of group)section.append(renderApprovedItem(entry));
+        content.append(section);
+      }
+    }catch(error){
+      if(live())content.textContent='Could not load approved levels: '+errorText(error)+'. Close and reopen to retry.';
+    }
+  }
+  function renderApprovedItem({c,level,claim,points}){
+    const item=element('div','player-approved-item');
+    const head=element('div','player-approved-item-head');
+    head.append(element('strong','',level.name),element('strong','player-approved-points',`${points} ${points===1?'pt':'pts'}`));
+    item.append(head);
+    if(claim)item.append(element('div','coin-status approved',`All 3 coins approved · +3 pts (${level.points} base pts)`));
+    const actions=element('div','button-row');
+    const removeLevel=element('button','action-btn danger-btn','Remove completion');removeLevel.type='button';
+    const removeCoins=claim?element('button','action-btn','Remove coins'):null;
+    if(removeCoins){removeCoins.type='button';actions.append(removeCoins);}
+    actions.append(removeLevel);item.append(actions);
+    const panel=element('div','rejection-panel');panel.hidden=true;
+    const panelTitle=element('div','rejection-panel-title');
+    const note=element('div','coin-review-note');
+    const label=element('label','rejection-reason-field','Reason (optional)');
+    const reason=element('textarea');reason.rows=3;reason.maxLength=500;reason.placeholder='Explain why the points are being removed…';label.append(reason);
+    const counter=element('div','rejection-counter','0 / 500 characters');
+    reason.addEventListener('input',()=>counter.textContent=`${reason.value.length} / 500 characters`);
+    const panelActions=element('div','button-row');
+    const confirmBtn=element('button','action-btn danger-btn');confirmBtn.type='button';
+    const cancel=element('button','action-btn','Cancel');cancel.type='button';
+    panelActions.append(confirmBtn,cancel);panel.append(panelTitle,note,label,counter,panelActions);item.append(panel);
+    let mode=null,trigger=null;
+    function closeEditor(restoreFocus=false){
+      panel.hidden=true;actions.hidden=false;
+      if(trigger){trigger.setAttribute('aria-expanded','false');if(restoreFocus)trigger.focus();}
+      reason.value='';counter.textContent='0 / 500 characters';mode=null;trigger=null;
+      if(activeEditor===closeEditor)activeEditor=null;
+    }
+    function openEditor(kind,button){
+      if(busy||!valid())return;
+      if(activeEditor)activeEditor();
+      setStatus('');mode=kind;trigger=button;activeEditor=closeEditor;
+      const coins=kind==='coins';
+      panelTitle.textContent=coins?'Remove approved coins':'Remove approved completion';
+      note.textContent=coins
+        ?`Remove 3 Main points from ${player.username}. ${level.name} stays approved. The player will be notified and may resubmit the coin claim.`
+        :`Reject ${player.username}’s ${level.name} completion and remove ${points} ${points===1?'point':'points'}${claim?' (including the 3 coin points)':''}. The player will be notified and may resubmit.`;
+      confirmBtn.textContent=coins?'Confirm removal of +3 pts':'Confirm removal';
+      button.setAttribute('aria-expanded','true');actions.hidden=true;panel.hidden=false;reason.focus();
+    }
+    removeLevel.setAttribute('aria-expanded','false');
+    removeLevel.addEventListener('click',()=>openEditor('completion',removeLevel));
+    if(removeCoins){removeCoins.setAttribute('aria-expanded','false');removeCoins.addEventListener('click',()=>openEditor('coins',removeCoins));}
+    cancel.addEventListener('click',()=>{if(!busy)closeEditor(true);});
+    confirmBtn.addEventListener('click',async()=>{
+      if(busy||!valid()||!mode)return;
+      const coins=mode==='coins',rejectionReason=reason.value.trim()||null;
+      if(rejectionReason&&rejectionReason.length>500){setStatus('Rejection reason must be 500 characters or less.',true);return;}
+      setBusy(true);setStatus('Checking current approval and permissions…');
+      let changed=false,stale=false;
+      try{
+        // Recheck the admin exclusion and current approval before sending a rejection.
+        // Existing server-side review RPCs still enforce actual authorization.
+        const adminResult=await supabase.rpc('list_admin_user_ids');
+        if(!valid())return;
+        const admins=verifiedAdminIds(adminResult,uid);
+        if(!admins||admins.has(player.id)){
+          showStatus('moderation-status','Could not verify that this player is a non-admin. No changes were made.',true);
+          await loadAdminPlayers();return;
+        }
+        const {data:base,error:baseError}=await supabase.from('completions')
+          .select('id,status').eq('id',c.id).eq('user_id',player.id).maybeSingle();
+        if(!valid())return;
+        if(baseError)throw baseError;
+        if(base?.status!=='approved'){
+          stale=true;setStatus('This completion is no longer approved. No changes were made.',true);return;
+        }
+        if(coins){
+          const {data:currentClaim,error:claimError}=await supabase.from('coin_claims')
+            .select('id,status').eq('id',claim.id).eq('completion_id',c.id).maybeSingle();
+          if(!valid())return;
+          if(claimError)throw claimError;
+          if(currentClaim?.status!=='approved'){
+            stale=true;setStatus('This coin bonus is no longer approved. No changes were made.',true);return;
+          }
+        }
+        setStatus(coins?'Removing coin bonus…':'Removing completion…');
+        const {error}=coins
+          ?await supabase.rpc('review_coin_claim',{p_coin_claim_id:claim.id,p_decision:'rejected',p_rejection_reason:rejectionReason})
+          :await supabase.rpc('review_completion',{p_completion_id:c.id,p_decision:'rejected',p_rejection_reason:rejectionReason});
+        if(error)throw error;
+        changed=true;
+        if(valid())setStatus(coins?`${level.name}: coin bonus removed. Base completion remains approved.`:`${level.name}: completion rejected.`);
+      }catch(error){if(valid())setStatus('Could not remove points: '+errorText(error),true);}
+      finally{
+        if(valid()){
+          setBusy(false);
+          if(changed||stale)await refreshApproved();
+        }
+        if(changed&&isAdmin&&currentUser?.id===uid){
+          // The other review queues reload when opened. Refresh scores and unread counts now.
+          await Promise.allSettled([loadLeaderboard(),refreshNotificationBadges()]);
+          if(!details.isConnected&&adminView==='players')await loadAdminPlayers();
+        }
+      }
+    });
+    return item;
+  }
+  details.addEventListener('toggle',()=>{if(details.open&&!busy){setStatus('');refreshApproved();}});
+  return {details,setBusy,refresh:()=>{if(details.open){setStatus('');return refreshApproved();}title.textContent='View approved levels';}};
+}
+
 async function loadAdminPlayers(){
   if(!isAdmin||!currentUser)return;
-  const root=$('admin-players');root.textContent='Loading players…';
-  const requestingAdminId=currentUser.id;
+  const root=$('admin-players');
+  const expanded=new Set([...root.querySelectorAll('.player-approved[open]')].map(d=>d.dataset.playerId));
+  root.textContent='Loading players…';
+  const requestingAdminId=currentUser.id,token=++moderationLoadToken;
+  const live=()=>isAdmin&&currentUser?.id===requestingAdminId&&token===moderationLoadToken;
   let profilesResult,bansResult,adminsResult;
   try{
     [profilesResult,bansResult,adminsResult]=await Promise.all([
       supabase.from('profiles').select('id,username').order('username'),
       supabase.from('submission_bans').select('user_id,reason'),
-      // V7.2.2: an admin-only RPC returns ALL admin IDs despite self-only RLS on admins.
+      // Admin-only RPC returns ALL admin IDs despite self-only RLS on admins.
       supabase.rpc('list_admin_user_ids')
     ]);
   }catch(error){
-    root.textContent='Could not load players. Check your connection and refresh.';
+    if(live())root.textContent='Could not load players. Check your connection and refresh.';
     return;
   }
-  // Fail closed: never display moderation actions without a complete admin list.
-  if(!isAdmin||currentUser?.id!==requestingAdminId){root.textContent='';return;}
+  if(!live())return;
   const error=profilesResult.error||bansResult.error||adminsResult.error;
   if(error){root.textContent='Could not load players: '+errorText(error);return;}
-  const adminRows=adminsResult.data;
-  if(!Array.isArray(adminRows)||!adminRows.length||
-     !adminRows.every(a=>typeof a?.user_id==='string')||
-     !adminRows.some(a=>a.user_id===requestingAdminId)){
-    root.textContent='Could not verify the complete admin list. Player moderation is unavailable; refresh to retry.';
-    return;
-  }
+  // Fail closed: never display moderation actions without a complete admin list.
+  const adminIds=verifiedAdminIds(adminsResult,requestingAdminId);
+  if(!adminIds){root.textContent='Could not verify the complete admin list. Player moderation is unavailable; refresh to retry.';return;}
   const banned=new Map((bansResult.data||[]).map(b=>[b.user_id,b]));
-  const adminIds=new Set(adminRows.map(a=>a.user_id));
   clear(root);
   const players=(profilesResult.data||[]).filter(p=>!adminIds.has(p.id));
   if(!players.length){root.textContent='No non-admin players found.';return;}
@@ -1545,29 +1742,38 @@ async function loadAdminPlayers(){
     row.append(header);
     const actions=element('div','button-row');
     const banBtn=element('button','action-btn',banned.has(player.id)?'Unban submissions':'Ban submissions');banBtn.type='button';
+    const resetBtn=element('button','action-btn danger-btn','Revoke approved points');resetBtn.type='button';
+    const approved=createPlayerApprovedPanel(player,requestingAdminId,banBtn,resetBtn);
+    approved.details.dataset.playerId=player.id;
     banBtn.addEventListener('click',async()=>{
+      if(!live())return;
       const isBanned=banned.has(player.id);
       let reason=null;
       if(isBanned){if(!confirm(`Unban ${player.username} from submitting completions?`))return;}
       else{reason=prompt(`Reason for banning ${player.username} from submissions (optional):`);if(reason===null)return;if(reason.length>500){showStatus('moderation-status','Ban reason must be 500 characters or less.',true);return;}}
-      banBtn.disabled=true;showStatus('moderation-status','Updating submission ban…');
+      approved.setBusy(true);showStatus('moderation-status','Updating submission ban…');
       const {error}=isBanned
         ?await supabase.rpc('unban_player',{p_user_id:player.id})
         :await supabase.rpc('ban_player',{p_user_id:player.id,p_reason:reason||null});
+      if(!live())return;
       showStatus('moderation-status',error?errorText(error):`${player.username}: submission ban updated.`,!!error);
-      if(!error)await loadAdminPlayers();else banBtn.disabled=false;
+      if(!error)await loadAdminPlayers();else{approved.setBusy(false);await approved.refresh();}
     });
-    const resetBtn=element('button','action-btn danger-btn','Revoke approved points');resetBtn.type='button';
     resetBtn.addEventListener('click',async()=>{
+      if(!live())return;
       const confirmation=prompt(`This will revoke ALL approved completions for ${player.username}.\n\nType RESET (all capital letters) to confirm:`);
       if(confirmation===null)return;
       if(confirmation.trim()!=='RESET'){showStatus('moderation-status','Points were not revoked. Type RESET in all capital letters to confirm.',true);return;}
-      resetBtn.disabled=true;showStatus('moderation-status','Revoking approved points…');
+      approved.setBusy(true);showStatus('moderation-status','Revoking approved points…');
       const {data,error}=await supabase.rpc('reset_player_points',{p_user_id:player.id});
+      if(!live())return;
       showStatus('moderation-status',error?errorText(error):`Revoked ${data} approved completion(s) for ${player.username}.`,!!error);
-      if(!error){await Promise.all([loadAdminQueue(),loadLeaderboard()]);}resetBtn.disabled=false;
+      approved.setBusy(false);
+      if(!error){await Promise.allSettled([loadAdminQueue(),loadLeaderboard(),approved.refresh(),refreshNotificationBadges()]);}
+      else await approved.refresh();
     });
-    actions.append(banBtn,resetBtn);row.append(actions);root.append(row);
+    actions.append(banBtn,resetBtn);row.append(actions,approved.details);root.append(row);
+    if(expanded.has(player.id))approved.details.open=true;
   }
 }
 
