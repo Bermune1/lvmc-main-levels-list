@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <meta name="theme-color" content="#0d1118" />
 <meta name="description" content="LVMC Geometry Dash rankings: a Main Levels List and separate Discord Community Voted Levels, with independent scores and a main-first leaderboard." />
-<title>LVMC Rankings V9.0 — The Achievement Expansion</title>
+<title>LVMC Rankings V9.1 — Difficulty Icons Update</title>
 <style>
  :root{color-scheme:dark;--bg:#0d1118;--panel:#151b25;--panel-active:#192333;--border:#293241;--muted:#99a7ba;--text:#f1f5fb;--accent:#79b9ff}
  *{box-sizing:border-box}
@@ -280,6 +280,13 @@
   @media(prefers-reduced-motion:reduce){.absolute-madness-text{animation:none;background:none;-webkit-text-fill-color:currentColor;color:#f9d66d;filter:none}}
   @media(max-width:600px){.achievement-grid{grid-template-columns:1fr}.achievement-card{padding:12px}.achievement-equipment{padding:11px}.achievement-slots{gap:5px}.achievement-slot{min-height:100px;padding:8px 4px}.achievement-slot-name{font-size:11px}.achievement-title{white-space:normal;text-align:left}.achievement-header h3{font-size:20px}}
   @media(max-width:480px){.notification-item.achievement{flex-wrap:wrap}.notification-item.achievement .notification-content{flex:1 1 calc(100% - 35px)}.notification-item.achievement .notification-read-btn{margin-left:auto}.achievement-filter{padding:6px 8px}}
+  /* LVMC V9.1: original transparent difficulty sprites, beside the level name. */
+  .rankings-column .name{overflow-wrap:anywhere}
+  .level-difficulty-icon{display:inline-block;width:24px;height:24px;object-fit:contain;vertical-align:middle;margin-left:5px;max-width:100%;border:0;background:transparent;box-shadow:none}
+  .level-difficulty-icon.special-difficulty{width:22px;height:22px}
+  .level-difficulty-fallback{display:inline;font-size:10px;font-weight:600;color:var(--muted);margin-left:5px}
+  @media(max-width:480px){.level-difficulty-icon{width:22px;height:22px;margin-left:4px}.level-difficulty-icon.special-difficulty{width:20px;height:20px}}
+  @media(max-width:360px){.level-difficulty-icon{width:21px;height:21px;margin-left:4px}.level-difficulty-icon.special-difficulty{width:20px;height:20px}}
  </style>
 </head>
 <body>
@@ -287,7 +294,7 @@
 <main class="wrap">
 <header>
   <div class="eyebrow">Geometry Dash · LVMC Rankings</div>
-  <h1>LVMC Levels List<span style="color:#79b9ff">.</span></h1>
+  <h1>Main Levels List<span style="color:#79b9ff">.</span></h1>
   <p>A Bermune-made ranking of the 22 classic Geometry Dash main levels, The Challenge, and RobTop Travel — plus levels voted in by the LVMC Discord community.</p>
   <div class="stats">
     <div class="stat"><strong id="main-count">24</strong> Main levels · <span id="main-total">268 pts</span></div>
@@ -487,7 +494,7 @@
 </section>
 <footer>
   <p>Made for the LVMC gang · Not affiliated with actual RobTop or Geometry Dash</p>
-  <p class="credit">Background image: <a href="https://www.charlieintel.com/" target="_blank" rel="noopener noreferrer">CharlieIntel</a>. Gameplay screenshots: <a href="https://stpkukaif.github.io/GeometryDash/" target="_blank" rel="noopener noreferrer">GD screenshot collection</a> &amp; <a href="https://store.steampowered.com/app/322170/Geometry_Dash/" target="_blank" rel="noopener noreferrer">Steam (Dash)</a>. RobTop Travel thumbnail art: <a href="https://www.youtube.com/watch?v=CaoUIkQ3QuI" target="_blank" rel="noopener noreferrer">Lairon GD showcase</a>. Sweater Weather thumbnail: <a href="https://www.youtube.com/watch?v=y3Kk0ZvDqUM" target="_blank" rel="noopener noreferrer">credited showcase</a>. Nine Circles thumbnail: <a href="https://www.youtube.com/watch?v=LPl51rdl6-o" target="_blank" rel="noopener noreferrer">credited showcase</a>. Cataclysm thumbnail: <a href="https://www.reddit.com/r/geometrydash/comments/1lv9gxk/i_make_level_thumbnails/" target="_blank" rel="noopener noreferrer">Reddit thumbnail creator</a>. Bloodbath thumbnail: <a href="https://www.youtube.com/watch?v=JR981ToYoYA" target="_blank" rel="noopener noreferrer">credited showcase</a>.</p>
+  <p class="credit">Background image: <a href="https://www.charlieintel.com/" target="_blank" rel="noopener noreferrer">CharlieIntel</a>. Gameplay screenshots: <a href="https://stpkukaif.github.io/GeometryDash/" target="_blank" rel="noopener noreferrer">GD screenshot collection</a> &amp; <a href="https://store.steampowered.com/app/322170/Geometry_Dash/" target="_blank" rel="noopener noreferrer">Steam (Dash)</a>. RobTop Travel thumbnail art: <a href="https://www.youtube.com/watch?v=CaoUIkQ3QuI" target="_blank" rel="noopener noreferrer">Lairon GD showcase</a>. Sweater Weather thumbnail: <a href="https://www.youtube.com/watch?v=y3Kk0ZvDqUM" target="_blank" rel="noopener noreferrer">credited showcase</a>. Nine Circles thumbnail: <a href="https://www.youtube.com/watch?v=LPl51rdl6-o" target="_blank" rel="noopener noreferrer">credited showcase</a>. Cataclysm thumbnail: <a href="https://www.reddit.com/r/geometrydash/comments/1lv9gxk/i_make_level_thumbnails/" target="_blank" rel="noopener noreferrer">Reddit thumbnail creator</a>. Bloodbath thumbnail: <a href="https://www.youtube.com/watch?v=JR981ToYoYA" target="_blank" rel="noopener noreferrer">credited showcase</a>. Difficulty artwork: <a href="https://geometrydash.wiki.gg/wiki/Category:Difficulty_icon_images" target="_blank" rel="noopener noreferrer">Geometry Dash Wiki</a>.</p>
 </footer>
 </main>
 
@@ -496,6 +503,7 @@
 const levels = [
   {
     "name": "Bloodbath",
+    "difficulty": "extreme_demon",
     "points": 77,
     "category": "community",
     "image": "bloodbath.jpg",
@@ -505,6 +513,7 @@ const levels = [
   },
   {
     "name": "RobTop Travel",
+    "difficulty": "special",
     "points": 50,
     "image": "https://i.ytimg.com/vi/CaoUIkQ3QuI/hqdefault.jpg",
     "source": "https://www.youtube.com/watch?v=CaoUIkQ3QuI",
@@ -514,6 +523,7 @@ const levels = [
   },
   {
     "name": "Cataclysm",
+    "difficulty": "extreme_demon",
     "points": 49,
     "category": "community",
     "image": "cataclysm.png",
@@ -523,6 +533,7 @@ const levels = [
   },
   {
     "name": "Sweater Weather",
+    "difficulty": "extreme_demon",
     "points": 45,
     "category": "community",
     "image": "sweater-weather.png",
@@ -532,6 +543,7 @@ const levels = [
   },
   {
     "name": "Nine Circles",
+    "difficulty": "hard_demon",
     "points": 29,
     "category": "community",
     "image": "nine-circles.jpg",
@@ -541,126 +553,147 @@ const levels = [
   },
   {
     "name": "Deadlocked",
+    "difficulty": "easy_demon",
     "points": 17,
     "image": "https://stpkukaif.github.io/GeometryDash/img/Deadlocked.webp",
     "source": "https://stpkukaif.github.io/GeometryDash/"
   },
   {
     "name": "Theory Of Everything 2",
+    "difficulty": "easy_demon",
     "points": 15,
     "image": "https://stpkukaif.github.io/GeometryDash/img/TOE2.webp",
     "source": "https://stpkukaif.github.io/GeometryDash/"
   },
   {
     "name": "Clubstep",
+    "difficulty": "easy_demon",
     "points": 15,
     "image": "https://stpkukaif.github.io/GeometryDash/img/Clubstep.webp",
     "source": "https://stpkukaif.github.io/GeometryDash/"
   },
   {
     "name": "Hexagon Force",
+    "difficulty": "insane",
     "points": 10,
     "image": "https://stpkukaif.github.io/GeometryDash/img/HexagonForce.webp",
     "source": "https://stpkukaif.github.io/GeometryDash/"
   },
   {
     "name": "Electrodynamix",
+    "difficulty": "insane",
     "points": 10,
     "image": "https://stpkukaif.github.io/GeometryDash/img/Electrodynamix.webp",
     "source": "https://stpkukaif.github.io/GeometryDash/"
   },
   {
     "name": "Clutterfunk",
+    "difficulty": "insane",
     "points": 10,
     "image": "https://stpkukaif.github.io/GeometryDash/img/Clutterfunk.webp",
     "source": "https://stpkukaif.github.io/GeometryDash/"
   },
   {
     "name": "Electroman Adventures",
+    "difficulty": "insane",
     "points": 8,
     "image": "https://stpkukaif.github.io/GeometryDash/img/Electroman_Adventures.webp",
     "source": "https://stpkukaif.github.io/GeometryDash/"
   },
   {
     "name": "Fingerdash",
+    "difficulty": "insane",
     "points": 6,
     "image": "https://stpkukaif.github.io/GeometryDash/img/Fingerdash.webp",
     "source": "https://stpkukaif.github.io/GeometryDash/"
   },
   {
     "name": "Geometrical Dominator",
+    "difficulty": "harder",
     "points": 6,
     "image": "https://stpkukaif.github.io/GeometryDash/img/Geometrical_Dominator.webp",
     "source": "https://stpkukaif.github.io/GeometryDash/"
   },
   {
     "name": "Time Machine",
+    "difficulty": "harder",
     "points": 6,
     "image": "https://stpkukaif.github.io/GeometryDash/img/TimeMachine.webp",
     "source": "https://stpkukaif.github.io/GeometryDash/"
   },
   {
     "name": "Cycles",
+    "difficulty": "harder",
     "points": 6,
     "image": "https://stpkukaif.github.io/GeometryDash/img/Cycles.webp",
     "source": "https://stpkukaif.github.io/GeometryDash/"
   },
   {
     "name": "Dash",
+    "difficulty": "insane",
     "points": 6,
     "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/322170/ss_05cb182b93131a5faf0516232a7ad27c83f2c0e8.1920x1080.jpg?t=1775300400",
     "source": "https://store.steampowered.com/app/322170/Geometry_Dash/"
   },
   {
     "name": "xStep",
+    "difficulty": "insane",
     "points": 6,
     "image": "https://stpkukaif.github.io/GeometryDash/img/xStep.webp",
     "source": "https://stpkukaif.github.io/GeometryDash/"
   },
   {
     "name": "Theory Of Everything",
+    "difficulty": "insane",
     "points": 5,
     "image": "https://stpkukaif.github.io/GeometryDash/img/TheoryOfEverything.webp",
     "source": "https://stpkukaif.github.io/GeometryDash/"
   },
   {
     "name": "Can't Let Go",
+    "difficulty": "hard",
     "points": 5,
     "image": "https://stpkukaif.github.io/GeometryDash/img/Cant_Let_Go.webp",
     "source": "https://stpkukaif.github.io/GeometryDash/"
   },
   {
     "name": "Blast Processing",
+    "difficulty": "harder",
     "points": 5,
     "image": "https://stpkukaif.github.io/GeometryDash/img/Blast_Processing.webp",
     "source": "https://stpkukaif.github.io/GeometryDash/"
   },
   {
     "name": "Jumper",
+    "difficulty": "harder",
     "points": 4,
     "image": "https://stpkukaif.github.io/GeometryDash/img/Jumper.webp",
     "source": "https://stpkukaif.github.io/GeometryDash/"
   },
   {
     "name": "Base After Base",
+    "difficulty": "hard",
     "points": 3,
     "image": "https://stpkukaif.github.io/GeometryDash/img/BaseAfterBase.webp",
     "source": "https://stpkukaif.github.io/GeometryDash/"
   },
   {
     "name": "Dry Out",
+    "difficulty": "normal",
     "points": 3,
     "image": "https://stpkukaif.github.io/GeometryDash/img/Dry_Out.webp",
     "source": "https://stpkukaif.github.io/GeometryDash/"
   },
   {
     "name": "Polargeist",
+    "difficulty": "normal",
     "points": 2,
     "image": "https://stpkukaif.github.io/GeometryDash/img/Polargeist.webp",
     "source": "https://stpkukaif.github.io/GeometryDash/"
   },
   {
     "name": "The Challenge",
+    "difficulty": "special",
     "points": 2,
     "image": "the-challenge.png",
     "source": "https://geometry-dash.fandom.com/wiki/The_Challenge",
@@ -668,12 +701,14 @@ const levels = [
   },
   {
     "name": "Back On Track",
+    "difficulty": "easy",
     "points": 1,
     "image": "https://stpkukaif.github.io/GeometryDash/img/Back_on_Track.webp",
     "source": "https://stpkukaif.github.io/GeometryDash/"
   },
   {
     "name": "Stereo Madness",
+    "difficulty": "easy",
     "points": 1,
     "image": "https://stpkukaif.github.io/GeometryDash/img/Stereo_Madness.webp",
     "source": "https://stpkukaif.github.io/GeometryDash/"
@@ -731,6 +766,26 @@ document.getElementById('community-level-label').textContent=communityLevels.len
 document.getElementById('main-points-card').textContent=mainTotalWithCoins;
 document.getElementById('main-coin-breakdown').textContent=`${mainTotalPoints} base points + ${maxCoinBonus} all-coins bonus points`;
 document.getElementById('community-points-card').textContent=communityTotalPoints;
+// V9.1: use local assets, including all five Demon difficulties for future additions.
+// When adding a level, keep its difficulty field consistent with Supabase levels.difficulty.
+const difficultyLabels=Object.freeze({easy:'Easy',normal:'Normal',hard:'Hard',harder:'Harder',insane:'Insane',easy_demon:'Easy Demon',medium_demon:'Medium Demon',hard_demon:'Hard Demon',insane_demon:'Insane Demon',extreme_demon:'Extreme Demon',special:'Special level'});
+function levelDifficultyLabel(level){return Object.hasOwn(difficultyLabels,level.difficulty)?difficultyLabels[level.difficulty]:'Difficulty not set';}
+function levelDifficultyIcon(level){
+ const label=levelDifficultyLabel(level);
+ if(!Object.hasOwn(difficultyLabels,level.difficulty))return null;
+ const img=document.createElement('img');
+ img.className='level-difficulty-icon';img.alt=label;img.title=label;img.width=24;img.height=24;img.decoding='async';
+ if(level.difficulty==='special'){
+  img.classList.add('special-difficulty');
+  const crown=level.name==='RobTop Travel';
+  const shape=crown?'<path d="M3 6l4.5 4.5L12 3l4.5 7.5L21 6l-2 12H5L3 6Z"/><path d="M6 21h12" fill="none" stroke="#e9c65d" stroke-width="2" stroke-linecap="round"/>':'<path d="m12 2 3.1 6.3 7 .9-5.1 5 1.2 7-6.2-3.3-6.2 3.3 1.2-7-5.1-5 7-.9Z"/>';
+  img.src='data:image/svg+xml;charset=UTF-8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#e9c65d" stroke="#ffe6a0" stroke-width="1" stroke-linejoin="round">'+shape+'</svg>');
+ }else{
+  img.src='difficulty-icons/'+level.difficulty+'.png';
+ }
+ img.addEventListener('error',()=>{const fallback=document.createElement('span');fallback.className='level-difficulty-fallback';fallback.textContent='('+label+')';img.replaceWith(fallback);},{once:true});
+ return img;
+}
 function renderRankedLevels(group,listId,categoryName,categoryTotal){
  const list=document.getElementById(listId);
  group.forEach((level,i)=>{
@@ -740,13 +795,14 @@ function renderRankedLevels(group,listId,categoryName,categoryTotal){
   const rank=document.createElement('span');rank.className='rank';rank.textContent='#'+(i+1);
   const tier=i===0?'tier-red':i<4?'tier-gold':i<10?'tier-green':'';
   const title=document.createElement('span');title.className='name'+(tier?' '+tier:'');title.textContent=level.name;
+  const difficultyIcon=levelDifficultyIcon(level);if(difficultyIcon)title.append(difficultyIcon);
   const pill=document.createElement('span');pill.className='points'+(tier?' '+tier:'');pill.textContent=level.points+' '+(level.points===1?'pt':'pts');
   const chev=document.createElement('span');chev.className='chev';chev.textContent='⌄';chev.setAttribute('aria-hidden','true');
   summary.append(rank,levelImage(level,originalIndex,'thumb'),title,pill,chev);
   const body=document.createElement('div');body.className='detail-panel';
   const preview=levelImage(level,originalIndex,'detail-image');
   const content=document.createElement('div');
-  const label=document.createElement('div');label.className='small-label';label.textContent=categoryName+' · Rank #'+(i+1);
+  const label=document.createElement('div');label.className='small-label';label.textContent=categoryName+' · Rank #'+(i+1)+' · '+levelDifficultyLabel(level);
   const value=document.createElement('div');value.className='detail-value';value.textContent=String(level.points)+' ';
   const unit=document.createElement('span');unit.textContent=level.points===1?'point':'points';value.append(unit);
   const desc=document.createElement('p');desc.className='detail-description';
