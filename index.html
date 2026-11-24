@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <meta name="theme-color" content="#0d1118" />
 <meta name="description" content="LVMC Geometry Dash rankings: a Main Levels List and separate Discord Community Voted Levels, with independent scores and a main-first leaderboard." />
-<title>LVMC Rankings V8.3 — Main Levels & Community Voted Levels</title>
+<title>LVMC Rankings V9.0 — The Achievement Expansion</title>
 <style>
  :root{color-scheme:dark;--bg:#0d1118;--panel:#151b25;--panel-active:#192333;--border:#293241;--muted:#99a7ba;--text:#f1f5fb;--accent:#79b9ff}
  *{box-sizing:border-box}
@@ -259,22 +259,27 @@
   .coin-status.pending{color:#ffe59a}
   .admin-subtabs{grid-template-columns:repeat(3,minmax(0,1fr))}
   @media(max-width:480px){.admin-subtab{font-size:11px;padding:10px 4px}.coin-checkbox-wrap{padding:10px}.coin-summary{padding:10px}}
-  /* LVMC V8.3: cosmetic achievements and achievement notifications. */
-  .coin-master-title{display:inline-block;appearance:none;border:0;background:none;padding:0;margin:0 0 0 6px;color:#e9c65d;font:inherit;font-size:12px;font-weight:650;line-height:1.5;white-space:nowrap;vertical-align:baseline;cursor:pointer;text-shadow:0 0 9px #e9c65d40}
-  .coin-master-title:hover,.coin-master-title[aria-expanded="true"]{color:#ffe59a;text-shadow:0 0 12px #e9c65d70}
-  .coin-master-title:focus-visible{outline:2px solid #e9c65d;outline-offset:3px;border-radius:3px}
-  .coin-master-tooltip{position:fixed;z-index:1000;width:300px;max-width:calc(100vw - 24px);max-height:calc(100dvh - 24px);overflow:auto;padding:13px 15px;border:1px solid #786437;border-radius:11px;background:#18202b;color:#f1f5fb;box-shadow:0 8px 28px #0009;font-size:12px;line-height:1.5;overflow-wrap:anywhere}
-  .coin-master-tooltip-heading{display:flex;align-items:center;gap:8px;color:#f4d35e;font-size:13px;font-weight:750;margin-bottom:6px}
-  .coin-master-tooltip-heading .coin-symbol{font-size:17px;line-height:1}
-  .coin-master-tooltip-description{color:#c7d2e1}
-  .coin-master-tooltip-unlocked{color:#a3dbb1;font-weight:650;margin-top:9px}
-  .notification-item.achievement,.notification-item.achievement.unread{background:#24271f;border-color:#786437}
-  .notification-symbol.achievement_coin_master{background:#493915;color:#f4d35e}
-  .notification-symbol.achievement_coin_master svg{width:17px;height:17px}
-  .notification-achievement-title{display:block;color:#f4d35e;margin-bottom:4px}
-  .notification-item.achievement .notification-read-btn{border-color:#786437;background:#38331f;color:#f1d58a}
-  .notification-item.achievement .notification-read-btn:hover{border-color:#e9c65d}
-  @media(max-width:480px){.notification-item.achievement{flex-wrap:wrap}.notification-item.achievement .notification-content{flex:1 1 calc(100% - 35px)}.notification-item.achievement .notification-read-btn{margin-left:auto}}
+  /* LVMC V9.0: achievement inventory, title equipment and shared tooltips. */
+  .account-subtabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding:5px;margin:18px 0 22px;border:1px solid #304158;border-radius:13px;background:#0d1521}
+  .account-subtab{display:flex;align-items:center;justify-content:center;gap:7px;min-width:0;appearance:none;border:1px solid transparent;background:transparent;color:#a7bad0;border-radius:9px;padding:12px 8px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+  .account-subtab:hover{background:#1c3046;color:#fff}.account-subtab[aria-selected="true"]{background:#28527b;border-color:#5286b7;color:#fff}
+  .account-subtab:focus-visible,.achievement-title:focus-visible,.achievement-filter:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .achievement-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}.achievement-header h3{margin:0 0 5px;font-size:23px;letter-spacing:-.035em}.achievement-header p{margin:0;max-width:560px}
+  .achievement-overview{margin:16px 0;display:grid;gap:9px;padding:15px;border:1px solid #35485f;background:#142133;border-radius:12px}
+  .achievement-overview-top,.achievement-equipment-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.achievement-overview-top strong{font-size:19px;color:#f4d35e;font-variant-numeric:tabular-nums}
+  .achievement-progress{height:6px;background:#0c1521;border-radius:99px;overflow:hidden}.achievement-progress-fill{display:block;height:100%;border-radius:99px;background:var(--achievement-color,#e9c65d);transition:width .2s}
+  .achievement-equipment{padding:15px;border:1px solid #3b4b61;border-radius:13px;background:#111d2b;margin:0 0 18px}.achievement-equipment h4{font-size:15px;margin:0}.achievement-equipment-head span{color:#b9c9dc;font-size:12px;font-weight:700}
+  .achievement-equipment p{margin:5px 0 12px;font-size:12px}.achievement-slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.achievement-slot{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;text-align:center;min-height:105px;padding:10px 6px;background:#182638;border:1px solid #40516a;border-radius:10px}.achievement-slot.empty{border-style:dashed;color:#8798ae;background:#101b29}.achievement-slot-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#99a7ba}.achievement-slot-name{font-size:12px;font-weight:750;color:var(--achievement-color);overflow-wrap:anywhere}.achievement-slot .action-btn{padding:5px 8px;font-size:11px}.achievement-slot .achievement-icon{width:25px;height:25px;flex-basis:25px}.achievement-slot .achievement-icon svg{width:17px;height:17px}
+  .achievement-preview{margin-top:13px;border-top:1px solid #304158;padding-top:11px}.achievement-preview-label{font-size:11px;color:var(--muted);margin-bottom:6px}.achievement-preview .board-name{font-size:15px}
+  .achievement-toolbar{display:flex;align-items:center;justify-content:space-between;gap:9px;flex-wrap:wrap;margin:18px 0 12px}.achievement-toolbar strong{font-size:15px}.achievement-filters{display:flex;gap:4px;padding:3px;background:#0d1521;border:1px solid #304158;border-radius:9px}.achievement-filter{appearance:none;border:1px solid transparent;border-radius:6px;padding:6px 10px;background:transparent;color:#a7bad0;font:inherit;font-size:12px;font-weight:650;cursor:pointer}.achievement-filter[aria-pressed="true"]{background:#28527b;border-color:#5286b7;color:#fff}
+  .achievement-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.achievement-card{display:flex;flex-direction:column;gap:10px;min-width:0;padding:14px;border:1px solid #34445a;border-radius:12px;background:#142133}.achievement-card.unlocked{border-color:color-mix(in srgb,var(--achievement-color) 42%,#304158);background:linear-gradient(125deg,color-mix(in srgb,var(--achievement-color) 7%,#142133),#142133 60%)}.achievement-card.locked{background:#111b29}.achievement-card-head{display:flex;gap:10px;align-items:flex-start}.achievement-icon{display:inline-flex;align-items:center;justify-content:center;flex:0 0 38px;width:38px;height:38px;border-radius:10px;background:color-mix(in srgb,var(--achievement-color) 13%,#182638);border:1px solid color-mix(in srgb,var(--achievement-color) 35%,#34445a);color:var(--achievement-color)}.achievement-icon svg{width:22px;height:22px}.achievement-card.locked .achievement-icon{color:#91a2b8;background:#1a2637;border-color:#35465b}.achievement-card-text{min-width:0;flex:1}.achievement-card h4{margin:0 0 4px;font-size:15px;line-height:1.3;color:var(--achievement-color);overflow-wrap:anywhere}.achievement-card.locked h4{color:#b2bfd1}.achievement-card p{font-size:12px;line-height:1.45;margin:0;color:#a7b6c9}.achievement-card-status{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:11px;color:#a4b3c6}.achievement-card-status .unlocked-label{color:#a3dbb1;font-weight:700}.achievement-card-status .locked-label{color:#a4b3c6;font-weight:650}.achievement-card-status .future-label{color:#e1c48b}.achievement-card-progress{display:grid;gap:5px;margin-top:auto}.achievement-card-progress-label{display:flex;justify-content:space-between;gap:6px;color:#a7b6c9;font-size:11px;font-variant-numeric:tabular-nums}.achievement-card.locked .achievement-progress-fill{background:#647b96}.achievement-card-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.achievement-card-actions .action-btn{font-size:12px;padding:7px 11px}.achievement-card-actions .action-btn:disabled,.achievement-slot .action-btn:disabled{cursor:not-allowed}.achievement-card-actions .equipped-label{font-size:11px;color:#a3dbb1}.achievement-history{font-size:10px;color:#92a3b8;line-height:1.4}.achievement-empty{grid-column:1/-1;color:var(--muted);padding:20px;text-align:center;border:1px dashed #34445a;border-radius:10px}
+  .achievement-title{display:inline-block;appearance:none;border:0;background:none;padding:0;margin:0 0 0 6px;color:var(--achievement-color);font:inherit;font-size:12px;font-weight:650;line-height:1.5;white-space:nowrap;vertical-align:baseline;cursor:pointer;text-shadow:0 0 9px color-mix(in srgb,var(--achievement-color) 28%,transparent)}.achievement-title:hover,.achievement-title[aria-expanded="true"]{filter:brightness(1.2)}.achievement-title.preview-title{cursor:default}
+  .achievement-tooltip{position:fixed;z-index:1000;width:300px;max-width:calc(100vw - 24px);max-height:calc(100dvh - 24px);overflow:auto;padding:13px 15px;border:1px solid color-mix(in srgb,var(--achievement-color) 55%,#34445a);border-radius:11px;background:#18202b;color:#f1f5fb;box-shadow:0 8px 28px #0009;font-size:12px;line-height:1.5;overflow-wrap:anywhere}.achievement-tooltip-heading{display:flex;align-items:center;gap:8px;color:var(--achievement-color);font-size:13px;font-weight:750;margin-bottom:6px}.achievement-tooltip-heading svg{width:19px;height:19px;flex:none}.achievement-tooltip-description{color:#c7d2e1}.achievement-tooltip-unlocked{color:#a3dbb1;font-weight:650;margin-top:9px}
+  .notification-item.achievement,.notification-item.achievement.unread{background:color-mix(in srgb,var(--achievement-color) 8%,#182333);border-color:color-mix(in srgb,var(--achievement-color) 45%,#34445a)}.notification-item.achievement .notification-symbol{background:color-mix(in srgb,var(--achievement-color) 17%,#182333);color:var(--achievement-color)}.notification-item.achievement .notification-symbol svg{width:17px;height:17px}.notification-achievement-title{display:block;color:var(--achievement-color);margin-bottom:4px}.notification-item.achievement .notification-read-btn{border-color:color-mix(in srgb,var(--achievement-color) 45%,#34445a);background:#253044;color:var(--achievement-color)}
+  .absolute-madness-text{color:#f9d66d;background:linear-gradient(90deg,#ff929c,#ffce75,#a3efb6,#8ddcff,#c8aaff,#ff929c);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:absolute-rainbow 4s linear infinite;text-shadow:none;filter:drop-shadow(0 0 5px #f9d66d38)}@keyframes absolute-rainbow{to{background-position:250% 0}}
+  @media(prefers-reduced-motion:reduce){.absolute-madness-text{animation:none;background:none;-webkit-text-fill-color:currentColor;color:#f9d66d;filter:none}}
+  @media(max-width:600px){.achievement-grid{grid-template-columns:1fr}.achievement-card{padding:12px}.achievement-equipment{padding:11px}.achievement-slots{gap:5px}.achievement-slot{min-height:100px;padding:8px 4px}.achievement-slot-name{font-size:11px}.achievement-title{white-space:normal;text-align:left}.achievement-header h3{font-size:20px}}
+  @media(max-width:480px){.notification-item.achievement{flex-wrap:wrap}.notification-item.achievement .notification-content{flex:1 1 calc(100% - 35px)}.notification-item.achievement .notification-read-btn{margin-left:auto}.achievement-filter{padding:6px 8px}}
  </style>
 </head>
 <body>
@@ -282,7 +287,7 @@
 <main class="wrap">
 <header>
   <div class="eyebrow">Geometry Dash · LVMC Rankings</div>
-  <h1>LVMC Levels List<span style="color:#79b9ff">.</span></h1>
+  <h1>Main Levels List<span style="color:#79b9ff">.</span></h1>
   <p>A Bermune-made ranking of the 22 classic Geometry Dash main levels, The Challenge, and RobTop Travel — plus levels voted in by the LVMC Discord community.</p>
   <div class="stats">
     <div class="stat"><strong id="main-count">24</strong> Main levels · <span id="main-total">268 pts</span></div>
@@ -358,6 +363,11 @@
   </div>
   <div class="feature" id="signed-in" hidden>
     <div class="section-title"><h2 id="welcome">My player profile</h2><button type="button" class="action-btn" id="logout">Log out</button></div>
+    <div class="account-subtabs" role="tablist" aria-label="My account sections">
+      <button type="button" class="account-subtab" role="tab" id="account-profile-tab" aria-controls="account-profile-panel" aria-selected="true" tabindex="0" data-account-view="profile">My Profile <span class="notification-badge" id="profile-notification-badge" aria-hidden="true" hidden></span></button>
+      <button type="button" class="account-subtab" role="tab" id="account-achievements-tab" aria-controls="account-achievements-panel" aria-selected="false" tabindex="-1" data-account-view="achievements">Achievements</button>
+    </div>
+    <div id="account-profile-panel" role="tabpanel" aria-labelledby="account-profile-tab" data-account-panel="profile">
     <p id="profile-info">Loading your profile…</p>
     <div class="notification-center" id="account-notification-center" hidden aria-label="My account notifications">
       <div class="notification-heading">
@@ -395,12 +405,21 @@
     <div id="my-submissions">Loading…</div>
     <div class="danger-zone" id="delete-account-zone">
       <h3>Delete account</h3>
-      <p>Permanently delete your LVMC account, all completions and points, and your leaderboard entry. Your username will become available to others. This cannot be undone.</p>
+      <p>Permanently delete your LVMC account, all completions, points, achievements, and your leaderboard entry. Your username will become available to others. This cannot be undone.</p>
       <form id="delete-account-form" class="form-stack">
         <label>Type DELETE to confirm <input name="confirmation" type="text" autocomplete="off" placeholder="DELETE" required></label>
         <button class="action-btn danger-btn" type="submit">Permanently delete my account</button>
       </form>
       <p id="delete-account-status" class="status-line" role="status" aria-live="polite"></p>
+    </div>
+    </div>
+    <div id="account-achievements-panel" role="tabpanel" aria-labelledby="account-achievements-tab" data-account-panel="achievements" hidden>
+      <div class="achievement-header"><div><h3>Achievements</h3><p>Unlock achievements through approved completions, coin claims and leaderboard milestones. Equip up to three titles to show off on the leaderboard.</p></div><button type="button" class="action-btn" id="achievement-refresh">Refresh achievements</button></div>
+      <div class="achievement-overview"><div class="achievement-overview-top"><strong id="achievement-count">— / 14</strong><span class="muted-note" id="achievement-percent">Achievement progress loads from your account.</span></div><div id="achievement-overview-bar"></div></div>
+      <div class="achievement-equipment"><div class="achievement-equipment-head"><h4>Equipped titles</h4><span id="achievement-slot-count">0 / 3 equipped</span></div><p>Titles are cosmetic. Changes save automatically. If you lose eligibility, the title is removed and must be equipped again after you regain it.</p><div class="achievement-slots" id="achievement-slots"></div><p id="achievement-slot-hint" hidden>All three slots are filled. Remove a title to equip a different one.</p><div class="achievement-preview"><div class="achievement-preview-label">Leaderboard preview</div><div class="board-name" id="achievement-preview-name">Your username</div></div></div>
+      <div id="achievement-status" class="status-line" role="status" aria-live="polite"></div>
+      <div class="achievement-toolbar"><strong id="achievement-filter-heading">All achievements</strong><div class="achievement-filters" role="group" aria-label="Filter achievements"><button type="button" class="achievement-filter" data-achievement-filter="all" aria-pressed="true">All</button><button type="button" class="achievement-filter" data-achievement-filter="unlocked" aria-pressed="false">Unlocked</button><button type="button" class="achievement-filter" data-achievement-filter="locked" aria-pressed="false">Locked</button></div></div>
+      <div class="achievement-grid" id="achievement-grid"></div>
     </div>
   </div>
 </section>
@@ -803,13 +822,169 @@ async function submissionErrorText(error){
 }
 function element(tag, cls, text) { const el=document.createElement(tag); if(cls)el.className=cls; if(text!==undefined)el.textContent=String(text); return el; }
 function clear(el){el.replaceChildren();}
+// V9.0: achievement definitions are presentation only; eligibility comes from Supabase.
+const ACHIEVEMENTS=[
+ ['insanely_dedicated','Insanely Dedicated','Complete all official RobTop Insane levels.','#ff9e67','flame','levels'],
+ ['easy_demon','Easy Demon','Complete at least one Easy Demon from either rankings list.','#a3dbb1','shield','demons'],
+ ['demon_slayer','Demon Slayer','Complete all three official RobTop Demon levels.','#ff8585','swords','levels'],
+ ['medium_demon','Medium Demon','Complete at least one Medium Demon from the Community Voted Levels list.','#79b9ff','shield','demons'],
+ ['robtop_shenanigans','RobTop Shenanigans','Complete all 23 Main Levels, excluding RobTop Travel.','#9cdacb','gamepad','levels'],
+ ['coin_master','Coin Master','Collect all 66 coins across the 22 official RobTop Main Levels.','#e9c65d','coins','coins'],
+ ['hard_demon','Hard Demon','Complete at least one Hard Demon from the Community Voted Levels list.','#ed9ac4','shield','demons'],
+ ['insane_demon','Insane Demon','Complete at least one Insane Demon from the Community Voted Levels list.','#bd9aff','shield','demons'],
+ ['main_level_master','Main Level Master','Complete RobTop Travel.','#ffab6b','crown','levels'],
+ ['extreme_demon','Extreme Demon','Complete at least one Extreme Demon from the Community Voted Levels list.','#ff626b','shield','demons'],
+ ['demon_destroyer','Demon Destroyer','Complete at least one Demon of each of the five Demon difficulties.','#f58baf','swords','difficulties'],
+ ['perfectionist','Perfectionist','Obtain every possible point across both rankings lists.','#8cddff','gem','points'],
+ ['geometry_dasher','Geometry Dasher','Reach #1 on the LVMC leaderboard.','#ffe8a3','crown','rank'],
+ ['absolute_madness','Absolute Madness','Unlock all possible achievements.','#f9d66d','trophy','achievements']
+].map(([key,name,description,color,icon,unit])=>({key,name,description,color,icon,unit}));
+const ACHIEVEMENT_MAP=new Map(ACHIEVEMENTS.map(a=>[a.key,a]));
+const RECLAIM_EVENT='achievement_geometry_dasher_reclaimed';
+const ACHIEVEMENT_EVENTS=[...ACHIEVEMENTS.map(a=>'achievement_'+a.key),RECLAIM_EVENT];
+const ICON_PATHS={
+ flame:'M12 22c-4 0-7-3-7-7 0-4 3-7 5-9 0 3 1 4 2 5 2-3 3-6 2-9 4 3 5 6 5 9 0 6-3 11-7 11ZM12 22c-2 0-4-2-4-4 0-2 2-4 4-6 2 2 4 4 4 6 0 2-2 4-4 4Z',
+ shield:'M12 22S4 18 4 11V5l8-3 8 3v6c0 7-8 11-8 11ZM9 10l3 3 3-3M12 13v4',
+ swords:'m3 3 6 2 10 10-4 4L5 9 3 3Zm18 0-6 2-3 3M8 12l-3 3 4 4 3-3M13 21l8-8M3 13l8 8M3 21l4-4M21 21l-4-4',
+ gamepad:'M7 7h10c3 0 4 2 5 7s-2 6-4 4l-3-3H9l-3 3c-2 2-5 1-4-4s2-7 5-7ZM7 10v5M4.5 12.5h5M16 11h.01M19 14h.01',
+ coins:'M12 3c5 0 9 2 9 5s-4 5-9 5-9-2-9-5 4-5 9-5ZM3 8v5c0 3 4 5 9 5s9-2 9-5V8M3 13v4c0 3 4 5 9 5s9-2 9-5v-4',
+ crown:'m2 7 5 4 5-7 5 7 5-4-3 12H5L2 7ZM5 22h14',
+ gem:'M3 8l4-5h10l4 5-9 13L3 8Zm0 0h18M7 3l5 18 5-18',
+ trophy:'M8 21h8M12 17v4M7 4h10v6a5 5 0 0 1-10 0V4ZM7 6H3v2a4 4 0 0 0 4 4M17 6h4v2a4 4 0 0 1-4 4',
+ lock:'M6 11h12v10H6zM8 11V7a4 4 0 0 1 8 0v4M12 15v2',
+ plus:'M12 5v14M5 12h14'
+};
+function achievementIcon(icon){
+ const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');
+ for(const [k,v] of Object.entries({viewBox:'0 0 24 24',fill:'none',stroke:'currentColor','stroke-width':'1.7','stroke-linecap':'round','stroke-linejoin':'round','aria-hidden':'true'}))svg.setAttribute(k,v);
+ const path=document.createElementNS(ns,'path');path.setAttribute('d',ICON_PATHS[icon]||ICON_PATHS.trophy);svg.append(path);return svg;
+}
+function achievementAccent(node,a){node.style.setProperty('--achievement-color',a.color);return node;}
+function achievementName(node,a,active=true){if(active&&a.key==='absolute_madness')node.classList.add('absolute-madness-text');return node;}
+function achievementIconBox(a,locked=false){const box=achievementAccent(element('span','achievement-icon'),a);box.append(achievementIcon(locked?'lock':a.icon));return box;}
+let accountView='profile',achievementFilter='all',achievementRows=[],achievementAvailable=null,achievementReady=false,achievementLoading=false,achievementSaving=false,achievementLoadToken=0,achievementSession=0,profileUsername='';
+function accountAchievementsVisible(){return !!currentUser&&accountView==='achievements'&&!document.querySelector('[data-panel="account"]').hidden;}
+function switchAccountView(view,load=true){
+ if(!['profile','achievements'].includes(view))return;
+ accountView=view;
+ document.querySelectorAll('[data-account-panel]').forEach(p=>p.hidden=p.dataset.accountPanel!==view);
+ document.querySelectorAll('[data-account-view]').forEach(b=>{const selected=b.dataset.accountView===view;b.setAttribute('aria-selected',String(selected));b.tabIndex=selected?0:-1;});
+ if(load&&currentUser){if(view==='achievements')loadAchievements();else{loadMySubmissions();loadNotifications('account');}}
+}
+document.querySelectorAll('[data-account-view]').forEach(b=>{
+ b.addEventListener('click',()=>switchAccountView(b.dataset.accountView));
+ b.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const next=e.key==='Home'?'profile':e.key==='End'?'achievements':accountView==='profile'?'achievements':'profile';switchAccountView(next);document.querySelector(`[data-account-view="${next}"]`).focus();});
+});
+function clearAchievementSession(){
+ achievementSession++;achievementLoadToken++;achievementRows=[];achievementAvailable=null;achievementReady=false;achievementLoading=false;achievementSaving=false;profileUsername='';achievementFilter='all';
+ switchAccountView('profile',false);showStatus('achievement-status','');renderAchievements();
+}
+function equippedRows(){return achievementRows.filter(a=>a.is_unlocked&&a.equipped_slot!=null).sort((a,b)=>a.equipped_slot-b.equipped_slot);}
+function achievementFuture(key){
+ if(!achievementAvailable)return false;
+ const has=d=>achievementAvailable.some(l=>l.category==='community'&&l.difficulty===d);
+ const missing=['medium_demon','hard_demon','insane_demon','extreme_demon'].some(d=>!has(d))||!achievementAvailable.some(l=>l.difficulty==='easy_demon');
+ if(['medium_demon','hard_demon','insane_demon','extreme_demon'].includes(key))return !has(key);
+ if(key==='easy_demon')return !achievementAvailable.some(l=>l.difficulty==='easy_demon');
+ return ['demon_destroyer','absolute_madness'].includes(key)&&missing;
+}
+function achievementProgress(current,target,color,label){
+ const bar=element('div','achievement-progress');bar.setAttribute('role','progressbar');bar.setAttribute('aria-label',label);bar.setAttribute('aria-valuemin','0');bar.setAttribute('aria-valuemax',String(Math.max(1,target)));bar.setAttribute('aria-valuenow',String(Math.max(0,Math.min(current,Math.max(1,target)))));
+ const fill=element('span','achievement-progress-fill');fill.style.width=(target>0?Math.max(0,Math.min(100,current/target*100)):0)+'%';if(color)fill.style.setProperty('--achievement-color',color);bar.append(fill);return bar;
+}
+function renderAchievements(){
+ const root=$('achievement-grid'),slots=$('achievement-slots'),preview=$('achievement-preview-name'),overview=$('achievement-overview-bar');
+ const equipped=equippedRows(),count=achievementRows.filter(a=>a.is_unlocked).length;
+ const disabled=!achievementReady||achievementLoading||achievementSaving;
+ const focus=document.activeElement?.dataset?.achievementAction;
+ clear(root);clear(slots);clear(preview);clear(overview);
+ $('achievement-refresh').disabled=achievementLoading||achievementSaving;
+ $('achievement-count').textContent=achievementReady?`${count} / ${ACHIEVEMENTS.length}`:'— / '+ACHIEVEMENTS.length;
+ $('achievement-percent').textContent=achievementReady?`${Math.round(count/ACHIEVEMENTS.length*100)}% currently unlocked`:'Achievement progress loads from your account.';
+ overview.append(achievementProgress(count,ACHIEVEMENTS.length,'#e9c65d','Overall achievement progress'));
+ $('achievement-slot-count').textContent=`${equipped.length} / 3 equipped`;
+ $('achievement-slot-hint').hidden=equipped.length<3;
+ $('achievement-filter-heading').textContent=achievementFilter==='all'?'All achievements':achievementFilter==='unlocked'?'Unlocked achievements':'Locked achievements';
+ for(let i=0;i<3;i++){
+  const row=equipped[i],a=row&&ACHIEVEMENT_MAP.get(row.achievement_key),slot=element('div','achievement-slot'+(a?'':' empty'));
+  slot.append(element('span','achievement-slot-label','Slot '+(i+1)));
+  if(a){achievementAccent(slot,a);slot.append(achievementIconBox(a),achievementName(element('span','achievement-slot-name',a.name),a));const btn=element('button','action-btn','Remove');btn.type='button';btn.disabled=disabled;btn.dataset.achievementAction='slot-'+a.key;btn.setAttribute('aria-label','Remove '+a.name);btn.addEventListener('click',()=>changeEquipped(a.key));slot.append(btn);}
+  else{slot.append(achievementIconBox({color:'#8293aa',icon:'plus'}),element('span','achievement-slot-name','Empty slot'));}
+  slots.append(slot);
+ }
+ preview.append(document.createTextNode(profileUsername||'Your username'));
+ for(const row of equipped){const a=ACHIEVEMENT_MAP.get(row.achievement_key);if(a)preview.append(achievementName(achievementAccent(element('span','achievement-title preview-title','· '+a.name),a),a));}
+ document.querySelectorAll('[data-achievement-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.achievementFilter===achievementFilter)));
+ if(!achievementReady){root.append(element('div','achievement-empty',achievementLoading?'Loading achievements…':'Achievement progress is unavailable. Refresh achievements to try again.'));return;}
+ const filtered=achievementRows.filter(r=>achievementFilter==='all'||(achievementFilter==='unlocked'?r.is_unlocked:!r.is_unlocked));
+ for(const row of filtered){
+  const a=ACHIEVEMENT_MAP.get(row.achievement_key);if(!a)continue;
+  const unlocked=row.is_unlocked===true,equippedNow=equipped.some(e=>e.achievement_key===a.key),future=!unlocked&&achievementFuture(a.key);
+  const card=achievementAccent(element('article','achievement-card '+(unlocked?'unlocked':'locked')),a);card.dataset.achievementKey=a.key;
+  const head=element('div','achievement-card-head'),text=element('div','achievement-card-text');text.append(achievementName(element('h4','',a.name),a,unlocked),element('p','',a.description));head.append(achievementIconBox(a,!unlocked),text);card.append(head);
+  const state=element('div','achievement-card-status');state.append(element('span',unlocked?'unlocked-label':future?'future-label':'locked-label',unlocked?'✓ Unlocked':future?'Not yet obtainable':'Locked'));
+  if(equippedNow)state.append(element('span','unlocked-label','Equipped'));card.append(state);
+  if(a.key==='geometry_dasher')card.append(element('p','','Only the current #1 player qualifies. Losing first place removes this title.'));
+  if(a.key==='absolute_madness')card.append(element('p','','All 13 other achievements must be unlocked at the same time.'));
+  if(future)card.append(element('p','','Requires a future level addition.'));
+  const progress=element('div','achievement-card-progress'),line=element('div','achievement-card-progress-label');line.append(element('span','','Progress'),element('span','',`${row.progress_current} / ${row.progress_target} ${a.unit==='rank'?'':row.progress_target===1&&a.unit.endsWith('s')?a.unit.slice(0,-1):a.unit}`.trim()));progress.append(line,achievementProgress(row.progress_current,row.progress_target,unlocked?a.color:null,a.name+' progress'));card.append(progress);
+  const actions=element('div','achievement-card-actions'),btn=element('button','action-btn'+(unlocked&&!equippedNow?' primary':''),equippedNow?'Unequip':unlocked?'Equip':'Locked');btn.type='button';btn.dataset.achievementAction='card-'+a.key;btn.setAttribute('aria-label',(equippedNow?'Unequip ':unlocked?'Equip ':'Locked: ')+a.name);btn.disabled=disabled||!unlocked||(!equippedNow&&equipped.length>=3);if(unlocked&&!equippedNow&&equipped.length>=3)btn.title='Remove a title to free a slot';btn.addEventListener('click',()=>changeEquipped(a.key));actions.append(btn);
+  if(row.first_unlocked_at){const date=new Date(row.first_unlocked_at);if(!Number.isNaN(date.getTime()))actions.append(element('span','achievement-history',(unlocked?'First unlocked ':'Previously unlocked ')+date.toLocaleDateString()));}card.append(actions);root.append(card);
+ }
+ if(!filtered.length)root.append(element('div','achievement-empty','No '+achievementFilter+' achievements yet.'));
+ if(focus){const target=[...document.querySelectorAll('[data-achievement-action]')].find(b=>b.dataset.achievementAction===focus);if(target&&!target.disabled)target.focus({preventScroll:true});}
+}
+async function loadAchievements({quiet=false,afterSave=false}={}){
+ const uid=currentUser?.id;if(!uid||achievementSaving&&!afterSave||quiet&&achievementLoading)return false;
+ const token=++achievementLoadToken,session=achievementSession;achievementLoading=true;
+ if(!quiet){showStatus('achievement-status','Loading achievements…');renderAchievements();}
+ try{
+  const [inventory,levelData]=await Promise.all([supabase.rpc('get_my_achievements_v90'),supabase.from('levels').select('category,difficulty')]);
+  if(uid!==currentUser?.id||token!==achievementLoadToken||session!==achievementSession)return false;
+  if(inventory.error)throw inventory.error;
+  const rows=(inventory.data||[]).filter(r=>ACHIEVEMENT_MAP.has(r.achievement_key)).sort((a,b)=>a.sort_order-b.sort_order);
+  if(rows.length!==ACHIEVEMENTS.length||new Set(rows.map(r=>r.achievement_key)).size!==ACHIEVEMENTS.length)throw new Error('Achievement inventory incomplete');
+  const availability=levelData.error?null:levelData.data||[];
+  const changed=!achievementReady||JSON.stringify(rows)!==JSON.stringify(achievementRows)||JSON.stringify(availability)!==JSON.stringify(achievementAvailable);
+  achievementRows=rows;achievementAvailable=availability;achievementReady=true;achievementLoading=false;
+  if(!quiet||changed){showStatus('achievement-status','');renderAchievements();}
+  return true;
+ }catch(error){
+  if(uid!==currentUser?.id||token!==achievementLoadToken||session!==achievementSession)return false;
+  achievementReady=false;achievementLoading=false;achievementRows=[];achievementAvailable=null;showStatus('achievement-status','Could not load achievements. Please refresh and try again.',true);console.warn('LVMC achievement inventory:',error);renderAchievements();return false;
+ }
+}
+async function changeEquipped(key){
+ const uid=currentUser?.id,session=achievementSession;if(!uid||!achievementReady||achievementLoading||achievementSaving)return;
+ const row=achievementRows.find(r=>r.achievement_key===key);if(!row?.is_unlocked)return;
+ const current=equippedRows().map(r=>r.achievement_key),removing=current.includes(key);if(!removing&&current.length>=3)return;
+ const next=removing?current.filter(k=>k!==key):[...current,key];
+ achievementSaving=true;achievementLoadToken++;showStatus('achievement-status','Saving equipped titles…');renderAchievements();
+ try{
+  const {error}=await supabase.rpc('set_equipped_titles_v90',{p_achievement_keys:next});
+  if(uid!==currentUser?.id||session!==achievementSession)return;
+  if(error)throw error;
+  const refreshed=await loadAchievements({afterSave:true});
+  if(uid!==currentUser?.id||session!==achievementSession)return;
+  if(refreshed)showStatus('achievement-status','Equipped titles saved!');
+  await loadLeaderboard();
+ }catch(error){
+  if(uid!==currentUser?.id||session!==achievementSession)return;
+  const message=String(error?.message||'');await loadAchievements({afterSave:true});
+  if(uid!==currentUser?.id||session!==achievementSession)return;
+  showStatus('achievement-status',/only equip unlocked/i.test(message)?'Your eligibility changed. Achievement progress has been refreshed.':/maximum of 3|duplicate achievement/i.test(message)?message:'Could not save titles. Please try again.',true);
+ }finally{if(uid===currentUser?.id&&session===achievementSession){achievementSaving=false;renderAchievements();}}
+}
+$('achievement-refresh').addEventListener('click',()=>loadAchievements());
+document.querySelectorAll('[data-achievement-filter]').forEach(b=>b.addEventListener('click',()=>{achievementFilter=b.dataset.achievementFilter;renderAchievements();}));
+
 function switchTab(tab) {
   if(tab==='admin' && !isAdmin) tab='rankings';
-  closeCoinMasterTooltip();
+  closeAchievementTooltip();
   document.querySelectorAll('[data-panel]').forEach(el => el.hidden=el.dataset.panel!==tab);
   document.querySelectorAll('[data-tab]').forEach(el=>el.setAttribute('aria-selected',String(el.dataset.tab===tab)));
   if(tab==='leaderboard') loadLeaderboard();
-  if(tab==='account' && currentUser) {loadMySubmissions();loadNotifications('account');}
+  if(tab==='account' && currentUser) {if(accountView==='achievements')loadAchievements();else{loadMySubmissions();loadNotifications('account');}}
   if(tab==='admin' && isAdmin) {if(adminView==='players')loadAdminPlayers();else if(adminView==='coins')loadAdminCoinQueue();else loadAdminQueue();loadNotifications('admin');}
 }
 document.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>switchTab(btn.dataset.tab)));
@@ -844,7 +1019,7 @@ document.querySelectorAll('[data-admin-view]').forEach(btn=>{
 // --- LVMC V7.2: private, persistent notifications (polling, not browser push) ---
 const ADMIN_COMPLETION_TYPES=['new_submission','resubmitted'];
 const ADMIN_COIN_TYPES=['coin_new','coin_resubmitted'];
-const NOTIFICATION_TYPES={account:['approved','rejected','coin_approved','coin_rejected','achievement_coin_master'],admin:[...ADMIN_COMPLETION_TYPES,...ADMIN_COIN_TYPES]};
+const NOTIFICATION_TYPES={account:['approved','rejected','coin_approved','coin_rejected',...ACHIEVEMENT_EVENTS],admin:[...ADMIN_COMPLETION_TYPES,...ADMIN_COIN_TYPES]};
 const notificationVisible={account:5,admin:5};
 const notificationCounts={account:0,admin:0};
 const adminNotificationSplit={completion:0,coin:0};
@@ -865,12 +1040,12 @@ function updateNotificationBadges(kind,count){
   $(kind+'-notification-center').hidden=count===0;
   const targets=kind==='admin'
     ?[['admin-notification-badge','admin-tab']]
-    :[['account-notification-badge','account-tab']];
+    :[['account-notification-badge','account-tab'],['profile-notification-badge','account-profile-tab']];
   for(const [badgeId,buttonId] of targets){
     const badge=$(badgeId),button=$(buttonId);
     badge.hidden=count===0;
     badge.textContent=count?notificationBadgeText(count):'';
-    const base=buttonId==='admin-reviews-tab'?'Completion Reviews':kind==='admin'?'Admin':'My account';
+    const base=buttonId==='account-profile-tab'?'My Profile':kind==='admin'?'Admin':'My account';
     button.setAttribute('aria-label',count?`${base}, ${count} unread notification${count===1?'':'s'}`:base);
   }
   $('mark-'+kind+'-notifications-read').disabled=count===0||notificationBulkBusy;
@@ -974,28 +1149,21 @@ async function loadNotifications(kind){
     const level=c?nameForLevel(c.level_id):'A completion';
     const player=c?(names.get(c.user_id)||'A player'):'A player';
     const unread=n.read_at===null;
-    const achievement=n.event_type==='achievement_coin_master';
+    const reclaim=n.event_type===RECLAIM_EVENT;
+    const achievement=ACHIEVEMENT_MAP.get(reclaim?'geometry_dasher':n.event_type.replace(/^achievement_/,''));
     const row=element('div','notification-item'+(unread?' unread':'')+(achievement?' achievement':''));
     const symbolClass=n.event_type==='coin_approved'?'approved':n.event_type==='coin_rejected'?'rejected':n.event_type==='coin_resubmitted'?'resubmitted':n.event_type;
     const symbol=element('span','notification-symbol '+symbolClass,
       ({approved:'✓',rejected:'×',new_submission:'!',resubmitted:'↻',coin_new:'◈',coin_resubmitted:'↻',coin_approved:'✓',coin_rejected:'×'})[n.event_type]||'•');
     symbol.setAttribute('aria-hidden','true');
-    if(achievement){
-      // Static vector trophy, using the existing gold accent.
-      const ns='http://www.w3.org/2000/svg';
-      const svg=document.createElementNS(ns,'svg');
-      svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('fill','none');
-      svg.setAttribute('stroke','currentColor');svg.setAttribute('stroke-width','1.8');
-      svg.setAttribute('stroke-linecap','round');svg.setAttribute('stroke-linejoin','round');
-      const path=document.createElementNS(ns,'path');
-      path.setAttribute('d','M8 21h8M12 17v4M7 4h10v6a5 5 0 0 1-10 0V4ZM7 6H3v2a4 4 0 0 0 4 4M17 6h4v2a4 4 0 0 1-4 4');
-      svg.append(path);symbol.replaceChildren(svg);
-    }
+    if(achievement){achievementAccent(row,achievement);symbol.replaceChildren(achievementIcon(reclaim?'crown':'trophy'));}
     const body=element('div','notification-content');
     const message=element('div','notification-message');
     if(achievement){
-      message.append(element('strong','notification-achievement-title','Achievement unlocked: Coin Master!'),
-        "Congratulations! You've collected all 66 coins across the 22 official RobTop Main Levels and earned the exclusive golden Coin Master title on the leaderboard.");
+      const heading=element('strong','notification-achievement-title',reclaim?'Geometry Dasher reclaimed!':`Achievement unlocked: ${achievement.name}!`);
+      achievementName(heading,achievement);
+      const detail=reclaim?"You've reclaimed the #1 spot on the LVMC leaderboard and are once again eligible to equip the Geometry Dasher title!":achievement.key==='geometry_dasher'?"Congratulations! You've reached #1 on the LVMC leaderboard and unlocked the Geometry Dasher title.":achievement.key==='coin_master'?"Congratulations! You've collected all 66 coins across the 22 official RobTop Main Levels and earned the golden Coin Master title.":`Congratulations! You've earned ${achievement.name}. Visit My account → Achievements to view your current eligibility and equip titles.`;
+      message.append(heading,detail);
     }else if(n.event_type==='approved')message.append(element('strong','',level),' was approved!');
     else if(n.event_type==='rejected')message.append(element('strong','',level),' was rejected.');
     else if(n.event_type==='coin_approved')message.append('All coins for ',element('strong','',level),' were approved! (+3 Main pts)');
@@ -1011,7 +1179,7 @@ async function loadNotifications(kind){
     row.append(symbol,body);
     if(unread){
       const mark=element('button','notification-read-btn','Mark read');mark.type='button';
-      mark.setAttribute('aria-label',achievement?'Mark Coin Master achievement notification as read':`Mark ${level} notification as read`);
+      mark.setAttribute('aria-label',achievement?`Mark ${achievement.name}${reclaim?' reclaim':''} notification as read`:`Mark ${level} notification as read`);
       mark.addEventListener('click',async()=>{
         if(!currentUser||currentUser.id!==uid)return;
         mark.disabled=true;
@@ -1080,7 +1248,7 @@ async function refreshNotificationUI(){
   if(!currentUser||notificationBulkBusy)return;
   const selected=document.querySelector('[data-tab][aria-selected="true"]')?.dataset.tab;
   const jobs=[refreshNotificationBadges()];
-  if(selected==='account')jobs.push(loadNotifications('account'));
+  if(selected==='account'){if(accountView==='achievements')jobs.push(loadAchievements({quiet:true}));else jobs.push(loadNotifications('account'));}
   if(selected==='admin'&&isAdmin)jobs.push(loadNotifications('admin'));
   await Promise.all(jobs);
 }
@@ -1094,83 +1262,84 @@ document.addEventListener('visibilitychange',()=>{
   if(!document.hidden&&currentUser)refreshNotificationUI();
 });
 
-// V8.3: one shared, viewport-positioned tooltip avoids clipping in the leaderboard.
-const coinMasterTooltip=element('div','coin-master-tooltip');
-coinMasterTooltip.id='coin-master-tooltip';coinMasterTooltip.hidden=true;
-coinMasterTooltip.setAttribute('role','tooltip');
-const coinMasterHeading=element('div','coin-master-tooltip-heading');
-const coinMasterIcon=element('span','coin-symbol','◈');coinMasterIcon.setAttribute('aria-hidden','true');
-coinMasterHeading.append(coinMasterIcon,element('span','','Coin Master Achievement'));
-const coinMasterUnlocked=element('div','coin-master-tooltip-unlocked');
-coinMasterTooltip.append(coinMasterHeading,element('div','coin-master-tooltip-description',
-  'Obtain all 66 coins across all 22 official RobTop Main Levels.'),coinMasterUnlocked);
-document.body.append(coinMasterTooltip);
-let coinMasterAnchor=null,coinMasterPinned=false,coinMasterHideTimer=null;
-function cancelCoinMasterHide(){clearTimeout(coinMasterHideTimer);coinMasterHideTimer=null;}
-function closeCoinMasterTooltip(){
-  cancelCoinMasterHide();
-  if(coinMasterAnchor){coinMasterAnchor.setAttribute('aria-expanded','false');coinMasterAnchor.removeAttribute('aria-describedby');}
-  coinMasterAnchor=null;coinMasterPinned=false;coinMasterTooltip.hidden=true;
+// V9.0: one shared, viewport-positioned tooltip avoids clipping in the leaderboard.
+const achievementTooltip=element('div','achievement-tooltip');
+achievementTooltip.id='achievement-tooltip';achievementTooltip.hidden=true;
+achievementTooltip.setAttribute('role','tooltip');
+const achievementHeading=element('div','achievement-tooltip-heading');
+const achievementUnlocked=element('div','achievement-tooltip-unlocked');
+const achievementDescription=element('div','achievement-tooltip-description');
+achievementTooltip.append(achievementHeading,achievementDescription,achievementUnlocked);
+document.body.append(achievementTooltip);
+let achievementAnchor=null,achievementPinned=false,achievementHideTimer=null;
+function cancelAchievementHide(){clearTimeout(achievementHideTimer);achievementHideTimer=null;}
+function closeAchievementTooltip(){
+  cancelAchievementHide();
+  if(achievementAnchor){achievementAnchor.setAttribute('aria-expanded','false');achievementAnchor.removeAttribute('aria-describedby');}
+  achievementAnchor=null;achievementPinned=false;achievementTooltip.hidden=true;
 }
-function positionCoinMasterTooltip(){
-  if(!coinMasterAnchor)return;
-  if(!coinMasterAnchor.isConnected||!coinMasterAnchor.getClientRects().length){closeCoinMasterTooltip();return;}
-  const rect=coinMasterAnchor.getBoundingClientRect(),w=document.documentElement.clientWidth,h=window.innerHeight;
-  if(rect.bottom<0||rect.top>h||rect.right<0||rect.left>w){closeCoinMasterTooltip();return;}
+function positionAchievementTooltip(){
+  if(!achievementAnchor)return;
+  if(!achievementAnchor.isConnected||!achievementAnchor.getClientRects().length){closeAchievementTooltip();return;}
+  const rect=achievementAnchor.getBoundingClientRect(),w=document.documentElement.clientWidth,h=window.innerHeight;
+  if(rect.bottom<0||rect.top>h||rect.right<0||rect.left>w){closeAchievementTooltip();return;}
   const margin=12,gap=7;
-  const width=coinMasterTooltip.offsetWidth,height=coinMasterTooltip.offsetHeight;
+  const width=achievementTooltip.offsetWidth,height=achievementTooltip.offsetHeight;
   const left=Math.max(margin,Math.min(rect.left,w-width-margin));
   const below=rect.bottom+gap,above=rect.top-height-gap;
   const preferred=below+height<=h-margin||above<margin?below:above;
   const top=Math.max(margin,Math.min(preferred,h-height-margin));
-  coinMasterTooltip.style.left=left+'px';coinMasterTooltip.style.top=top+'px';
+  achievementTooltip.style.left=left+'px';achievementTooltip.style.top=top+'px';
 }
-function showCoinMasterTooltip(button,username,pinned=false){
-  if(coinMasterAnchor!==button)closeCoinMasterTooltip();
-  cancelCoinMasterHide();coinMasterAnchor=button;coinMasterPinned=pinned||coinMasterPinned;
-  coinMasterUnlocked.textContent='✓ Unlocked by '+username;
-  coinMasterTooltip.hidden=false;
-  button.setAttribute('aria-expanded','true');button.setAttribute('aria-describedby',coinMasterTooltip.id);
-  positionCoinMasterTooltip();
+function showAchievementTooltip(button,username,a,pinned=false){
+  if(achievementAnchor!==button)closeAchievementTooltip();
+  cancelAchievementHide();achievementAnchor=button;achievementPinned=pinned||achievementPinned;
+  achievementAccent(achievementTooltip,a);
+  achievementHeading.replaceChildren(achievementIcon(a.icon),achievementName(element('span','',a.name+' Achievement'),a));
+  achievementDescription.textContent=a.description+(a.key==='geometry_dasher'?' Only the current #1 player qualifies.':a.key==='absolute_madness'?' All 13 other achievements must be unlocked simultaneously.':'');
+  achievementUnlocked.textContent='✓ Unlocked by '+username;
+  achievementTooltip.hidden=false;
+  button.setAttribute('aria-expanded','true');button.setAttribute('aria-describedby',achievementTooltip.id);
+  positionAchievementTooltip();
 }
-function scheduleCoinMasterHide(){
-  cancelCoinMasterHide();
-  if(!coinMasterAnchor||coinMasterPinned||coinMasterAnchor.matches(':focus-visible'))return;
-  coinMasterHideTimer=setTimeout(closeCoinMasterTooltip,180);
+function scheduleAchievementHide(){
+  cancelAchievementHide();
+  if(!achievementAnchor||achievementPinned||achievementAnchor.matches(':focus-visible'))return;
+  achievementHideTimer=setTimeout(closeAchievementTooltip,180);
 }
-function createCoinMasterTitle(username){
-  const button=element('button','coin-master-title','· Coin Master');button.type='button';
-  button.setAttribute('aria-label','Coin Master achievement for '+username);
+function createAchievementTitle(username,a){
+  const button=achievementName(achievementAccent(element('button','achievement-title','· '+a.name),a),a);button.type='button';
+  button.setAttribute('aria-label',a.name+' achievement for '+username);
   button.setAttribute('aria-expanded','false');
   button.addEventListener('pointerenter',event=>{
-    if(event.pointerType!=='touch')showCoinMasterTooltip(button,username);
+    if(event.pointerType!=='touch')showAchievementTooltip(button,username,a);
   });
-  button.addEventListener('pointerleave',()=>{if(coinMasterAnchor===button)scheduleCoinMasterHide();});
-  button.addEventListener('focus',()=>{if(button.matches(':focus-visible'))showCoinMasterTooltip(button,username);});
-  button.addEventListener('blur',()=>{if(coinMasterAnchor===button)closeCoinMasterTooltip();});
+  button.addEventListener('pointerleave',()=>{if(achievementAnchor===button)scheduleAchievementHide();});
+  button.addEventListener('focus',()=>{if(button.matches(':focus-visible'))showAchievementTooltip(button,username,a);});
+  button.addEventListener('blur',()=>{if(achievementAnchor===button)closeAchievementTooltip();});
   button.addEventListener('click',()=>{
-    if(coinMasterAnchor===button&&coinMasterPinned)closeCoinMasterTooltip();
-    else showCoinMasterTooltip(button,username,true);
+    if(achievementAnchor===button&&achievementPinned)closeAchievementTooltip();
+    else showAchievementTooltip(button,username,a,true);
   });
   return button;
 }
-coinMasterTooltip.addEventListener('pointerenter',cancelCoinMasterHide);
-coinMasterTooltip.addEventListener('pointerleave',scheduleCoinMasterHide);
+achievementTooltip.addEventListener('pointerenter',cancelAchievementHide);
+achievementTooltip.addEventListener('pointerleave',scheduleAchievementHide);
 document.addEventListener('pointerdown',event=>{
-  if(coinMasterAnchor&&!coinMasterAnchor.contains(event.target)&&!coinMasterTooltip.contains(event.target))closeCoinMasterTooltip();
+  if(achievementAnchor&&!achievementAnchor.contains(event.target)&&!achievementTooltip.contains(event.target))closeAchievementTooltip();
 });
 document.addEventListener('keydown',event=>{
-  if(event.key==='Escape'&&coinMasterAnchor)closeCoinMasterTooltip();
+  if(event.key==='Escape'&&achievementAnchor)closeAchievementTooltip();
 });
-window.addEventListener('resize',positionCoinMasterTooltip);
-window.addEventListener('scroll',positionCoinMasterTooltip,{passive:true,capture:true});
+window.addEventListener('resize',positionAchievementTooltip);
+window.addEventListener('scroll',positionAchievementTooltip,{passive:true,capture:true});
 let leaderboardLoadToken=0;
 async function loadLeaderboard(){
   const token=++leaderboardLoadToken;
-  closeCoinMasterTooltip();
+  closeAchievementTooltip();
   const root=$('leaderboard-list'); root.textContent='Loading leaderboard…';
   // Server calculates both the existing scores and current achievement eligibility.
-  const {data,error}=await supabase.rpc('get_leaderboard_v83');
+  const {data,error}=await supabase.rpc('get_leaderboard_v90');
   if(token!==leaderboardLoadToken)return;
   if(error){root.textContent='Could not load leaderboard: '+errorText(error);return;}
   clear(root);
@@ -1180,7 +1349,8 @@ async function loadLeaderboard(){
     const rank=element('span','board-rank',`#${i+1}`);
     const middle=element('div','board-player');
     const name=element('div','board-name',player.username);
-    if(player.coin_master===true)name.append(createCoinMasterTitle(player.username));
+    const equipped=Array.isArray(player.equipped_titles)?player.equipped_titles:[];
+    for(const key of [...new Set(equipped)].slice(0,3)){const a=ACHIEVEMENT_MAP.get(key);if(a)name.append(createAchievementTitle(player.username,a));}
     middle.append(
       name,
       element('div','board-sub',`${player.main_completed} / ${mainLevels.length} main levels · ${player.community_completed} / ${communityLevels.length} community levels`)
@@ -1263,7 +1433,11 @@ async function loadLevels(){
 }
 async function loadProfile(){
   if(!currentUser)return;
-  const {data,error}=await supabase.from('profiles').select('username').eq('id',currentUser.id).maybeSingle();
+  const uid=currentUser.id;
+  const {data,error}=await supabase.from('profiles').select('username').eq('id',uid).maybeSingle();
+  if(uid!==currentUser?.id)return;
+  profileUsername=data?.username||'';
+  if(achievementReady)renderAchievements();
   $('welcome').textContent=data?.username?`${data.username}'s profile`:'My player profile';
   $('profile-info').textContent=error?'Signed in. Could not load profile: '+errorText(error):`Signed in as ${data?.username||'player'}. Your submissions need admin approval to earn points.`;
 }
@@ -1383,6 +1557,7 @@ async function refreshAuth(user){
   $('signed-in').hidden=!user;
   if(previousId!==user?.id){
     clearNotificationSession();
+    clearAchievementSession();
     moderationLoadToken++;
     $('admin-players').textContent='Loading players…';
     showStatus('moderation-status','');
@@ -1420,7 +1595,7 @@ $('username-form').addEventListener('submit',async(e)=>{
     const {error}=await supabase.rpc('change_my_username',{new_username:username});
     if(error)throw error;
     showStatus('username-status','Username updated successfully!');
-    form.reset();await Promise.all([loadProfile(),loadLeaderboard()]);
+    form.reset();await Promise.all([loadProfile(),loadLeaderboard(),refreshNotificationUI()]);
     if(isAdmin)await loadAdminQueue();
   }catch(err){
     const msg=errorText(err);
@@ -1950,6 +2125,7 @@ supabase.auth.onAuthStateChange((event,session)=>{
     }catch(err){showStatus('global-status',errorText(err),true);}
   },0);
 });
+renderAchievements();
 try{
   await Promise.all([loadLeaderboard(),loadLevels()]);
   // A visitor without a session is normal, not an authentication error.
