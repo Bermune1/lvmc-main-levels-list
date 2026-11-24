@@ -253,8 +253,8 @@
   <p>A Bermune-made ranking of the 22 classic Geometry Dash main levels, The Challenge, and RobTop Travel — plus levels voted in by the LVMC Discord community.</p>
   <div class="stats">
     <div class="stat"><strong id="main-count">24</strong> Main levels · <span id="main-total">268 pts</span></div>
-    <div class="stat"><strong id="community-count">1</strong> Community voted · <span id="community-total">45 pts</span></div>
-    <div class="stat"><strong id="count">25</strong> Levels total</div>
+    <div class="stat"><strong id="community-count">2</strong> Community voted · <span id="community-total">74 pts</span></div>
+    <div class="stat"><strong id="count">26</strong> Levels total</div>
   </div>
 </header>
 
@@ -288,7 +288,7 @@
         <div class="rankings-eyebrow">CHOSEN BY THE LVMC DISCORD</div>
         <h2>Community Voted Levels</h2>
         <p>All other levels selected through community polls.</p>
-        <div class="rankings-category-stats"><strong id="community-count-card">1</strong> level<span id="community-level-plural"></span> <span aria-hidden="true">·</span> <strong id="community-points-card">45</strong> possible points</div>
+        <div class="rankings-category-stats"><strong id="community-count-card">2</strong> level<span id="community-level-plural">s</span> <span aria-hidden="true">·</span> <strong id="community-points-card">74</strong> possible points</div>
       </div>
       <div class="list" id="community-list"></div>
       <div class="community-vote-note"><span aria-hidden="true">✦</span> New levels join this list when the LVMC Discord votes them in.</div>
@@ -435,7 +435,7 @@
 </section>
 <footer>
   <p>Made for the LVMC gang · Not affiliated with actual RobTop or Geometry Dash</p>
-  <p class="credit">Background image: <a href="https://www.charlieintel.com/" target="_blank" rel="noopener noreferrer">CharlieIntel</a>. Gameplay screenshots: <a href="https://stpkukaif.github.io/GeometryDash/" target="_blank" rel="noopener noreferrer">GD screenshot collection</a> &amp; <a href="https://store.steampowered.com/app/322170/Geometry_Dash/" target="_blank" rel="noopener noreferrer">Steam (Dash)</a>. RobTop Travel thumbnail art: <a href="https://www.youtube.com/watch?v=CaoUIkQ3QuI" target="_blank" rel="noopener noreferrer">Lairon GD showcase</a>. Sweater Weather thumbnail: <a href="https://www.youtube.com/watch?v=y3Kk0ZvDqUM" target="_blank" rel="noopener noreferrer">credited showcase</a>.</p>
+  <p class="credit">Background image: <a href="https://www.charlieintel.com/" target="_blank" rel="noopener noreferrer">CharlieIntel</a>. Gameplay screenshots: <a href="https://stpkukaif.github.io/GeometryDash/" target="_blank" rel="noopener noreferrer">GD screenshot collection</a> &amp; <a href="https://store.steampowered.com/app/322170/Geometry_Dash/" target="_blank" rel="noopener noreferrer">Steam (Dash)</a>. RobTop Travel thumbnail art: <a href="https://www.youtube.com/watch?v=CaoUIkQ3QuI" target="_blank" rel="noopener noreferrer">Lairon GD showcase</a>. Sweater Weather thumbnail: <a href="https://www.youtube.com/watch?v=y3Kk0ZvDqUM" target="_blank" rel="noopener noreferrer">credited showcase</a>. Nine Circles thumbnail: <a href="https://www.youtube.com/watch?v=LPl51rdl6-o" target="_blank" rel="noopener noreferrer">credited showcase</a>.</p>
 </footer>
 </main>
 
@@ -457,7 +457,18 @@ const levels = [
     "category": "community",
     "image": "sweater-weather.png",
     "source": "https://www.youtube.com/watch?v=y3Kk0ZvDqUM",
-    "sourceLabel": "Thumbnail image credit: Sweater Weather showcase ↗"
+    "sourceLabel": "Thumbnail image credit: Sweater Weather showcase ↗",
+    "description": "Sweater Weather is an entry-level Extreme Demon and the first level selected through an LVMC community poll. Completing this level earns 45 Community points toward the {categoryTotal}-point Community Voted Levels maximum."
+  },
+  {
+    "name": "Nine Circles",
+    "points": 29,
+    "category": "community",
+    "tier": "",
+    "image": "nine-circles.jpg",
+    "source": "https://www.youtube.com/watch?v=LPl51rdl6-o",
+    "sourceLabel": "Thumbnail image credit: Nine Circles showcase ↗",
+    "description": "Nine Circles by Zobros is an iconic Hard Demon known for its challenging wave gameplay and flashing effects. Selected through a community vote, completing this level earns 29 Community points toward the {categoryTotal}-point Community Voted Levels maximum."
   },
   {
     "name": "Deadlocked",
@@ -660,7 +671,7 @@ function renderRankedLevels(group,listId,categoryName,categoryTotal){
   const rank=document.createElement('span');rank.className='rank';rank.textContent='#'+(i+1);
   const tier=listId==='main-list'
     ? (i===0?'tier-red':i<4?'tier-gold':i<10?'tier-green':'')
-    : (i<2?'tier-red':i<5?'tier-gold':i<10?'tier-green':'');
+    : (level.tier ?? (i<2?'tier-red':i<5?'tier-gold':i<10?'tier-green':''));
   const title=document.createElement('span');title.className='name'+(tier?' '+tier:'');title.textContent=level.name;
   const pill=document.createElement('span');pill.className='points'+(tier?' '+tier:'');pill.textContent=level.points+' '+(level.points===1?'pt':'pts');
   const chev=document.createElement('span');chev.className='chev';chev.textContent='⌄';chev.setAttribute('aria-hidden','true');
@@ -674,7 +685,7 @@ function renderRankedLevels(group,listId,categoryName,categoryTotal){
   const desc=document.createElement('p');desc.className='detail-description';
    const eligibleForCoins=listId==='main-list'&&coinEligibleMainNames.has(level.name);
    desc.textContent=level.description
-     ? level.description.replace('202-point Main Level maximum','268-point Main Level maximum (including coin bonuses)')
+     ? level.description.replace('202-point Main Level maximum','268-point Main Level maximum (including coin bonuses)').replace('{categoryTotal}',String(categoryTotal))
      : ('Completing '+level.name+' earns '+level.points+' base '+(level.points===1?'point':'points')+' toward the '+categoryName+' rankings.');
   const source=document.createElement('a');source.className='img-source';source.href=level.source;source.target='_blank';source.rel='noopener noreferrer';source.textContent=level.sourceLabel || 'View screenshot source ↗';
   content.append(label,value,desc);
