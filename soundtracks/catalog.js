@@ -27,5 +27,69 @@ window.LVMC_HOSTED_TRACKS = Object.freeze({
   "Clubstep": {
     url: "soundtracks/clubstep.mp3",
     offset: 0
+    },
+  "Dash": {
+    url: "soundtracks/dash.mp3",
+    offset: 0
+  },
+  "Blast Processing": {
+    url: "soundtracks/blast-processing.mp3",
+    offset: 0
+  },
+  "Clutterfunk": {
+    url: "soundtracks/clutterfunk.mp3",
+    offset: 0
+  },
+  "Deadlocked": {
+    url: "soundtracks/deadlocked.mp3",
+    offset: 0
+  },
+  "Electrodynamix": {
+    url: "soundtracks/electrodynamix.mp3",
+    offset: 0
+  },
+  "Electroman Adventures": {
+    url: "soundtracks/electroman.mp3",
+    offset: 0
+    },
+  "Fingerdash": {
+    url: "soundtracks/fingerdash.mp3",
+    offset: 0
+  },
+  "Geometrical Dominator": {
+    url: "soundtracks/geometrical-dominator.mp3",
+    offset: 0
+  },
+  "Hexagon Force": {
+    url: "soundtracks/hexagon-force.mp3",
+    offset: 0
+  },
+  "Jumper": {
+    url: "soundtracks/jumper.mp3",
+    offset: 0
+    },
+  "Polargeist": {
+    url: "soundtracks/polargeist.mp3",
+    offset: 0
+  },
+  "Stereo Madness": {
+    url: "soundtracks/stereo-madness.mp3",
+    offset: 0
+  },
+  "The Challenge": {
+    url: "soundtracks/the-challenge.mp3",
+    offset: 0
+  },
+  "Theory Of Everything": {
+    url: "soundtracks/theory-of-everything.mp3",
+    offset: 0
+  },
+  "Theory Of Everything 2": {
+    url: "soundtracks/theory-of-everything-2.mp3",
+    offset: 0
+  },
+  "Time Machine": {
+    url: "soundtracks/time-machine.mp3",
+    offset: 0
   }
 });
