@@ -23,6 +23,10 @@ window.LVMC_HOSTED_TRACKS = Object.freeze({
   "xStep": {
     url: "soundtracks/xstep.mp3",
     offset: 0
+  },
+  "Clubstep": {
+    url: "soundtracks/clubstep.mp3",
+    offset: 0
   }
 });
 
