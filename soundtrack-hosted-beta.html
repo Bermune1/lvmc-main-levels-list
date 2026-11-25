@@ -1,0 +1,2569 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<meta name="theme-color" content="#0d1118" />
+<meta name="description" content="LVMC Geometry Dash rankings: a Main Levels List and separate Discord Community Voted Levels, with independent scores and a main-first leaderboard." />
+<title>LVMC Rankings V9.3 Beta — Hosted Soundtracks</title>
+<style>
+ :root{color-scheme:dark;--bg:#0d1118;--panel:#151b25;--panel-active:#192333;--border:#293241;--muted:#99a7ba;--text:#f1f5fb;--accent:#79b9ff}
+ *{box-sizing:border-box}
+ html{scroll-behavior:smooth}
+ body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -9%,#1b314b 0,transparent 54%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif}
+ .wrap{max-width:880px;margin:auto;padding:64px 20px 82px}
+ header{text-align:center;margin:0 auto 42px}
+ .eyebrow{color:var(--accent);text-transform:uppercase;letter-spacing:.22em;font-size:11px;font-weight:750}
+ h1{font-size:clamp(37px,7vw,60px);letter-spacing:-.058em;line-height:1.1;margin:11px 0 14px;font-weight:790}
+ header p{color:var(--muted);margin:10px auto;max-width:540px;font-size:14px}
+ .stats{display:flex;justify-content:center;gap:10px;margin-top:26px;flex-wrap:wrap}
+ .stat{border:1px solid var(--border);background:#151e2a;border-radius:12px;padding:10px 17px;color:var(--muted);font-size:12px;white-space:nowrap}
+ .stat strong{color:#fff;font-size:16px;margin-right:6px}
+ .section-title{display:flex;align-items:center;justify-content:space-between;margin:0 0 13px;gap:10px}
+ .section-title h2{font-size:17px;letter-spacing:-.02em;margin:0}
+ .section-title span{font-size:12px;color:var(--muted)}
+ .list{display:grid;gap:9px}
+ details{border:1px solid var(--border);background:var(--panel);border-radius:13px;overflow:hidden;transition:border-color .2s,background .2s,box-shadow .2s}
+ details:hover,details[open]{border-color:#466485;background:var(--panel-active)}
+ details[open]{box-shadow:0 10px 32px #05070b26}
+ summary{cursor:pointer;display:flex;align-items:center;gap:16px;padding:11px 18px;list-style:none;min-height:77px;outline-offset:3px}
+ summary::-webkit-details-marker{display:none}
+ summary:focus-visible{outline:2px solid var(--accent)}
+ .rank{color:#9caac0;font-variant-numeric:tabular-nums;font-weight:750;width:38px;flex:0 0 38px;font-size:14px}
+ .thumb{width:92px;height:53px;flex:0 0 92px;border-radius:8px;object-fit:cover;object-position:center;border:1px solid #ffffff24;background:#253348;box-shadow:0 2px 10px #0003}
+ .name{font-weight:670;flex:1;min-width:0;line-height:1.3;letter-spacing:-.008em}
+ .points{color:#b2d6ff;background:#20384f;border:1px solid #365979;padding:5px 10px;border-radius:8px;font-size:12px;font-weight:740;white-space:nowrap;font-variant-numeric:tabular-nums}
+ /* Both lists: #1 red, #2–4 gold, #5–10 green, remaining ranks default. */
+ .name.tier-red{color:#ff626b;text-shadow:0 0 15px rgba(255,82,92,.16)}
+ .points.tier-red{color:#ff9ca3;background:#4c2029;border-color:#a94755}
+ .name.tier-gold{color:#f4d35e}
+ .points.tier-gold{color:#ffe59a;background:#493915;border-color:#9e7a2d}
+ .name.tier-green{color:#a3dbb1}
+ .points.tier-green{color:#b8e8c4;background:#203c2f;border-color:#477b60}
+ .chev{color:#9cadbf;transition:transform .2s;display:inline-flex;align-items:center;justify-content:center;width:15px;height:18px;font-size:18px;line-height:1}
+ details[open] .chev{transform:rotate(180deg)}
+ .detail-panel{border-top:1px solid var(--border);padding:17px 21px;display:grid;grid-template-columns:220px 1fr;gap:20px;align-items:center}
+ .detail-image{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;border-radius:9px;border:1px solid #ffffff25;background:#253348}
+ .detail-image.robtop-travel-expanded{object-fit:cover;object-position:center}
+ .small-label{color:#90a2bc;text-transform:uppercase;letter-spacing:.13em;font-size:10px;font-weight:740}
+ .detail-value{font-size:31px;letter-spacing:-.04em;line-height:1.13;font-weight:780;color:#f4f8ff;margin:5px 0 8px}
+ .detail-value span{color:#8fbef1;font-size:14px;letter-spacing:0;font-weight:600}
+ .detail-description{color:#a4b2c4;font-size:12px;margin:0}
+ .img-source{color:#8dbff8;text-decoration:none;font-size:11px;display:inline-block;margin-top:10px}
+ .img-source:hover{text-decoration:underline}
+ footer{text-align:center;color:#758398;font-size:12px;margin-top:38px}
+ footer p{margin:5px 0}
+ footer .credit{font-size:11px;color:#65788e}
+ footer a{color:#86a9d5;text-underline-offset:2px}
+ @media(max-width:600px){
+  .wrap{padding-top:45px;padding-bottom:60px}
+  .detail-panel{grid-template-columns:1fr;gap:12px;padding:14px 17px 18px}
+  .detail-image{max-width:100%}
+  .detail-value{font-size:27px}
+ }
+ @media(max-width:480px){
+  .wrap{padding-left:13px;padding-right:13px}
+  summary{gap:10px;padding:10px 12px;min-height:68px}
+  .rank{width:29px;flex-basis:29px;font-size:12px}
+  .thumb{width:73px;height:45px;flex-basis:73px;border-radius:7px}
+  .name{font-size:13px}
+  .points{font-size:11px;padding:4px 6px}
+  .chev{width:10px}
+  .stat{padding:9px 12px}
+ }
+ @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+
+  /* LVMC 2.0 interactive features */
+  .navtabs{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin:22px 0 27px}
+  .navtab,.action-btn{appearance:none;border:1px solid #36506a;background:#192739;color:#d8e7fa;border-radius:10px;padding:10px 15px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+  .navtab[aria-selected="true"],.action-btn.primary{background:#28527b;border-color:#5286b7;color:#fff}
+  .navtab:hover,.action-btn:hover{border-color:#82b8e8}
+  .action-btn:disabled{opacity:.55;cursor:wait}
+  .feature{border:1px solid var(--border);border-radius:14px;background:#151b25;padding:20px;margin-bottom:16px}
+  .feature h2,.feature h3{margin:0 0 13px;font-size:19px}
+  .feature p{color:var(--muted);font-size:13px}
+  .feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:13px}
+  .form-stack{display:grid;gap:11px;max-width:460px}
+  .form-stack label{display:grid;gap:5px;color:#c7d7e9;font-size:12px;font-weight:650}
+  .form-stack input,.form-stack select{width:100%;min-width:0;padding:11px 12px;border-radius:9px;background:#0d1521;border:1px solid #3a4b62;color:#f1f5fb;font:inherit;font-size:14px}
+  .form-stack input:focus,.form-stack select:focus{outline:2px solid #79b9ff;outline-offset:1px}
+  /* V8.1: optional search below the existing level selector */
+  .level-search-status{font-size:12px;color:var(--muted);line-height:1.4}
+  .level-search-status:empty{display:none}
+  .button-row{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+  .status-line{font-size:13px;color:#b4d8ff;min-height:18px;overflow-wrap:anywhere}
+  .status-line.error{color:#ff9ca3}
+  .board-row{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:center;border-top:1px solid var(--border);padding:13px 4px}
+  .board-rank{color:#f4d35e;font-weight:800}
+  .board-name{font-weight:700;overflow-wrap:anywhere}
+  .board-sub{font-size:12px;color:var(--muted)}
+  .board-score{font-weight:800;text-align:right}
+  .submission-row{border-top:1px solid var(--border);padding:13px 0;display:grid;gap:8px}
+  .submission-row strong{font-size:14px}
+  .submission-meta{font-size:12px;color:var(--muted);overflow-wrap:anywhere}
+  .tag{display:inline-block;border:1px solid #536378;padding:2px 8px;border-radius:99px;color:#dce8f6;font-size:11px}
+  .tag.approved{color:#a3dbb1;border-color:#477b60}
+  .tag.rejected{color:#ff9ca3;border-color:#a94755}
+   .tag.pending{color:#ffe59a;border-color:#9e7a2d}
+   .tag.revoked{color:#d5b6ff;border-color:#8564b1}
+   .danger-zone{border:1px solid #85404b;background:#261b25;border-radius:12px;padding:17px;margin-top:25px}
+   .danger-zone h3{color:#ffacb5;margin:0 0 8px}
+   .danger-btn{border-color:#a94755;color:#ffc3c9;background:#43242c}
+   /* V7.1: compact, expandable rejection form */
+   .rejection-panel{display:grid;gap:12px;width:100%;max-width:560px;margin-top:5px;padding:15px;border:1px solid #3a4b62;border-radius:12px;background:#192739}
+   .rejection-panel-title{font-size:14px;font-weight:750;color:#f1f5fb}
+   .rejection-reason-field{display:grid;gap:7px;width:100%;min-width:0;color:#c7d7e9;font-size:12px;font-weight:650}
+   .rejection-reason-field textarea{display:block;width:100%;min-width:0;min-height:92px;resize:vertical;padding:11px 12px;border:1px solid #3a4b62;border-radius:9px;background:#0d1521;color:#f1f5fb;font:inherit;font-size:13px;line-height:1.5}
+   .rejection-reason-field textarea:focus{outline:2px solid #79b9ff;outline-offset:1px}
+   .rejection-reason-field textarea::placeholder{color:#8191a7}
+   .rejection-counter{font-size:11px;color:#99a7ba;text-align:right}
+   .rejection-panel .button-row{margin-top:0}
+   /* V7.1: admin dashboard sub-navigation */
+   .admin-subtabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding:5px;margin:18px 0 23px;border:1px solid #304158;border-radius:13px;background:#0d1521}
+   .admin-subtab{min-width:0;appearance:none;border:1px solid transparent;background:transparent;color:#a7bad0;border-radius:9px;padding:12px 9px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
+   .admin-subtab:hover{color:#f1f5fb;background:#1c3046}
+   .admin-subtab[aria-selected="true"]{color:#fff;background:#28527b;border-color:#5286b7;box-shadow:0 2px 8px #0003}
+   .admin-subtab:focus-visible{outline:2px solid #79b9ff;outline-offset:2px}
+   [data-admin-panel]>h3{font-size:17px;margin:0 0 9px}
+   @media(max-width:480px){.admin-subtab{font-size:12px;padding:11px 5px}}
+
+    /* V7.2: persistent, Discord-style notification badges and inboxes */
+    .navtab{display:inline-flex;align-items:center;justify-content:center;gap:7px}
+    .admin-subtab{display:inline-flex;align-items:center;justify-content:center;gap:7px}
+    .notification-badge{display:inline-flex;align-items:center;justify-content:center;flex:none;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:#ed4755;color:#fff;font-size:10px;font-weight:850;line-height:1;letter-spacing:0;font-variant-numeric:tabular-nums;box-shadow:0 2px 8px #ed475555}
+    .notification-center{margin:17px 0 23px;padding:16px;border:1px solid #34485e;border-radius:13px;background:#111e2d}
+    .notification-heading{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+    .notification-heading h3{font-size:16px;margin:0 0 3px}
+    .notification-heading p{font-size:12px;margin:0;color:#99a7ba}
+    .notification-heading .action-btn{font-size:12px;padding:8px 11px}
+    .notification-list{display:grid;gap:8px;margin-top:13px}
+    .notification-item{display:flex;align-items:flex-start;gap:10px;padding:11px;border:1px solid #293b50;border-radius:10px;background:#152233}
+    .notification-item.unread{background:#1b3046;border-color:#466b8d}
+    .notification-symbol{display:flex;align-items:center;justify-content:center;flex:0 0 27px;width:27px;height:27px;border-radius:8px;background:#29435c;color:#b4d8ff;font-weight:850;font-size:16px}
+    .notification-symbol.approved{background:#203c2f;color:#a3dbb1}
+    .notification-symbol.rejected{background:#4c2029;color:#ff9ca3}
+    .notification-symbol.resubmitted{background:#3d3153;color:#d5b6ff}
+    .notification-content{min-width:0;flex:1}
+    .notification-message{font-size:13px;line-height:1.45;color:#f1f5fb;overflow-wrap:anywhere}
+    .notification-meta{font-size:11px;color:#99a7ba;margin-top:4px;overflow-wrap:anywhere}
+    .notification-read-btn{appearance:none;flex:none;align-self:center;border:1px solid #4b6887;background:#20344b;color:#c5e2ff;border-radius:8px;padding:6px 9px;font:inherit;font-size:11px;font-weight:700;cursor:pointer}
+    .notification-read-btn:hover{border-color:#82b8e8}
+    .notification-read-btn:disabled{opacity:.55;cursor:wait}
+    .notification-footer{display:flex;align-items:center;justify-content:space-between;gap:9px;flex-wrap:wrap;margin-top:10px}
+    .notification-footer .action-btn{font-size:12px;padding:7px 10px}
+    .notification-hint{font-size:11px;color:#99a7ba}
+    .notification-empty{color:#a4b2c4;font-size:13px;padding:10px 2px}
+    .notification-status{font-size:12px;color:#b4d8ff;margin-top:8px;min-height:0}
+    .notification-status.error{color:#ff9ca3}
+    @media(max-width:480px){.notification-center{padding:12px}.notification-item{gap:8px;padding:9px}.notification-read-btn{font-size:10px;padding:6px 7px}.notification-badge{min-width:19px;height:19px}}
+   .moderation-row{border-top:1px solid var(--border);padding:14px 0;display:grid;gap:9px}
+   .moderation-row .button-row{margin-top:3px}
+   /* Player moderation: lazy, per-player approved completion management. */
+   .player-approved{min-width:0;background:#111d2b;border:1px solid #34485e;border-radius:11px;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+   .player-approved:hover,.player-approved[open]{background:#111d2b;border-color:#466485;box-shadow:none}
+   .player-approved>summary{min-height:0;padding:11px 13px;gap:9px;color:#d8e7fa;font-size:13px;font-weight:700}
+   .player-approved>summary .chev{margin-left:auto;flex:none}
+   .player-approved-body{display:grid;gap:12px;padding:12px;border-top:1px solid #304158}
+   .player-approved-group{display:grid;gap:7px;min-width:0}
+   .player-approved-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px;color:#b9c9dc;font-weight:700}
+   .player-approved-heading strong{color:#f1f5fb;font-size:13px}
+   .player-approved-item{display:grid;gap:7px;padding:11px 12px;border:1px solid #304158;border-radius:9px;background:#162233;min-width:0}
+   .player-approved-item-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+   .player-approved-item-head strong:first-child{min-width:0;overflow-wrap:anywhere;font-size:14px}
+   .player-approved-points{white-space:nowrap;font-variant-numeric:tabular-nums;font-size:13px}
+   .player-approved-item .action-btn{font-size:12px;padding:7px 10px}
+   .player-approved-item .rejection-panel{max-width:none;margin:2px 0 0;padding:12px}
+   .player-approved-status:empty{display:none}
+   @media(max-width:480px){.player-approved-body{padding:9px}.player-approved-item{padding:10px}.player-approved-item .button-row{gap:6px}.player-approved-item .action-btn{white-space:normal;text-align:left}}
+   .muted-note{font-size:12px;color:var(--muted)}
+  .safe-link{color:#91c6ff;overflow-wrap:anywhere}
+  [hidden]{display:none!important}
+  @media(max-width:480px){.feature{padding:14px}.navtab{flex:1 1 40%}.board-row{grid-template-columns:29px minmax(0,1fr) auto;gap:7px}}
+
+  /* LVMC V6: static, full-frame cinematic Geometry Dash background */
+  body{background:#080d16;isolation:isolate}
+  .lvmc-backdrop{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:#090f19}
+  .lvmc-backdrop-image{position:absolute;inset:0;background-image:url("https://www.charlieintel.com/cdn-image/wp-content/uploads/2023/01/all-levels-in-geometry-dash-toughest-levels.jpg?width=1200&quality=60&format=auto");background-size:contain;background-repeat:no-repeat;background-position:center center;filter:blur(7px) saturate(1.12);transform:none}
+  .lvmc-backdrop-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,12,22,.72),rgba(7,12,22,.65) 48%,rgba(7,12,22,.82)),linear-gradient(115deg,rgba(15,45,85,.47),rgba(40,15,70,.24) 55%,rgba(7,14,25,.3))}
+  .lvmc-backdrop:after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 8%,rgba(57,103,164,.24),transparent 65%)}
+  .wrap{position:relative;z-index:1}
+  details,.feature{background:rgba(18,26,39,.89);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+  details:hover,details[open]{background:rgba(24,36,55,.94)}
+  @media(max-width:600px){.lvmc-backdrop-image{filter:blur(6px) saturate(1.1)}details,.feature{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(18,26,39,.95)}}
+
+  /* LVMC V8.0: independent main and Discord-voted rankings */
+  .wrap{max-width:1180px}
+  .feature{max-width:980px;margin-left:auto;margin-right:auto}
+  .rankings-intro{display:flex;justify-content:space-between;align-items:end;gap:18px;flex-wrap:wrap;margin:0 0 20px}
+  .rankings-intro h2{font-size:23px;letter-spacing:-.035em;margin:0 0 3px}
+  .rankings-intro p{color:var(--muted);font-size:13px;margin:0;max-width:650px}
+  .rankings-grid{display:grid;grid-template-columns:minmax(0,1.16fr) minmax(0,1fr);gap:20px;align-items:start}
+  .rankings-column{min-width:0;border:1px solid #32445a;background:rgba(13,21,33,.88);border-radius:17px;padding:15px;scroll-margin-top:18px}
+  .rankings-column-heading{padding:6px 5px 17px;min-height:150px}
+  .rankings-eyebrow{color:#e7c96d;font-size:10px;font-weight:800;letter-spacing:.15em}
+  .community-rankings .rankings-eyebrow{color:#8ec5ff}
+  .rankings-column-heading h2{font-size:clamp(22px,2.3vw,29px);line-height:1.18;letter-spacing:-.04em;margin:7px 0 8px}
+  .rankings-column-heading p{font-size:12px;color:var(--muted);margin:0 0 12px;line-height:1.5}
+  .rankings-category-stats{display:inline-flex;align-items:center;gap:5px;color:#b9c8da;font-size:12px;border-radius:7px;background:#1b2a3c;border:1px solid #30475f;padding:5px 9px}
+  .rankings-category-stats strong{color:#fff}
+  .rankings-column .list{gap:9px}
+  .rankings-column details{background:rgba(20,30,45,.95)}
+  .rankings-column summary{gap:10px;padding:10px 11px;min-height:73px}
+  .rankings-column .rank{width:28px;flex:0 0 28px;font-size:13px}
+  .rankings-column .thumb{width:82px;height:49px;flex:0 0 82px}
+  .rankings-column .name{font-size:14px}
+  .rankings-column .points{font-size:11px;padding:5px 7px}
+  .rankings-column .detail-panel{grid-template-columns:1fr;gap:12px;padding:13px}
+  .rankings-column .detail-image{max-height:none}
+  /* V9.2.1: both ranking columns move with the page. */
+  .community-rankings{position:static}
+  .community-vote-note{margin-top:15px;padding:13px 14px;border-radius:11px;border:1px dashed #426182;background:#15263b;color:#b3cde9;font-size:12px;line-height:1.55}
+  .community-vote-note span{color:#79b9ff;margin-right:5px}
+  .board-row-v8{grid-template-columns:42px minmax(0,1fr) minmax(160px,auto);gap:14px;padding:17px 6px}
+  .board-row-v8 .board-player{min-width:0}
+  .board-row-v8 .board-name{font-size:15px}
+  .board-row-v8 .board-sub{font-size:12px;margin-top:4px;line-height:1.5}
+  .board-scores{text-align:right;white-space:nowrap}
+  .board-row-v8 .board-rank{color:#f4d35e}
+  .board-main-score{color:#f1f5fb;font-size:19px;font-weight:800;font-variant-numeric:tabular-nums}
+  .board-community-score{color:#9aa7b7;font-size:12px;font-weight:550;font-variant-numeric:tabular-nums;margin-top:2px}
+  @media(max-width:980px){.rankings-grid{grid-template-columns:1fr}.rankings-column-heading{min-height:0}.rankings-column .detail-panel{grid-template-columns:180px 1fr;align-items:center}}
+  @media(max-width:600px){.rankings-column{padding:11px}.rankings-column .detail-panel{grid-template-columns:1fr}.rankings-column .thumb{width:73px;height:45px;flex-basis:73px}.rankings-column .rank{width:26px;flex-basis:26px}.rankings-column .name{font-size:13px}.rankings-column summary{gap:9px;padding:9px;min-height:67px}.rankings-intro h2{font-size:21px}.board-row-v8{grid-template-columns:30px minmax(0,1fr);gap:10px}.board-scores{grid-column:2;text-align:left;white-space:normal}.board-main-score{font-size:18px}}
+  @media(max-width:360px){.rankings-column .thumb{width:62px;height:41px;flex-basis:62px}.rankings-column .rank{width:23px;flex-basis:23px}.rankings-column .points{font-size:10px;padding:4px 5px}.rankings-column summary{gap:7px}}
+
+  /* LVMC V8.2: subtle coin accents, compact review/upgrade controls */
+  .coin-summary{display:grid;gap:8px;padding:11px 13px;border:1px solid #3b4654;border-radius:10px;background:#182333;max-width:540px}
+  .coin-summary-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .coin-summary-head strong{font-size:13px}
+  .coin-symbol{color:#e9c56a;font-size:15px}
+  .coin-summary .form-stack{max-width:100%}
+  .coin-summary .status-line{margin:0}
+  .coin-checkbox-wrap{display:grid;gap:5px;padding:11px 13px;border:1px solid #4d4533;background:#282518;border-radius:10px;max-width:460px}
+  .coin-checkbox-wrap label{display:flex;align-items:center;gap:10px;font-size:13px;color:#f0dcaa;font-weight:700;cursor:pointer}
+  .coin-checkbox-wrap input{width:17px;height:17px;flex:none;accent-color:#e3bd55;cursor:pointer}
+  .coin-checkbox-wrap p{margin:0 0 0 27px;color:#b8b0a0;font-size:11px}
+  .coin-note{color:#d5bd80;font-size:12px;line-height:1.5;margin:7px 0 0}
+  .coin-note strong{color:#f3d98b}
+  .coin-breakdown{color:#9daec3;font-size:11px;margin:7px 0 0}
+  .coin-review-note{font-size:12px;color:#b2c2d5}
+  .coin-review-note.waiting{color:#e9c56a}
+  /* Review filters: keep previously approved claims accessible for moderation. */
+  .review-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin:12px 0 3px}
+  .review-filter{display:flex;align-items:center;gap:8px;color:#b8c9dc;font-size:12px;font-weight:650}
+  .review-filter select{min-width:140px;padding:9px 11px;border-radius:9px;background:#0d1521;border:1px solid #3a4b62;color:#f1f5fb;font:inherit;font-size:13px}
+  .review-filter select:focus-visible{outline:2px solid #79b9ff;outline-offset:2px}
+  .coin-review-note.approved{color:#a3dbb1}
+  .coin-review-note.rejected{color:#ff9ca3}
+  .coin-status{font-size:12px;color:#b6c6d7}
+  .coin-status.approved{color:#a3dbb1}
+  .coin-status.rejected{color:#ff9ca3}
+  .coin-status.pending{color:#ffe59a}
+  .admin-subtabs{grid-template-columns:repeat(3,minmax(0,1fr))}
+  @media(max-width:480px){.admin-subtab{font-size:11px;padding:10px 4px}.coin-checkbox-wrap{padding:10px}.coin-summary{padding:10px}}
+  /* LVMC V9.0: achievement inventory, title equipment and shared tooltips. */
+  .account-subtabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding:5px;margin:18px 0 22px;border:1px solid #304158;border-radius:13px;background:#0d1521}
+  .account-subtab{display:flex;align-items:center;justify-content:center;gap:7px;min-width:0;appearance:none;border:1px solid transparent;background:transparent;color:#a7bad0;border-radius:9px;padding:12px 8px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+  .account-subtab:hover{background:#1c3046;color:#fff}.account-subtab[aria-selected="true"]{background:#28527b;border-color:#5286b7;color:#fff}
+  .account-subtab:focus-visible,.achievement-title:focus-visible,.achievement-filter:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .achievement-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}.achievement-header h3{margin:0 0 5px;font-size:23px;letter-spacing:-.035em}.achievement-header p{margin:0;max-width:560px}
+  .achievement-overview{margin:16px 0;display:grid;gap:9px;padding:15px;border:1px solid #35485f;background:#142133;border-radius:12px}
+  .achievement-overview-top,.achievement-equipment-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.achievement-overview-top strong{font-size:19px;color:#f4d35e;font-variant-numeric:tabular-nums}
+  .achievement-progress{height:6px;background:#0c1521;border-radius:99px;overflow:hidden}.achievement-progress-fill{display:block;height:100%;border-radius:99px;background:var(--achievement-color,#e9c65d);transition:width .2s}
+  .achievement-equipment{padding:15px;border:1px solid #3b4b61;border-radius:13px;background:#111d2b;margin:0 0 18px}.achievement-equipment h4{font-size:15px;margin:0}.achievement-equipment-head span{color:#b9c9dc;font-size:12px;font-weight:700}
+  .achievement-equipment p{margin:5px 0 12px;font-size:12px}.achievement-slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.achievement-slot{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;text-align:center;min-height:105px;padding:10px 6px;background:#182638;border:1px solid #40516a;border-radius:10px}.achievement-slot.empty{border-style:dashed;color:#8798ae;background:#101b29}.achievement-slot-label{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#99a7ba}.achievement-slot-name{font-size:12px;font-weight:750;color:var(--achievement-color);overflow-wrap:anywhere}.achievement-slot .action-btn{padding:5px 8px;font-size:11px}.achievement-slot .achievement-icon{width:25px;height:25px;flex-basis:25px}.achievement-slot .achievement-icon svg{width:17px;height:17px}
+  .achievement-preview{margin-top:13px;border-top:1px solid #304158;padding-top:11px}.achievement-preview-label{font-size:11px;color:var(--muted);margin-bottom:6px}.achievement-preview .board-name{font-size:15px}
+  .achievement-toolbar{display:flex;align-items:center;justify-content:space-between;gap:9px;flex-wrap:wrap;margin:18px 0 12px}.achievement-toolbar strong{font-size:15px}.achievement-filters{display:flex;gap:4px;padding:3px;background:#0d1521;border:1px solid #304158;border-radius:9px}.achievement-filter{appearance:none;border:1px solid transparent;border-radius:6px;padding:6px 10px;background:transparent;color:#a7bad0;font:inherit;font-size:12px;font-weight:650;cursor:pointer}.achievement-filter[aria-pressed="true"]{background:#28527b;border-color:#5286b7;color:#fff}
+  .achievement-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.achievement-card{display:flex;flex-direction:column;gap:10px;min-width:0;padding:14px;border:1px solid #34445a;border-radius:12px;background:#142133}.achievement-card.unlocked{border-color:color-mix(in srgb,var(--achievement-color) 42%,#304158);background:linear-gradient(125deg,color-mix(in srgb,var(--achievement-color) 7%,#142133),#142133 60%)}.achievement-card.locked{background:#111b29}.achievement-card-head{display:flex;gap:10px;align-items:flex-start}.achievement-icon{display:inline-flex;align-items:center;justify-content:center;flex:0 0 38px;width:38px;height:38px;border-radius:10px;background:color-mix(in srgb,var(--achievement-color) 13%,#182638);border:1px solid color-mix(in srgb,var(--achievement-color) 35%,#34445a);color:var(--achievement-color)}.achievement-icon svg{width:22px;height:22px}.achievement-card.locked .achievement-icon{color:#91a2b8;background:#1a2637;border-color:#35465b}.achievement-card-text{min-width:0;flex:1}.achievement-card h4{margin:0 0 4px;font-size:15px;line-height:1.3;color:var(--achievement-color);overflow-wrap:anywhere}.achievement-card.locked h4{color:#b2bfd1}.achievement-card p{font-size:12px;line-height:1.45;margin:0;color:#a7b6c9}.achievement-card-status{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:11px;color:#a4b3c6}.achievement-card-status .unlocked-label{color:#a3dbb1;font-weight:700}.achievement-card-status .locked-label{color:#a4b3c6;font-weight:650}.achievement-card-status .future-label{color:#e1c48b}.achievement-card-progress{display:grid;gap:5px;margin-top:auto}.achievement-card-progress-label{display:flex;justify-content:space-between;gap:6px;color:#a7b6c9;font-size:11px;font-variant-numeric:tabular-nums}.achievement-card.locked .achievement-progress-fill{background:#647b96}.achievement-card-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.achievement-card-actions .action-btn{font-size:12px;padding:7px 11px}.achievement-card-actions .action-btn:disabled,.achievement-slot .action-btn:disabled{cursor:not-allowed}.achievement-card-actions .equipped-label{font-size:11px;color:#a3dbb1}.achievement-history{font-size:10px;color:#92a3b8;line-height:1.4}.achievement-empty{grid-column:1/-1;color:var(--muted);padding:20px;text-align:center;border:1px dashed #34445a;border-radius:10px}
+  .achievement-title{display:inline-block;appearance:none;border:0;background:none;padding:0;margin:0 0 0 6px;color:var(--achievement-color);font:inherit;font-size:12px;font-weight:650;line-height:1.5;white-space:nowrap;vertical-align:baseline;cursor:pointer;text-shadow:0 0 9px color-mix(in srgb,var(--achievement-color) 28%,transparent)}.achievement-title:hover,.achievement-title[aria-expanded="true"]{filter:brightness(1.2)}.achievement-title.preview-title{cursor:default}
+  .achievement-tooltip{position:fixed;z-index:1000;width:300px;max-width:calc(100vw - 24px);max-height:calc(100dvh - 24px);overflow:auto;padding:13px 15px;border:1px solid color-mix(in srgb,var(--achievement-color) 55%,#34445a);border-radius:11px;background:#18202b;color:#f1f5fb;box-shadow:0 8px 28px #0009;font-size:12px;line-height:1.5;overflow-wrap:anywhere}.achievement-tooltip-heading{display:flex;align-items:center;gap:8px;color:var(--achievement-color);font-size:13px;font-weight:750;margin-bottom:6px}.achievement-tooltip-heading svg{width:19px;height:19px;flex:none}.achievement-tooltip-description{color:#c7d2e1}.achievement-tooltip-unlocked{color:#a3dbb1;font-weight:650;margin-top:9px}
+  .notification-item.achievement,.notification-item.achievement.unread{background:color-mix(in srgb,var(--achievement-color) 8%,#182333);border-color:color-mix(in srgb,var(--achievement-color) 45%,#34445a)}.notification-item.achievement .notification-symbol{background:color-mix(in srgb,var(--achievement-color) 17%,#182333);color:var(--achievement-color)}.notification-item.achievement .notification-symbol svg{width:17px;height:17px}.notification-achievement-title{display:block;color:var(--achievement-color);margin-bottom:4px}.notification-item.achievement .notification-read-btn{border-color:color-mix(in srgb,var(--achievement-color) 45%,#34445a);background:#253044;color:var(--achievement-color)}
+  .absolute-madness-text{color:#f9d66d;background:linear-gradient(90deg,#ff929c,#ffce75,#a3efb6,#8ddcff,#c8aaff,#ff929c);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:absolute-rainbow 4s linear infinite;text-shadow:none;filter:drop-shadow(0 0 5px #f9d66d38)}@keyframes absolute-rainbow{to{background-position:250% 0}}
+  @media(prefers-reduced-motion:reduce){.absolute-madness-text{animation:none;background:none;-webkit-text-fill-color:currentColor;color:#f9d66d;filter:none}}
+  @media(max-width:600px){.achievement-grid{grid-template-columns:1fr}.achievement-card{padding:12px}.achievement-equipment{padding:11px}.achievement-slots{gap:5px}.achievement-slot{min-height:100px;padding:8px 4px}.achievement-slot-name{font-size:11px}.achievement-title{white-space:normal;text-align:left}.achievement-header h3{font-size:20px}}
+  @media(max-width:480px){.notification-item.achievement{flex-wrap:wrap}.notification-item.achievement .notification-content{flex:1 1 calc(100% - 35px)}.notification-item.achievement .notification-read-btn{margin-left:auto}.achievement-filter{padding:6px 8px}}
+  /* LVMC V9.1: original transparent difficulty sprites, beside the level name. */
+  .rankings-column .name{overflow-wrap:anywhere}
+  .level-difficulty-icon{display:inline-block;width:24px;height:24px;object-fit:contain;vertical-align:middle;margin-left:5px;max-width:100%;border:0;background:transparent;box-shadow:none}
+  .level-difficulty-icon.special-difficulty{width:22px;height:22px}
+  .level-difficulty-fallback{display:inline;font-size:10px;font-weight:600;color:var(--muted);margin-left:5px}
+  @media(max-width:480px){.level-difficulty-icon{width:22px;height:22px;margin-left:4px}.level-difficulty-icon.special-difficulty{width:20px;height:20px}}
+  @media(max-width:360px){.level-difficulty-icon{width:21px;height:21px;margin-left:4px}.level-difficulty-icon.special-difficulty{width:20px;height:20px}}
+  /* V9.2.1: use the full, cropped artwork without further clipping. */
+  .rankings-column .thumb.full-artwork,.rankings-column .detail-image.full-artwork{height:auto;aspect-ratio:auto;object-fit:contain}
+ 
+  /* V9.3 compact soundtrack controls */
+  .music-credit{border-top:1px solid var(--border);margin-top:12px;padding-top:10px;font-size:12px;color:var(--muted);display:grid;gap:7px;min-width:0}
+  .music-credit strong{color:#a3dbb1;font-weight:650}
+  .music-credit a{color:var(--accent);text-decoration:none;overflow-wrap:anywhere}
+  .music-credit a:hover{text-decoration:underline}
+  .music-credit-status{font-size:11px;color:#a3dbb1;overflow-wrap:anywhere}
+  .music-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .music-controls .music-mute,.music-controls .music-retry{font:inherit;color:var(--text);background:var(--panel);border:1px solid var(--border);border-radius:7px;padding:5px 8px;cursor:pointer}
+  .music-controls .music-mute[aria-pressed="true"]{color:#a3dbb1}
+  .music-controls label{display:flex;align-items:center;gap:6px;min-width:0}
+  .music-controls input[type=range]{width:84px;max-width:28vw;accent-color:#a3dbb1;margin:0}
+  .music-controls output{min-width:30px;text-align:right;font-variant-numeric:tabular-nums}
+  .music-controls button:focus-visible,.music-controls input:focus-visible{outline:2px solid #a3dbb1;outline-offset:2px}
+
+</style>
+</head>
+<body>
+<div class="lvmc-backdrop" aria-hidden="true"><div class="lvmc-backdrop-image"></div><div class="lvmc-backdrop-shade"></div></div>
+<main class="wrap">
+<header>
+  <div class="eyebrow">Geometry Dash · LVMC Rankings</div>
+  <h1>Main Levels List<span style="color:#79b9ff">.</span></h1>
+  <p>A Bermune-made ranking of the 22 classic Geometry Dash main levels, The Challenge, and RobTop Travel — plus levels voted in by the LVMC Discord community.</p>
+  <div class="stats">
+    <div class="stat"><strong id="main-count">24</strong> Main levels · <span id="main-total">268 pts</span></div>
+    <div class="stat"><strong id="community-count">10</strong> Community voted · <span id="community-total">356 pts</span></div>
+    <div class="stat"><strong id="count">34</strong> Levels total</div>
+  </div>
+</header>
+
+<nav class="navtabs" aria-label="Website sections">
+  <button class="navtab" type="button" data-tab="rankings" aria-selected="true">Rankings</button>
+  <button class="navtab" type="button" data-tab="leaderboard" aria-selected="false">Leaderboard</button>
+  <button class="navtab" type="button" data-tab="account" aria-selected="false" id="account-tab">My account <span class="notification-badge" id="account-notification-badge" aria-hidden="true" hidden></span></button>
+  <button class="navtab" type="button" data-tab="admin" aria-selected="false" id="admin-tab" hidden>Admin <span class="notification-badge" id="admin-notification-badge" aria-hidden="true" hidden></span></button>
+</nav>
+<div id="global-status" class="status-line" role="status" aria-live="polite"></div>
+<div id="rankings-panel" data-panel="rankings">
+  <div class="rankings-intro">
+    <div>
+      <h2>Level rankings</h2>
+      <p>Two separate lists. Main Levels lead the competition; Community Voted Levels add a second challenge.</p>
+    </div>
+  </div>
+  <div class="rankings-grid">
+    <section class="rankings-column main-rankings" id="main-levels-list" aria-label="Main Levels List">
+      <div class="rankings-column-heading">
+        <div class="rankings-eyebrow">THE MAIN COMPETITION</div>
+        <h2>Main Levels List</h2>
+        <p>22 classic levels, The Challenge, and RobTop Travel.</p>
+        <div class="rankings-category-stats"><strong id="main-count-card">24</strong> levels <span aria-hidden="true">·</span> <strong id="main-points-card">268</strong> possible points</div>
+      </div>
+      <p class="coin-breakdown" id="main-coin-breakdown">202 base points + 66 all-coins bonus points</p>
+       <div class="list" id="main-list"></div>
+    </section>
+    <section class="rankings-column community-rankings" id="community-voted-list" aria-label="Community Voted Levels">
+      <div class="rankings-column-heading">
+        <div class="rankings-eyebrow">CHOSEN BY THE LVMC DISCORD</div>
+        <h2>Community Voted Levels</h2>
+        <p>All other levels selected through community polls.</p>
+        <div class="rankings-category-stats"><strong id="community-count-card">10</strong> <span id="community-level-label">levels</span> <span aria-hidden="true">·</span> <strong id="community-points-card">356</strong> possible points</div>
+      </div>
+      <div class="list" id="community-list"></div>
+      <div class="community-vote-note"><span aria-hidden="true">✦</span> New levels join this list when the LVMC Discord votes them in.</div>
+    </section>
+  </div>
+</div>
+<section class="feature" data-panel="leaderboard" hidden aria-label="LVMC leaderboard">
+  <div class="section-title"><h2>LVMC Leaderboard</h2><span>Approved completions and coin bonuses only</span></div>
+  <p>Only approved completions and approved all-coins claims earn points. <strong>Main Level points determine rank first</strong>; Community Voted points break every Main Level points tie.</p>
+  <div id="leaderboard-list" aria-live="polite">Loading leaderboard…</div>
+  <div class="button-row" style="margin-top:14px"><button type="button" class="action-btn" id="refresh-leaderboard">Refresh leaderboard</button></div>
+</section>
+<section data-panel="account" hidden aria-label="Player account">
+  <div class="feature" id="signed-out">
+    <h2>Join the LVMC</h2>
+    <p>Sign up to submit level completions and compete on the leaderboard. Email confirmation is required for new accounts.</p>
+    <div class="feature-grid">
+      <form id="signup-form" class="form-stack">
+        <h3>Create an account</h3>
+        <label>Username <input type="text" name="username" autocomplete="username" required minlength="3" maxlength="20" pattern="[A-Za-z0-9_]{3,20}" title="3–20 letters, numbers, or underscores" placeholder="GeometryDashPro"></label>
+        <label>Email <input type="email" name="email" autocomplete="email" required maxlength="254"></label>
+        <label>Password <input type="password" name="password" autocomplete="new-password" required minlength="8"></label>
+        <button class="action-btn primary" type="submit">Sign up</button>
+      </form>
+      <form id="login-form" class="form-stack">
+        <h3>Log in</h3>
+        <label>Email <input type="email" name="email" autocomplete="email" required></label>
+        <label>Password <input type="password" name="password" autocomplete="current-password" required></label>
+        <button class="action-btn primary" type="submit">Log in</button>
+        <button class="action-btn" type="button" id="reset-password">Send password reset email</button>
+      </form>
+    </div>
+    <p id="auth-status" class="status-line" role="status" aria-live="polite"></p>
+  </div>
+  <div class="feature" id="signed-in" hidden>
+    <div class="section-title"><h2 id="welcome">My player profile</h2><button type="button" class="action-btn" id="logout">Log out</button></div>
+    <div class="account-subtabs" role="tablist" aria-label="My account sections">
+      <button type="button" class="account-subtab" role="tab" id="account-profile-tab" aria-controls="account-profile-panel" aria-selected="true" tabindex="0" data-account-view="profile">My Profile <span class="notification-badge" id="profile-notification-badge" aria-hidden="true" hidden></span></button>
+      <button type="button" class="account-subtab" role="tab" id="account-achievements-tab" aria-controls="account-achievements-panel" aria-selected="false" tabindex="-1" data-account-view="achievements">Achievements</button>
+    </div>
+    <div id="account-profile-panel" role="tabpanel" aria-labelledby="account-profile-tab" data-account-panel="profile">
+    <p id="profile-info">Loading your profile…</p>
+    <div class="notification-center" id="account-notification-center" hidden aria-label="My account notifications">
+      <div class="notification-heading">
+        <div><h3>Notifications</h3><p>Updates about your completion and coin reviews, and achievement unlocks.</p></div>
+        <button type="button" class="action-btn" id="mark-account-notifications-read" disabled>Mark all as read</button>
+      </div>
+      <div class="notification-list" id="account-notifications" aria-live="polite">Loading notifications…</div>
+      <div class="notification-footer">
+        <span class="notification-hint">Opening this tab won't mark notifications as read.</span>
+        <button type="button" class="action-btn" id="more-account-notifications" hidden>Show older</button>
+      </div>
+      <div class="notification-status" id="account-notifications-status" role="status" aria-live="polite"></div>
+    </div>
+    <h3>Submit a completion</h3>
+    <p>Pick a level you've beaten. Video evidence is optional. Main Level coin bonuses are +3 points for all 3 coins; both completion and coin claim require admin approval.</p>
+    <form id="completion-form" class="form-stack">
+      <label>Level <select name="level" id="completion-level" required><option value="">Loading levels…</option></select></label>
+      <label>Search levels <input type="search" id="completion-level-search" autocomplete="off" placeholder="Search by level name…" aria-controls="completion-level" aria-describedby="completion-level-search-status" disabled></label>
+      <div id="completion-level-search-status" class="level-search-status" role="status" aria-live="polite"></div>
+       <div class="coin-checkbox-wrap" id="completion-coin-option" hidden>
+         <label><input type="checkbox" id="completion-all-coins" name="all_coins"> Completed with all 3 coins (+3 pts)</label>
+         <p>For eligible Main Levels only. Your optional video link below is also used as coin evidence. Coin points need separate admin approval.</p>
+       </div>
+       <label>Video link (optional) <input type="url" name="video" placeholder="https://..." maxlength="2000" inputmode="url"></label>
+      <button type="submit" class="action-btn primary">Submit completion</button>
+    </form>
+    <p id="submission-status" class="status-line" role="status" aria-live="polite"></p>
+    <form id="username-form" class="form-stack" style="margin:16px 0 24px">
+      <h3>Change username</h3>
+      <label>New username <input type="text" name="username" autocomplete="username" required minlength="3" maxlength="20" pattern="[A-Za-z0-9_]{3,20}" title="3–20 letters, numbers, or underscores" placeholder="Your new username"></label>
+      <button type="submit" class="action-btn">Save username</button>
+    </form>
+    <p id="username-status" class="status-line" role="status" aria-live="polite"></p>
+    <h3 style="margin-top:25px">My submissions &amp; coin upgrades</h3>
+    <div id="my-submissions">Loading…</div>
+    <div class="danger-zone" id="delete-account-zone">
+      <h3>Delete account</h3>
+      <p>Permanently delete your LVMC account, all completions, points, achievements, and your leaderboard entry. Your username will become available to others. This cannot be undone.</p>
+      <form id="delete-account-form" class="form-stack">
+        <label>Type DELETE to confirm <input name="confirmation" type="text" autocomplete="off" placeholder="DELETE" required></label>
+        <button class="action-btn danger-btn" type="submit">Permanently delete my account</button>
+      </form>
+      <p id="delete-account-status" class="status-line" role="status" aria-live="polite"></p>
+    </div>
+    </div>
+    <div id="account-achievements-panel" role="tabpanel" aria-labelledby="account-achievements-tab" data-account-panel="achievements" hidden>
+      <div class="achievement-header"><div><h3>Achievements</h3><p>Unlock achievements through approved completions, coin claims and leaderboard milestones. Equip up to three titles to show off on the leaderboard.</p></div><button type="button" class="action-btn" id="achievement-refresh">Refresh achievements</button></div>
+      <div class="achievement-overview"><div class="achievement-overview-top"><strong id="achievement-count">— / 14</strong><span class="muted-note" id="achievement-percent">Achievement progress loads from your account.</span></div><div id="achievement-overview-bar"></div></div>
+      <div class="achievement-equipment"><div class="achievement-equipment-head"><h4>Equipped titles</h4><span id="achievement-slot-count">0 / 3 equipped</span></div><p>Titles are cosmetic. Changes save automatically. If you lose eligibility, the title is removed and must be equipped again after you regain it.</p><div class="achievement-slots" id="achievement-slots"></div><p id="achievement-slot-hint" hidden>All three slots are filled. Remove a title to equip a different one.</p><div class="achievement-preview"><div class="achievement-preview-label">Leaderboard preview</div><div class="board-name" id="achievement-preview-name">Your username</div></div></div>
+      <div id="achievement-status" class="status-line" role="status" aria-live="polite"></div>
+      <div class="achievement-toolbar"><strong id="achievement-filter-heading">All achievements</strong><div class="achievement-filters" role="group" aria-label="Filter achievements"><button type="button" class="achievement-filter" data-achievement-filter="all" aria-pressed="true">All</button><button type="button" class="achievement-filter" data-achievement-filter="unlocked" aria-pressed="false">Unlocked</button><button type="button" class="achievement-filter" data-achievement-filter="locked" aria-pressed="false">Locked</button></div></div>
+      <div class="achievement-grid" id="achievement-grid"></div>
+    </div>
+  </div>
+</section>
+<section class="feature" data-panel="admin" hidden aria-label="Administrator dashboard">
+  <h2>Admin Dashboard</h2>
+  <p>Manage LVMC completion reviews and player moderation.</p>
+  <div class="admin-subtabs" role="tablist" aria-label="Admin dashboard sections">
+    <button type="button" class="admin-subtab" role="tab" id="admin-reviews-tab" aria-controls="admin-reviews-panel" aria-selected="true" tabindex="0" data-admin-view="reviews">Completion Reviews <span class="notification-badge" id="admin-reviews-notification-badge" aria-hidden="true" hidden></span></button>
+    <button type="button" class="admin-subtab" role="tab" id="admin-coins-tab" aria-controls="admin-coins-panel" aria-selected="false" tabindex="-1" data-admin-view="coins">Coin Reviews <span class="notification-badge" id="admin-coins-notification-badge" aria-hidden="true" hidden></span></button>
+    <button type="button" class="admin-subtab" role="tab" id="admin-players-tab" aria-controls="admin-players-panel" aria-selected="false" tabindex="-1" data-admin-view="players">Player Moderation</button>
+  </div>
+  <div class="notification-center" id="admin-notification-center" hidden aria-label="Admin notifications">
+      <div class="notification-heading">
+        <div><h3>Review notifications</h3><p>New and resubmitted completion and all-coins requests.</p></div>
+        <button type="button" class="action-btn" id="mark-admin-notifications-read" disabled>Mark all as read</button>
+      </div>
+      <div class="notification-list" id="admin-notifications" aria-live="polite">Loading notifications…</div>
+      <div class="notification-footer">
+        <span class="notification-hint">Read status is separate from whether a submission is pending.</span>
+        <button type="button" class="action-btn" id="more-admin-notifications" hidden>Show older</button>
+      </div>
+      <div class="notification-status" id="admin-notifications-status" role="status" aria-live="polite"></div>
+    </div>
+  <div id="admin-reviews-panel" role="tabpanel" aria-labelledby="admin-reviews-tab" data-admin-panel="reviews">
+    <h3>Completion Reviews</h3>
+    <p>Approve or reject submitted completions. Approved levels automatically count toward the public leaderboard.</p>
+    <div class="review-toolbar">
+      <button type="button" class="action-btn" id="refresh-admin">Refresh submissions</button>
+      <label class="review-filter" for="completion-review-filter">Show
+        <select id="completion-review-filter">
+          <option value="pending" selected>Pending</option>
+          <option value="all">All requests</option>
+          <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
+        </select>
+      </label>
+    </div>
+    <p id="admin-status" class="status-line" role="status" aria-live="polite"></p>
+    <div id="admin-queue">Loading…</div>
+  </div>
+  <div id="admin-coins-panel" role="tabpanel" aria-labelledby="admin-coins-tab" data-admin-panel="coins" hidden>
+    <h3>Coin Reviews</h3>
+    <p>Review all-coins requests for eligible Main Levels. Approved claims remain here so admins can reject a bonus later if needed, without changing the base level completion.</p>
+    <div class="review-toolbar">
+      <button type="button" class="action-btn" id="refresh-coins">Refresh coin requests</button>
+      <label class="review-filter" for="coin-review-filter">Show
+        <select id="coin-review-filter">
+          <option value="pending" selected>Pending</option>
+          <option value="all">All requests</option>
+          <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
+        </select>
+      </label>
+    </div>
+    <p id="coin-admin-status" class="status-line" role="status" aria-live="polite"></p>
+    <div id="coin-admin-queue">Loading…</div>
+  </div>
+  <div id="admin-players-panel" role="tabpanel" aria-labelledby="admin-players-tab" data-admin-panel="players" hidden>
+    <h3>Player Moderation</h3>
+    <p>Ban or unban submissions, view a non-admin player’s approved levels, remove individual completions or coin bonuses, or revoke all approved points. Individual removals are rejections and may be resubmitted; fully revoked completions cannot be resubmitted.</p>
+    <button type="button" class="action-btn" id="refresh-players">Refresh players</button>
+    <p id="moderation-status" class="status-line" role="status" aria-live="polite"></p>
+    <div id="admin-players">Loading players…</div>
+  </div>
+</section>
+<footer>
+  <p>Made for the LVMC gang · Not affiliated with actual RobTop or Geometry Dash</p>
+  <p class="credit">Background image: <a href="https://www.charlieintel.com/" target="_blank" rel="noopener noreferrer">CharlieIntel</a>. Difficulty artwork: <a href="https://geometrydash.wiki.gg/wiki/Category:Difficulty_icon_images" target="_blank" rel="noopener noreferrer">Geometry Dash Wiki</a>.</p>
+</footer>
+</main>
+
+<script>
+// --- LVMC DATA: You can reorder levels and edit their points later. ---
+const levels = [
+  {
+    "name": "Bloodbath",
+    "difficulty": "extreme_demon",
+    "points": 77,
+    "category": "community",
+    "image": "bloodbath.jpg",
+    "source": "https://www.youtube.com/watch?v=JR981ToYoYA",
+    "sourceLabel": "Thumbnail image credit: Bloodbath showcase ↗",
+    "description": "Bloodbath, hosted and verified by Riot, is a legendary Extreme Demon collaboration known for its demanding ship gameplay and tight timings. Completing this level earns 77 Community points toward the {categoryTotal}-point Community Voted Levels maximum."
+  },
+  {
+    "name": "RobTop Travel",
+    "difficulty": "special",
+    "points": 50,
+    "image": "https://i.ytimg.com/vi/CaoUIkQ3QuI/hqdefault.jpg",
+    "source": "https://www.youtube.com/watch?v=CaoUIkQ3QuI",
+    "sourceLabel": "Thumbnail art credit: Lairon GD showcase ↗",
+    "description": "Completing RobTop Travel proves you have truly mastered this game, and you may finally call yourself a Geometry Dash pro. Completion earns 50 Main Level points toward the 202-point Main Level maximum.",
+    "special": true
+  },
+  {
+    "name": "Cataclysm",
+    "difficulty": "extreme_demon",
+    "points": 49,
+    "category": "community",
+    "image": "cataclysm.png",
+    "source": "https://www.reddit.com/r/geometrydash/comments/1lv9gxk/i_make_level_thumbnails/",
+    "sourceLabel": "Thumbnail art credit: Reddit creator ↗",
+    "description": "Cataclysm by Ggb0y is a classic Extreme Demon known for its challenging wave and ship gameplay. Completing this level earns 49 Community points toward the {categoryTotal}-point Community Voted Levels maximum."
+  },
+  {
+    "name": "Sweater Weather",
+    "difficulty": "extreme_demon",
+    "points": 45,
+    "category": "community",
+    "image": "sweater-weather.png",
+    "source": "https://www.youtube.com/watch?v=y3Kk0ZvDqUM",
+    "sourceLabel": "Thumbnail image credit: Sweater Weather showcase ↗",
+    "description": "Sweater Weather is an entry-level Extreme Demon and the first level selected through an LVMC community poll. Completing this level earns 45 Community points toward the {categoryTotal}-point Community Voted Levels maximum."
+  },
+  {
+    "name": "Acu",
+    "difficulty": "extreme_demon",
+    "points": 45,
+    "category": "community",
+    "image": "https://pbs.twimg.com/media/E8vOqZaWEAM3jLn?format=webp&name=large",
+    "source": "https://x.com/zchilost/status/1426461482552864772",
+    "sourceLabel": "Thumbnail art credit: original X post ↗",
+    "description": "Acu is an Extreme Demon level selected through an LVMC community poll. Completing this level earns 45 Community points toward the {categoryTotal}-point Community Voted Levels maximum."
+  },
+  {
+    "name": "Supersonic",
+    "difficulty": "insane_demon",
+    "points": 38,
+    "category": "community",
+    "image": "supersonic.jpg",
+    "source": "https://www.youtube.com/watch?v=jKJVVn4N0Fk",
+    "sourceLabel": "Thumbnail image credit: Supersonic showcase ↗",
+    "description": "Supersonic is an Insane Demon level selected through an LVMC community poll. Completing this level earns 38 Community points toward the {categoryTotal}-point Community Voted Levels maximum."
+  },
+  {
+    "name": "Windy Landscape",
+    "difficulty": "insane_demon",
+    "points": 34,
+    "category": "community",
+    "image": "https://i.ytimg.com/vi/5PVyVI2xbiI/maxresdefault.jpg",
+    "source": "https://www.youtube.com/watch?v=5PVyVI2xbiI",
+    "sourceLabel": "Thumbnail image credit: Windy Landscape showcase ↗",
+    "description": "Windy Landscape is an Insane Demon level selected through an LVMC community poll. Completing this level earns 34 Community points toward the {categoryTotal}-point Community Voted Levels maximum."
+  },
+  {
+    "name": "Nine Circles",
+    "difficulty": "hard_demon",
+    "points": 29,
+    "category": "community",
+    "image": "nine-circles.jpg",
+    "source": "https://www.youtube.com/watch?v=LPl51rdl6-o",
+    "sourceLabel": "Thumbnail image credit: Nine Circles showcase ↗",
+    "description": "Nine Circles by Zobros is an iconic Hard Demon known for its challenging wave gameplay and flashing effects. Selected through a community vote, completing this level earns 29 Community points toward the {categoryTotal}-point Community Voted Levels maximum."
+  },
+  {
+    "name": "Sakupen Egg",
+    "difficulty": "medium_demon",
+    "points": 22,
+    "category": "community",
+    "image": "https://i.ytimg.com/vi/PLDMeLujlok/maxresdefault.jpg",
+    "source": "https://www.youtube.com/watch?v=PLDMeLujlok",
+    "sourceLabel": "Thumbnail image credit: Sakupen Egg showcase ↗",
+    "description": "Sakupen Egg is a Medium Demon level selected through an LVMC community poll. Completing this level earns 22 Community points toward the {categoryTotal}-point Community Voted Levels maximum."
+  },
+  {
+    "name": "Aperture",
+    "difficulty": "insane",
+    "points": 9,
+    "category": "community",
+    "image": "https://i.ytimg.com/vi/RTz0gkRik94/maxresdefault.jpg",
+    "source": "https://www.youtube.com/watch?v=RTz0gkRik94",
+    "sourceLabel": "Thumbnail image credit: Aperture showcase ↗",
+    "description": "Aperture is an Insane level selected through an LVMC community poll. Completing this level earns 9 Community points toward the {categoryTotal}-point Community Voted Levels maximum."
+  },
+  {
+    "name": "Bird Brain",
+    "difficulty": "insane",
+    "points": 8,
+    "category": "community",
+    "image": "bird-brain.jpg",
+    "source": "https://www.youtube.com/watch?v=f16XwBFY9hU",
+    "sourceLabel": "Thumbnail image credit: Bird Brain showcase ↗",
+    "description": "Bird Brain is an Insane level selected through an LVMC community poll. Completing this level earns 8 Community points toward the {categoryTotal}-point Community Voted Levels maximum."
+  },
+  {
+    "name": "Deadlocked",
+    "difficulty": "easy_demon",
+    "points": 17,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Deadlocked.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Theory Of Everything 2",
+    "difficulty": "easy_demon",
+    "points": 15,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/TOE2.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Clubstep",
+    "difficulty": "easy_demon",
+    "points": 15,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Clubstep.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Hexagon Force",
+    "difficulty": "insane",
+    "points": 10,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/HexagonForce.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Electrodynamix",
+    "difficulty": "insane",
+    "points": 10,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Electrodynamix.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Clutterfunk",
+    "difficulty": "insane",
+    "points": 10,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Clutterfunk.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Electroman Adventures",
+    "difficulty": "insane",
+    "points": 8,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Electroman_Adventures.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Fingerdash",
+    "difficulty": "insane",
+    "points": 6,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Fingerdash.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Geometrical Dominator",
+    "difficulty": "harder",
+    "points": 6,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Geometrical_Dominator.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Time Machine",
+    "difficulty": "harder",
+    "points": 6,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/TimeMachine.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Cycles",
+    "difficulty": "harder",
+    "points": 6,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Cycles.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Dash",
+    "difficulty": "insane",
+    "points": 6,
+    "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/322170/ss_05cb182b93131a5faf0516232a7ad27c83f2c0e8.1920x1080.jpg?t=1775300400",
+    "source": "https://store.steampowered.com/app/322170/Geometry_Dash/"
+  },
+  {
+    "name": "xStep",
+    "difficulty": "insane",
+    "points": 6,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/xStep.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Theory Of Everything",
+    "difficulty": "insane",
+    "points": 5,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/TheoryOfEverything.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Can't Let Go",
+    "difficulty": "hard",
+    "points": 5,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Cant_Let_Go.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Blast Processing",
+    "difficulty": "harder",
+    "points": 5,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Blast_Processing.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Jumper",
+    "difficulty": "harder",
+    "points": 4,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Jumper.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Base After Base",
+    "difficulty": "hard",
+    "points": 3,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/BaseAfterBase.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Dry Out",
+    "difficulty": "normal",
+    "points": 3,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Dry_Out.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Polargeist",
+    "difficulty": "normal",
+    "points": 2,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Polargeist.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "The Challenge",
+    "difficulty": "special",
+    "points": 2,
+    "image": "the-challenge.png",
+    "source": "https://geometry-dash.fandom.com/wiki/The_Challenge",
+    "description": "Completing RobTop's secret \"The Challenge\" earns 2 Main Level points toward the 202-point Main Level maximum."
+  },
+  {
+    "name": "Back On Track",
+    "difficulty": "easy",
+    "points": 1,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Back_on_Track.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  },
+  {
+    "name": "Stereo Madness",
+    "difficulty": "easy",
+    "points": 1,
+    "image": "https://stpkukaif.github.io/GeometryDash/img/Stereo_Madness.webp",
+    "source": "https://stpkukaif.github.io/GeometryDash/"
+  }
+]
+// Image URLs were selected from screenshots of the actual RobTop levels, with RobTop Travel using credited showcase thumbnail art.
+// When offline, a distinct illustrated placeholder appears instead of a broken-image icon.
+const palette=[['#6f4f00','#f4d35e'],['#a51c34','#f7646c'],['#123d88','#4ed9f9'],['#4d257f','#da6bff'],['#dc6e18','#ffd358'],['#2337a6','#5ce6f5'],['#7b296e','#ff8cdb'],['#126e7e','#65f8c6'],['#a3312e','#ffce64'],['#4b267b','#ff5eac'],['#784a25','#e9c37b'],['#235b9b','#83f2fa'],['#8b245d','#ff92c9'],['#41649b','#a9d4ff'],['#306381','#7ee6ff'],['#6b3c82','#e3a7ff'],['#206b6c','#93ffe2'],['#447d37','#c9f77a'],['#785b31','#ffe59a'],['#315d7e','#9de5ff'],['#714c33','#efb780'],['#5a448b','#c5afff'],['#316c87','#9beaff']];
+const shapes=['monster','wave','rings','monster','dual','saws','gears','lightning','spider','stars','steps','rings','dash','stairs','rings','spikes','wave','steps','stairs','spikes','blocks','rings','steps'];
+function fallbackThumbnail(i){
+ const [dark,light]=palette[i%palette.length];
+ const shape=shapes[i%shapes.length];
+ let art='';
+ if(shape==='wave'||shape==='dash')art='<path d="M-8 60 12 26 30 55 50 17 70 52 96 12" stroke="#fff" stroke-width="7" fill="none"/><path d="M0 68 20 43 39 69 59 35 83 62" stroke="#101626" stroke-width="8" fill="none"/>';
+ else if(shape==='dual')art='<path d="M0 38H96" stroke="#fff" opacity=".7"/><rect x="25" y="12" width="22" height="22" transform="rotate(20 36 23)" fill="#fff"/><rect x="53" y="47" width="22" height="22" transform="rotate(20 64 58)" fill="#111a30" stroke="#fff" stroke-width="3"/>';
+ else if(shape==='rings')art='<circle cx="30" cy="37" r="17" stroke="#fff" stroke-width="6" fill="none"/><circle cx="71" cy="42" r="14" stroke="#fff" stroke-width="5" fill="none"/><circle cx="30" cy="37" r="6" fill="#111a30"/>';
+ else if(shape==='saws'||shape==='gears')art='<path d="M48 8 55 21 70 12 69 29 86 31 73 43 83 57 65 56 60 72 48 60 34 73 31 56 13 55 23 42 10 30 28 27 27 11 42 21Z" fill="#101626" stroke="#fff" stroke-width="3"/><circle cx="48" cy="41" r="12" fill="'+light+'"/>';
+ else if(shape==='lightning')art='<path d="M55 5 24 44 47 44 37 76 78 30 51 30Z" fill="#fff"/>';
+ else if(shape==='monster')art='<path d="M15 22H81V65H15Z" fill="#111a30" stroke="#fff" stroke-width="3"/><path d="M25 48 34 57 43 48 52 57 61 48 70 57" stroke="'+light+'" stroke-width="5" fill="none"/><rect x="28" y="30" width="12" height="9" fill="#fff"/><rect x="56" y="30" width="12" height="9" fill="#fff"/>';
+ else if(shape==='stars')art='<path d="M48 8 59 30 84 34 66 52 70 75 48 63 26 75 30 52 12 34 37 30Z" fill="#fff"/>';
+ else if(shape==='spider')art='<path d="M48 14 65 28 60 52 48 65 34 52 30 28Z" fill="#111a30" stroke="#fff" stroke-width="4"/><path d="M30 31 12 20M30 48 10 59M65 31 85 20M65 48 85 59" stroke="#fff" stroke-width="4"/>';
+ else art='<path d="M0 68H18V53H36V37H54V22H74V8H96" fill="none" stroke="#fff" stroke-width="7"/><path d="M12 68 24 47 36 68M52 68 64 47 76 68" fill="#111a30" stroke="#fff" stroke-width="2"/>';
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 80"><defs><linearGradient id="g" x2="1" y2="1"><stop stop-color="${dark}"/><stop offset="1" stop-color="${light}"/></linearGradient></defs><rect width="96" height="80" fill="url(#g)"/><path d="M0 16H96M0 55H96M22 0V80M70 0V80" stroke="#fff" stroke-opacity=".13" stroke-width="2"/>${art}</svg>`;
+ return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg);
+}
+function levelImage(level,i,klass){
+ const img=document.createElement('img');
+ img.className=klass;
+ if(level.name==='Supersonic'||level.name==='Bird Brain')img.classList.add('full-artwork');
+ if(klass==='detail-image' && level.name==='RobTop Travel')img.classList.add('robtop-travel-expanded');
+ img.alt=klass==='detail-image'?'Gameplay screenshot for '+level.name:'';
+ img.src=level.image;
+ img.loading=i<3?'eager':'lazy';
+ img.decoding='async';
+ img.addEventListener('error',()=>{img.src=fallbackThumbnail(i);img.alt='Illustrated fallback thumbnail for '+level.name;},{once:true});
+ return img;
+}
+// V8: Keep RobTop Travel and The Challenge with the 22 official main levels.
+// Discord-voted entries have category "community"; all others default to "main".
+const mainLevels=levels.filter(l=>l.category!=='community');
+const communityLevels=levels.filter(l=>l.category==='community');
+const mainTotalPoints=mainLevels.reduce((sum,l)=>sum+l.points,0);
+const communityTotalPoints=communityLevels.reduce((sum,l)=>sum+l.points,0);
+// RobTop Travel and The Challenge do not have 3 collectible coins.
+const coinEligibleMainNames=new Set(mainLevels.filter(l=>!['RobTop Travel','The Challenge'].includes(l.name)).map(l=>l.name));
+const maxCoinBonus=coinEligibleMainNames.size*3;
+const mainTotalWithCoins=mainTotalPoints+maxCoinBonus;
+document.getElementById('count').textContent=levels.length;
+document.getElementById('main-count').textContent=mainLevels.length;
+document.getElementById('community-count').textContent=communityLevels.length;
+document.getElementById('main-total').textContent=mainTotalWithCoins+' pts';
+document.getElementById('community-total').textContent=communityTotalPoints+' pts';
+document.getElementById('main-count-card').textContent=mainLevels.length;
+document.getElementById('community-count-card').textContent=communityLevels.length;
+document.getElementById('community-level-label').textContent=communityLevels.length===1?'level':'levels';
+document.getElementById('main-points-card').textContent=mainTotalWithCoins;
+document.getElementById('main-coin-breakdown').textContent=`${mainTotalPoints} base points + ${maxCoinBonus} all-coins bonus points`;
+document.getElementById('community-points-card').textContent=communityTotalPoints;
+// V9.1: use local assets, including all five Demon difficulties for future additions.
+// When adding a level, keep its difficulty field consistent with Supabase levels.difficulty.
+const difficultyLabels=Object.freeze({easy:'Easy',normal:'Normal',hard:'Hard',harder:'Harder',insane:'Insane',easy_demon:'Easy Demon',medium_demon:'Medium Demon',hard_demon:'Hard Demon',insane_demon:'Insane Demon',extreme_demon:'Extreme Demon',special:'Special level'});
+function levelDifficultyLabel(level){return Object.hasOwn(difficultyLabels,level.difficulty)?difficultyLabels[level.difficulty]:'Difficulty not set';}
+function levelDifficultyIcon(level){
+ const label=levelDifficultyLabel(level);
+ if(!Object.hasOwn(difficultyLabels,level.difficulty))return null;
+ const img=document.createElement('img');
+ img.className='level-difficulty-icon';img.alt=label;img.title=label;img.width=24;img.height=24;img.decoding='async';
+ if(level.difficulty==='special'){
+  img.classList.add('special-difficulty');
+  const crown=level.name==='RobTop Travel';
+  const shape=crown?'<path d="M3 6l4.5 4.5L12 3l4.5 7.5L21 6l-2 12H5L3 6Z"/><path d="M6 21h12" fill="none" stroke="#e9c65d" stroke-width="2" stroke-linecap="round"/>':'<path d="m12 2 3.1 6.3 7 .9-5.1 5 1.2 7-6.2-3.3-6.2 3.3 1.2-7-5.1-5 7-.9Z"/>';
+  img.src='data:image/svg+xml;charset=UTF-8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#e9c65d" stroke="#ffe6a0" stroke-width="1" stroke-linejoin="round">'+shape+'</svg>');
+ }else{
+  img.src='difficulty-icons/'+level.difficulty+'.png';
+ }
+ img.addEventListener('error',()=>{const fallback=document.createElement('span');fallback.className='level-difficulty-fallback';fallback.textContent='('+label+')';img.replaceWith(fallback);},{once:true});
+ return img;
+}
+function renderRankedLevels(group,listId,categoryName,categoryTotal){
+ const list=document.getElementById(listId);
+ group.forEach((level,i)=>{
+  const originalIndex=levels.indexOf(level);
+  const details=document.createElement('details');
+  details.dataset.musicLevel=level.name;
+  const summary=document.createElement('summary');
+  const rank=document.createElement('span');rank.className='rank';rank.textContent='#'+(i+1);
+  const tier=i===0?'tier-red':i<4?'tier-gold':i<10?'tier-green':'';
+  const title=document.createElement('span');title.className='name'+(tier?' '+tier:'');title.textContent=level.name;
+  const difficultyIcon=levelDifficultyIcon(level);if(difficultyIcon)title.append(difficultyIcon);
+  const pill=document.createElement('span');pill.className='points'+(tier?' '+tier:'');pill.textContent=level.points+' '+(level.points===1?'pt':'pts');
+  const chev=document.createElement('span');chev.className='chev';chev.textContent='⌄';chev.setAttribute('aria-hidden','true');
+  summary.append(rank,levelImage(level,originalIndex,'thumb'),title,pill,chev);
+  const body=document.createElement('div');body.className='detail-panel';
+  const preview=levelImage(level,originalIndex,'detail-image');
+  const content=document.createElement('div');
+  const label=document.createElement('div');label.className='small-label';label.textContent=categoryName+' · Rank #'+(i+1)+' · '+levelDifficultyLabel(level);
+  const value=document.createElement('div');value.className='detail-value';value.textContent=String(level.points)+' ';
+  const unit=document.createElement('span');unit.textContent=level.points===1?'point':'points';value.append(unit);
+  const desc=document.createElement('p');desc.className='detail-description';
+   const eligibleForCoins=listId==='main-list'&&coinEligibleMainNames.has(level.name);
+   desc.textContent=level.description
+     ? level.description.replace('202-point Main Level maximum','268-point Main Level maximum (including coin bonuses)').replace('{categoryTotal}',String(categoryTotal))
+     : ('Completing '+level.name+' earns '+level.points+' base '+(level.points===1?'point':'points')+' toward the '+categoryName+' rankings.');
+  const source=document.createElement('a');source.className='img-source';source.href=level.source;source.target='_blank';source.rel='noopener noreferrer';source.textContent=level.sourceLabel || 'View screenshot source ↗';
+  content.append(label,value,desc);
+   if(eligibleForCoins){const note=document.createElement('p');note.className='coin-note';note.textContent='◈ All 3 coins: +3 Main points with an approved coin claim.';content.append(note);}
+   content.append(source);body.append(preview,content);details.append(summary,body);list.append(details);
+ });
+}
+renderRankedLevels(mainLevels,'main-list','Main Level',mainTotalPoints);
+renderRankedLevels(communityLevels,'community-list','Community Voted Level',communityTotalPoints);
+</script>
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+// Publishable key only. Never place a service-role/secret key in this file.
+const SUPABASE_URL = 'https://rhgehmrfhdhgjqkpjrnf.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_TbCInOpQXXeSlapQCgEvWA_lopVYmt_';
+const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+const $ = (id) => document.getElementById(id);
+let currentUser = null;
+let isAdmin = false;
+let moderationLoadToken = 0;
+let dbLevels = [];
+let orderedSubmissionLevels = [];
+const nameForLevel = (id) => dbLevels.find(l => String(l.id) === String(id))?.name || `Level #${id}`;
+function showStatus(id, message, error=false) { const el=$(id); el.textContent=message; el.classList.toggle('error',error); }
+function errorText(error) {
+  const message=String(error?.message||'');
+  const code=String(error?.code||'');
+  if(/invalid login credentials/i.test(message))return 'Incorrect email or password. Please try again.';
+  if(/email not confirmed/i.test(message))return 'Please confirm your email address before logging in.';
+  if(/user already registered/i.test(message))return 'An account with this email already exists. Try logging in.';
+  if(/password should be|password is too short|weak password/i.test(message))return 'Please choose a stronger password (at least 8 characters).';
+  if(/rate limit|too many requests|over_email_send_rate_limit/i.test(message))return 'Too many attempts. Please wait a little while and try again.';
+  if(/jwt expired|invalid jwt|session.*expired|not authenticated/i.test(message))return 'Your session expired. Please log in again.';
+  if(code==='23505'||/duplicate key|unique constraint/i.test(message))return 'That entry already exists. Please check your previous submission or username.';
+  if(/Only administrators can/i.test(message))return 'You do not have permission to perform this action.';
+  if(/Administrator points cannot be reset|Administrators cannot be banned/i.test(message))return 'Administrator accounts are protected from this action.';
+  if(/Revoked completions cannot be reviewed/i.test(message))return 'This completion was revoked and cannot be reviewed again.';
+  if(/Only rejected completions can be resubmitted/i.test(message))return 'Only rejected completions can be resubmitted.';
+  if(/banned from submitting completions/i.test(message))return 'You are banned from submitting completions. Contact an LVMC administrator if you think this is a mistake.';
+  if(/row.level security|permission denied|not allowed|42501/i.test(message)||code==='42501')return 'This action is not permitted for your account. Please check your permissions or contact an LVMC administrator.';
+  if(/failed to fetch|networkerror|fetch failed/i.test(message))return 'Could not connect to the server. Check your internet connection and try again.';
+  if(/rejection reason cannot exceed 500 characters/i.test(message))return 'Rejection reason must be 500 characters or less.';
+  if(/could not choose the best candidate function|function .* is not unique|PGRST203/i.test(message))return 'Database review functions need the V7.1 cleanup step. Contact an LVMC administrator.';
+  if(/invalid video url/i.test(message))return 'Video links must begin with https://';
+  if(/no existing completion found/i.test(message))return 'We could not find that completion. Refresh your submissions and try again.';
+  if(/submit the level completion first/i.test(message))return 'Submit the level completion before requesting coin points.';
+  if(/only pending or approved coin claims can be reviewed|approved coin claims can only be rejected|only pending coin claims can be reviewed/i.test(message))return 'This coin request has changed status. Refresh the queue.';
+  if(/approve the level completion first/i.test(message))return 'Approve the base level completion before approving its coin bonus.';
+  if(/not eligible for coin bonuses|not coin.eligible/i.test(message))return 'This level is not eligible for coin bonuses.';
+  if(/already.*coin|coin claim.*pending|coin claim.*approved/i.test(message))return 'A coin claim already exists for this level. Check My Submissions.';
+  console.warn('LVMC unrecognized error:',error);
+  return 'Something went wrong. Please try again or contact an LVMC administrator.';
+}
+async function submissionErrorText(error){
+  const message=String(error?.message||'');
+  if(/row.level security|permission denied/i.test(message)||error?.code==='42501'){
+    if(currentUser){
+      const {data, error:banCheckError}=await supabase.from('submission_bans').select('user_id').eq('user_id',currentUser.id).maybeSingle();
+      if(!banCheckError && data)return 'You are banned from submitting completions. Contact an LVMC administrator if you think this is a mistake.';
+    }
+    return 'Your submission could not be accepted. Please log in again or contact an LVMC administrator.';
+  }
+  if(error?.code==='23505'||/duplicate key|unique constraint/i.test(message))return 'You already submitted this level. Check My Submissions; rejected completions can be resubmitted there.';
+  return errorText(error);
+}
+function element(tag, cls, text) { const el=document.createElement(tag); if(cls)el.className=cls; if(text!==undefined)el.textContent=String(text); return el; }
+function clear(el){el.replaceChildren();}
+// V9.0: achievement definitions are presentation only; eligibility comes from Supabase.
+const ACHIEVEMENTS=[
+ ['insanely_dedicated','Insanely Dedicated','Complete all official RobTop Insane levels.','#ff9e67','flame','levels'],
+ ['easy_demon','Easy Demon','Complete at least one Easy Demon from either rankings list.','#a3dbb1','shield','demons'],
+ ['demon_slayer','Demon Slayer','Complete all three official RobTop Demon levels.','#ff8585','swords','levels'],
+ ['medium_demon','Medium Demon','Complete at least one Medium Demon from the Community Voted Levels list.','#79b9ff','shield','demons'],
+ ['robtop_shenanigans','RobTop Shenanigans','Complete all 23 Main Levels, excluding RobTop Travel.','#9cdacb','gamepad','levels'],
+ ['coin_master','Coin Master','Collect all 66 coins across the 22 official RobTop Main Levels.','#e9c65d','coins','coins'],
+ ['hard_demon','Hard Demon','Complete at least one Hard Demon from the Community Voted Levels list.','#ed9ac4','shield','demons'],
+ ['insane_demon','Insane Demon','Complete at least one Insane Demon from the Community Voted Levels list.','#bd9aff','shield','demons'],
+ ['main_level_master','Main Level Master','Complete RobTop Travel.','#ffab6b','crown','levels'],
+ ['extreme_demon','Extreme Demon','Complete at least one Extreme Demon from the Community Voted Levels list.','#ff626b','shield','demons'],
+ ['demon_destroyer','Demon Destroyer','Complete at least one Demon of each of the five Demon difficulties.','#f58baf','swords','difficulties'],
+ ['perfectionist','Perfectionist','Obtain every possible point across both rankings lists.','#8cddff','gem','points'],
+ ['geometry_dasher','Geometry Dasher','Reach #1 on the LVMC leaderboard.','#ffe8a3','crown','rank'],
+ ['absolute_madness','Absolute Madness','Unlock all possible achievements.','#f9d66d','trophy','achievements']
+].map(([key,name,description,color,icon,unit])=>({key,name,description,color,icon,unit}));
+const ACHIEVEMENT_MAP=new Map(ACHIEVEMENTS.map(a=>[a.key,a]));
+const RECLAIM_EVENT='achievement_geometry_dasher_reclaimed';
+const ACHIEVEMENT_EVENTS=[...ACHIEVEMENTS.map(a=>'achievement_'+a.key),RECLAIM_EVENT];
+const ICON_PATHS={
+ flame:'M12 22c-4 0-7-3-7-7 0-4 3-7 5-9 0 3 1 4 2 5 2-3 3-6 2-9 4 3 5 6 5 9 0 6-3 11-7 11ZM12 22c-2 0-4-2-4-4 0-2 2-4 4-6 2 2 4 4 4 6 0 2-2 4-4 4Z',
+ shield:'M12 22S4 18 4 11V5l8-3 8 3v6c0 7-8 11-8 11ZM9 10l3 3 3-3M12 13v4',
+ swords:'m3 3 6 2 10 10-4 4L5 9 3 3Zm18 0-6 2-3 3M8 12l-3 3 4 4 3-3M13 21l8-8M3 13l8 8M3 21l4-4M21 21l-4-4',
+ gamepad:'M7 7h10c3 0 4 2 5 7s-2 6-4 4l-3-3H9l-3 3c-2 2-5 1-4-4s2-7 5-7ZM7 10v5M4.5 12.5h5M16 11h.01M19 14h.01',
+ coins:'M12 3c5 0 9 2 9 5s-4 5-9 5-9-2-9-5 4-5 9-5ZM3 8v5c0 3 4 5 9 5s9-2 9-5V8M3 13v4c0 3 4 5 9 5s9-2 9-5v-4',
+ crown:'m2 7 5 4 5-7 5 7 5-4-3 12H5L2 7ZM5 22h14',
+ gem:'M3 8l4-5h10l4 5-9 13L3 8Zm0 0h18M7 3l5 18 5-18',
+ trophy:'M8 21h8M12 17v4M7 4h10v6a5 5 0 0 1-10 0V4ZM7 6H3v2a4 4 0 0 0 4 4M17 6h4v2a4 4 0 0 1-4 4',
+ lock:'M6 11h12v10H6zM8 11V7a4 4 0 0 1 8 0v4M12 15v2',
+ plus:'M12 5v14M5 12h14'
+};
+function achievementIcon(icon){
+ const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');
+ for(const [k,v] of Object.entries({viewBox:'0 0 24 24',fill:'none',stroke:'currentColor','stroke-width':'1.7','stroke-linecap':'round','stroke-linejoin':'round','aria-hidden':'true'}))svg.setAttribute(k,v);
+ const path=document.createElementNS(ns,'path');path.setAttribute('d',ICON_PATHS[icon]||ICON_PATHS.trophy);svg.append(path);return svg;
+}
+function achievementAccent(node,a){node.style.setProperty('--achievement-color',a.color);return node;}
+function achievementName(node,a,active=true){if(active&&a.key==='absolute_madness')node.classList.add('absolute-madness-text');return node;}
+function achievementIconBox(a,locked=false){const box=achievementAccent(element('span','achievement-icon'),a);box.append(achievementIcon(locked?'lock':a.icon));return box;}
+let accountView='profile',achievementFilter='all',achievementRows=[],achievementAvailable=null,achievementReady=false,achievementLoading=false,achievementSaving=false,achievementLoadToken=0,achievementSession=0,profileUsername='';
+function accountAchievementsVisible(){return !!currentUser&&accountView==='achievements'&&!document.querySelector('[data-panel="account"]').hidden;}
+function switchAccountView(view,load=true){
+ if(!['profile','achievements'].includes(view))return;
+ accountView=view;
+ document.querySelectorAll('[data-account-panel]').forEach(p=>p.hidden=p.dataset.accountPanel!==view);
+ document.querySelectorAll('[data-account-view]').forEach(b=>{const selected=b.dataset.accountView===view;b.setAttribute('aria-selected',String(selected));b.tabIndex=selected?0:-1;});
+ if(load&&currentUser){if(view==='achievements')loadAchievements();else{loadMySubmissions();loadNotifications('account');}}
+}
+document.querySelectorAll('[data-account-view]').forEach(b=>{
+ b.addEventListener('click',()=>switchAccountView(b.dataset.accountView));
+ b.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const next=e.key==='Home'?'profile':e.key==='End'?'achievements':accountView==='profile'?'achievements':'profile';switchAccountView(next);document.querySelector(`[data-account-view="${next}"]`).focus();});
+});
+function clearAchievementSession(){
+ achievementSession++;achievementLoadToken++;achievementRows=[];achievementAvailable=null;achievementReady=false;achievementLoading=false;achievementSaving=false;profileUsername='';achievementFilter='all';
+ switchAccountView('profile',false);showStatus('achievement-status','');renderAchievements();
+}
+function equippedRows(){return achievementRows.filter(a=>a.is_unlocked&&a.equipped_slot!=null).sort((a,b)=>a.equipped_slot-b.equipped_slot);}
+function achievementFuture(key){
+ if(!achievementAvailable)return false;
+ const has=d=>achievementAvailable.some(l=>l.category==='community'&&l.difficulty===d);
+ const missing=['medium_demon','hard_demon','insane_demon','extreme_demon'].some(d=>!has(d))||!achievementAvailable.some(l=>l.difficulty==='easy_demon');
+ if(['medium_demon','hard_demon','insane_demon','extreme_demon'].includes(key))return !has(key);
+ if(key==='easy_demon')return !achievementAvailable.some(l=>l.difficulty==='easy_demon');
+ return ['demon_destroyer','absolute_madness'].includes(key)&&missing;
+}
+function achievementProgress(current,target,color,label){
+ const bar=element('div','achievement-progress');bar.setAttribute('role','progressbar');bar.setAttribute('aria-label',label);bar.setAttribute('aria-valuemin','0');bar.setAttribute('aria-valuemax',String(Math.max(1,target)));bar.setAttribute('aria-valuenow',String(Math.max(0,Math.min(current,Math.max(1,target)))));
+ const fill=element('span','achievement-progress-fill');fill.style.width=(target>0?Math.max(0,Math.min(100,current/target*100)):0)+'%';if(color)fill.style.setProperty('--achievement-color',color);bar.append(fill);return bar;
+}
+function renderAchievements(){
+ const root=$('achievement-grid'),slots=$('achievement-slots'),preview=$('achievement-preview-name'),overview=$('achievement-overview-bar');
+ const equipped=equippedRows(),count=achievementRows.filter(a=>a.is_unlocked).length;
+ const disabled=!achievementReady||achievementLoading||achievementSaving;
+ const focus=document.activeElement?.dataset?.achievementAction;
+ clear(root);clear(slots);clear(preview);clear(overview);
+ $('achievement-refresh').disabled=achievementLoading||achievementSaving;
+ $('achievement-count').textContent=achievementReady?`${count} / ${ACHIEVEMENTS.length}`:'— / '+ACHIEVEMENTS.length;
+ $('achievement-percent').textContent=achievementReady?`${Math.round(count/ACHIEVEMENTS.length*100)}% currently unlocked`:'Achievement progress loads from your account.';
+ overview.append(achievementProgress(count,ACHIEVEMENTS.length,'#e9c65d','Overall achievement progress'));
+ $('achievement-slot-count').textContent=`${equipped.length} / 3 equipped`;
+ $('achievement-slot-hint').hidden=equipped.length<3;
+ $('achievement-filter-heading').textContent=achievementFilter==='all'?'All achievements':achievementFilter==='unlocked'?'Unlocked achievements':'Locked achievements';
+ for(let i=0;i<3;i++){
+  const row=equipped[i],a=row&&ACHIEVEMENT_MAP.get(row.achievement_key),slot=element('div','achievement-slot'+(a?'':' empty'));
+  slot.append(element('span','achievement-slot-label','Slot '+(i+1)));
+  if(a){achievementAccent(slot,a);slot.append(achievementIconBox(a),achievementName(element('span','achievement-slot-name',a.name),a));const btn=element('button','action-btn','Remove');btn.type='button';btn.disabled=disabled;btn.dataset.achievementAction='slot-'+a.key;btn.setAttribute('aria-label','Remove '+a.name);btn.addEventListener('click',()=>changeEquipped(a.key));slot.append(btn);}
+  else{slot.append(achievementIconBox({color:'#8293aa',icon:'plus'}),element('span','achievement-slot-name','Empty slot'));}
+  slots.append(slot);
+ }
+ preview.append(document.createTextNode(profileUsername||'Your username'));
+ for(const row of equipped){const a=ACHIEVEMENT_MAP.get(row.achievement_key);if(a)preview.append(achievementName(achievementAccent(element('span','achievement-title preview-title','· '+a.name),a),a));}
+ document.querySelectorAll('[data-achievement-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.achievementFilter===achievementFilter)));
+ if(!achievementReady){root.append(element('div','achievement-empty',achievementLoading?'Loading achievements…':'Achievement progress is unavailable. Refresh achievements to try again.'));return;}
+ const filtered=achievementRows.filter(r=>achievementFilter==='all'||(achievementFilter==='unlocked'?r.is_unlocked:!r.is_unlocked));
+ for(const row of filtered){
+  const a=ACHIEVEMENT_MAP.get(row.achievement_key);if(!a)continue;
+  const unlocked=row.is_unlocked===true,equippedNow=equipped.some(e=>e.achievement_key===a.key),future=!unlocked&&achievementFuture(a.key);
+  const card=achievementAccent(element('article','achievement-card '+(unlocked?'unlocked':'locked')),a);card.dataset.achievementKey=a.key;
+  const head=element('div','achievement-card-head'),text=element('div','achievement-card-text');text.append(achievementName(element('h4','',a.name),a,unlocked),element('p','',a.description));head.append(achievementIconBox(a,!unlocked),text);card.append(head);
+  const state=element('div','achievement-card-status');state.append(element('span',unlocked?'unlocked-label':future?'future-label':'locked-label',unlocked?'✓ Unlocked':future?'Not yet obtainable':'Locked'));
+  if(equippedNow)state.append(element('span','unlocked-label','Equipped'));card.append(state);
+  if(a.key==='geometry_dasher')card.append(element('p','','Only the current #1 player qualifies. Losing first place removes this title.'));
+  if(a.key==='absolute_madness')card.append(element('p','','All 13 other achievements must be unlocked at the same time.'));
+  if(future)card.append(element('p','','Requires a future level addition.'));
+  const progress=element('div','achievement-card-progress'),line=element('div','achievement-card-progress-label');line.append(element('span','','Progress'),element('span','',`${row.progress_current} / ${row.progress_target} ${a.unit==='rank'?'':row.progress_target===1&&a.unit.endsWith('s')?a.unit.slice(0,-1):a.unit}`.trim()));progress.append(line,achievementProgress(row.progress_current,row.progress_target,unlocked?a.color:null,a.name+' progress'));card.append(progress);
+  const actions=element('div','achievement-card-actions'),btn=element('button','action-btn'+(unlocked&&!equippedNow?' primary':''),equippedNow?'Unequip':unlocked?'Equip':'Locked');btn.type='button';btn.dataset.achievementAction='card-'+a.key;btn.setAttribute('aria-label',(equippedNow?'Unequip ':unlocked?'Equip ':'Locked: ')+a.name);btn.disabled=disabled||!unlocked||(!equippedNow&&equipped.length>=3);if(unlocked&&!equippedNow&&equipped.length>=3)btn.title='Remove a title to free a slot';btn.addEventListener('click',()=>changeEquipped(a.key));actions.append(btn);
+  if(row.first_unlocked_at){const date=new Date(row.first_unlocked_at);if(!Number.isNaN(date.getTime()))actions.append(element('span','achievement-history',(unlocked?'First unlocked ':'Previously unlocked ')+date.toLocaleDateString()));}card.append(actions);root.append(card);
+ }
+ if(!filtered.length)root.append(element('div','achievement-empty','No '+achievementFilter+' achievements yet.'));
+ if(focus){const target=[...document.querySelectorAll('[data-achievement-action]')].find(b=>b.dataset.achievementAction===focus);if(target&&!target.disabled)target.focus({preventScroll:true});}
+}
+async function loadAchievements({quiet=false,afterSave=false}={}){
+ const uid=currentUser?.id;if(!uid||achievementSaving&&!afterSave||quiet&&achievementLoading)return false;
+ const token=++achievementLoadToken,session=achievementSession;achievementLoading=true;
+ if(!quiet){showStatus('achievement-status','Loading achievements…');renderAchievements();}
+ try{
+  const [inventory,levelData]=await Promise.all([supabase.rpc('get_my_achievements_v90'),supabase.from('levels').select('category,difficulty')]);
+  if(uid!==currentUser?.id||token!==achievementLoadToken||session!==achievementSession)return false;
+  if(inventory.error)throw inventory.error;
+  const rows=(inventory.data||[]).filter(r=>ACHIEVEMENT_MAP.has(r.achievement_key)).sort((a,b)=>a.sort_order-b.sort_order);
+  if(rows.length!==ACHIEVEMENTS.length||new Set(rows.map(r=>r.achievement_key)).size!==ACHIEVEMENTS.length)throw new Error('Achievement inventory incomplete');
+  const availability=levelData.error?null:levelData.data||[];
+  const changed=!achievementReady||JSON.stringify(rows)!==JSON.stringify(achievementRows)||JSON.stringify(availability)!==JSON.stringify(achievementAvailable);
+  achievementRows=rows;achievementAvailable=availability;achievementReady=true;achievementLoading=false;
+  if(!quiet||changed){showStatus('achievement-status','');renderAchievements();}
+  return true;
+ }catch(error){
+  if(uid!==currentUser?.id||token!==achievementLoadToken||session!==achievementSession)return false;
+  achievementReady=false;achievementLoading=false;achievementRows=[];achievementAvailable=null;showStatus('achievement-status','Could not load achievements. Please refresh and try again.',true);console.warn('LVMC achievement inventory:',error);renderAchievements();return false;
+ }
+}
+async function changeEquipped(key){
+ const uid=currentUser?.id,session=achievementSession;if(!uid||!achievementReady||achievementLoading||achievementSaving)return;
+ const row=achievementRows.find(r=>r.achievement_key===key);if(!row?.is_unlocked)return;
+ const current=equippedRows().map(r=>r.achievement_key),removing=current.includes(key);if(!removing&&current.length>=3)return;
+ const next=removing?current.filter(k=>k!==key):[...current,key];
+ achievementSaving=true;achievementLoadToken++;showStatus('achievement-status','Saving equipped titles…');renderAchievements();
+ try{
+  const {error}=await supabase.rpc('set_equipped_titles_v90',{p_achievement_keys:next});
+  if(uid!==currentUser?.id||session!==achievementSession)return;
+  if(error)throw error;
+  const refreshed=await loadAchievements({afterSave:true});
+  if(uid!==currentUser?.id||session!==achievementSession)return;
+  if(refreshed)showStatus('achievement-status','Equipped titles saved!');
+  await loadLeaderboard();
+ }catch(error){
+  if(uid!==currentUser?.id||session!==achievementSession)return;
+  const message=String(error?.message||'');await loadAchievements({afterSave:true});
+  if(uid!==currentUser?.id||session!==achievementSession)return;
+  showStatus('achievement-status',/only equip unlocked/i.test(message)?'Your eligibility changed. Achievement progress has been refreshed.':/maximum of 3|duplicate achievement/i.test(message)?message:'Could not save titles. Please try again.',true);
+ }finally{if(uid===currentUser?.id&&session===achievementSession){achievementSaving=false;renderAchievements();}}
+}
+$('achievement-refresh').addEventListener('click',()=>loadAchievements());
+document.querySelectorAll('[data-achievement-filter]').forEach(b=>b.addEventListener('click',()=>{achievementFilter=b.dataset.achievementFilter;renderAchievements();}));
+
+function switchTab(tab) {
+  if(tab==='admin' && !isAdmin) tab='rankings';
+  closeAchievementTooltip();
+  document.querySelectorAll('[data-panel]').forEach(el => el.hidden=el.dataset.panel!==tab);
+  document.querySelectorAll('[data-tab]').forEach(el=>el.setAttribute('aria-selected',String(el.dataset.tab===tab)));
+  if(tab==='leaderboard') loadLeaderboard();
+  if(tab==='account' && currentUser) {if(accountView==='achievements')loadAchievements();else{loadMySubmissions();loadNotifications('account');}}
+  if(tab==='admin' && isAdmin) {if(adminView==='players')loadAdminPlayers();else if(adminView==='coins')loadAdminCoinQueue();else loadAdminQueue();loadNotifications('admin');}
+}
+document.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>switchTab(btn.dataset.tab)));
+// Admin sub-tabs keep player moderation accessible without scrolling through reviews.
+let adminView='reviews';
+function switchAdminView(view){
+  if(!['reviews','coins','players'].includes(view))return;
+  adminView=view;
+  document.querySelectorAll('[data-admin-panel]').forEach(panel=>{panel.hidden=panel.dataset.adminPanel!==view;});
+  document.querySelectorAll('[data-admin-view]').forEach(btn=>{
+    const selected=btn.dataset.adminView===view;
+    btn.setAttribute('aria-selected',String(selected));
+    btn.tabIndex=selected?0:-1;
+  });
+  if(isAdmin){if(view==='players')loadAdminPlayers();else if(view==='coins')loadAdminCoinQueue();else loadAdminQueue();loadNotifications('admin');}
+}
+document.querySelectorAll('[data-admin-view]').forEach(btn=>{
+  btn.addEventListener('click',()=>switchAdminView(btn.dataset.adminView));
+  btn.addEventListener('keydown',event=>{
+    if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+    event.preventDefault();
+    const views=['reviews','coins','players'];
+    const index=views.indexOf(adminView);
+    const next=event.key==='Home'?views[0]:event.key==='End'?views[views.length-1]:views[(index+(event.key==='ArrowRight'?1:views.length-1))%views.length];
+    switchAdminView(next);
+    document.querySelector(`[data-admin-view="${next}"]`).focus();
+  });
+});
+
+
+
+// --- LVMC V7.2: private, persistent notifications (polling, not browser push) ---
+const ADMIN_COMPLETION_TYPES=['new_submission','resubmitted'];
+const ADMIN_COIN_TYPES=['coin_new','coin_resubmitted'];
+const NOTIFICATION_TYPES={account:['approved','rejected','coin_approved','coin_rejected',...ACHIEVEMENT_EVENTS],admin:[...ADMIN_COMPLETION_TYPES,...ADMIN_COIN_TYPES]};
+const notificationVisible={account:5,admin:5};
+const notificationCounts={account:0,admin:0};
+const adminNotificationSplit={completion:0,coin:0};
+const notificationLoadToken={account:0,admin:0};
+let notificationPollTimer=null;
+let notificationCountToken=0;
+let notificationBulkBusy=false;
+const notificationRoot=kind=>$(kind+'-notifications');
+const notificationStatus=kind=>$(kind+'-notifications-status');
+const notificationBadgeText=count=>count>9?'9+':String(count);
+function setNotificationStatus(kind,message,error=false){
+  const node=notificationStatus(kind);node.textContent=message;node.classList.toggle('error',error);
+}
+function updateNotificationBadges(kind,count){
+  notificationCounts[kind]=count;
+  // Keep the completion form and review queue unobstructed once caught up.
+  // A future unread notification automatically reveals this section again.
+  $(kind+'-notification-center').hidden=count===0;
+  const targets=kind==='admin'
+    ?[['admin-notification-badge','admin-tab']]
+    :[['account-notification-badge','account-tab'],['profile-notification-badge','account-profile-tab']];
+  for(const [badgeId,buttonId] of targets){
+    const badge=$(badgeId),button=$(buttonId);
+    badge.hidden=count===0;
+    badge.textContent=count?notificationBadgeText(count):'';
+    const base=buttonId==='account-profile-tab'?'My Profile':kind==='admin'?'Admin':'My account';
+    button.setAttribute('aria-label',count?`${base}, ${count} unread notification${count===1?'':'s'}`:base);
+  }
+  $('mark-'+kind+'-notifications-read').disabled=count===0||notificationBulkBusy;
+  if(kind==='admin')updateAdminSubtabBadges();
+}
+function updateAdminSubtabBadges(){
+  for(const [id,tabId,count] of [
+    ['admin-reviews-notification-badge','admin-reviews-tab',adminNotificationSplit.completion],
+    ['admin-coins-notification-badge','admin-coins-tab',adminNotificationSplit.coin]
+  ]){
+    const badge=$(id),tab=$(tabId);
+    badge.hidden=count===0;
+    badge.textContent=count?notificationBadgeText(count):'';
+    const base=tabId==='admin-coins-tab'?'Coin Reviews':'Completion Reviews';
+    tab.setAttribute('aria-label',count?`${base}, ${count} unread notification${count===1?'':'s'}`:base);
+  }
+}
+function clearNotificationSession(){
+  if(notificationPollTimer!==null){clearInterval(notificationPollTimer);notificationPollTimer=null;}
+  notificationCountToken++;
+  for(const kind of ['account','admin']){
+    notificationLoadToken[kind]++;
+    notificationVisible[kind]=5;
+    if(kind==='admin'){adminNotificationSplit.completion=0;adminNotificationSplit.coin=0;}
+    updateNotificationBadges(kind,0);
+    notificationRoot(kind).textContent='Sign in to view notifications.';
+    $('more-'+kind+'-notifications').hidden=true;
+    setNotificationStatus(kind,'');
+  }
+}
+async function refreshNotificationBadges(){
+  const uid=currentUser?.id;
+  if(!uid)return;
+  const token=++notificationCountToken;
+  const requests=[
+    ['account',NOTIFICATION_TYPES.account],
+    ...(isAdmin?[['completion',ADMIN_COMPLETION_TYPES],['coin',ADMIN_COIN_TYPES]]:[])
+  ];
+  const results=await Promise.all(requests.map(([,types])=>
+    supabase.from('notifications').select('id',{count:'exact',head:true})
+      .eq('recipient_id',uid).in('event_type',types).is('read_at',null)
+  ));
+  if(uid!==currentUser?.id||token!==notificationCountToken)return;
+  const failures=results.filter(r=>r.error);
+  if(failures.length){
+    const kind=results[0].error?'account':'admin';
+    $(kind+'-notification-center').hidden=false;
+    setNotificationStatus(kind,'Could not check unread notifications: '+errorText(failures[0].error),true);
+    return;
+  }
+  updateNotificationBadges('account',results[0].count||0);
+  if(isAdmin){
+    adminNotificationSplit.completion=results[1].count||0;
+    adminNotificationSplit.coin=results[2].count||0;
+    updateNotificationBadges('admin',adminNotificationSplit.completion+adminNotificationSplit.coin);
+  }else{
+    adminNotificationSplit.completion=0;adminNotificationSplit.coin=0;
+    updateNotificationBadges('admin',0);
+  }
+}
+async function loadNotifications(kind){
+  if(!currentUser||(kind==='admin'&&!isAdmin))return;
+  const uid=currentUser.id,token=++notificationLoadToken[kind];
+  const root=notificationRoot(kind),limit=notificationVisible[kind];
+  if(!root.querySelector('.notification-item')&&!root.querySelector('.notification-empty'))root.textContent='Loading notifications…';
+  const {data,error}=await supabase.from('notifications')
+    .select('id,completion_id,event_type,created_at,read_at')
+    .eq('recipient_id',uid).in('event_type',NOTIFICATION_TYPES[kind])
+    .is('read_at',null)
+    .order('created_at',{ascending:false}).order('id',{ascending:false}).limit(limit+1);
+  if(uid!==currentUser?.id||token!==notificationLoadToken[kind])return;
+  if(error){
+    root.textContent='Could not load notifications.';
+    $(kind+'-notification-center').hidden=false;
+    setNotificationStatus(kind,errorText(error),true);
+    return;
+  }
+  setNotificationStatus(kind,'');
+  const records=(data||[]).slice(0,limit);
+  $('more-'+kind+'-notifications').hidden=(data||[]).length<=limit;
+  clear(root);
+  if(!records.length){root.append(element('div','notification-empty','You’re all caught up!'));return;}
+  // Completion and profile lookups use the same existing RLS permissions as the website.
+  // Achievements are account events, not tied to a completion. Never query a null ID.
+  const completionIds=[...new Set(records.map(n=>n.completion_id).filter(id=>id!=null))];
+  const {data:completions,error:completionError}=completionIds.length
+    ? await supabase.from('completions').select('id,user_id,level_id,status').in('id',completionIds)
+    : {data:[],error:null};
+  if(uid!==currentUser?.id||token!==notificationLoadToken[kind])return;
+  const completionMap=new Map((completions||[]).map(c=>[String(c.id),c]));
+  let names=new Map();
+  if(kind==='admin'&&completions?.length){
+    const userIds=[...new Set(completions.map(c=>c.user_id))];
+    const {data:profiles}=await supabase.from('profiles').select('id,username').in('id',userIds);
+    if(uid!==currentUser?.id||token!==notificationLoadToken[kind])return;
+    names=new Map((profiles||[]).map(p=>[p.id,p.username]));
+  }
+  if(completionError)setNotificationStatus(kind,'Some level details could not be loaded.',true);
+  for(const n of records){
+    const c=completionMap.get(String(n.completion_id));
+    const level=c?nameForLevel(c.level_id):'A completion';
+    const player=c?(names.get(c.user_id)||'A player'):'A player';
+    const unread=n.read_at===null;
+    const reclaim=n.event_type===RECLAIM_EVENT;
+    const achievement=ACHIEVEMENT_MAP.get(reclaim?'geometry_dasher':n.event_type.replace(/^achievement_/,''));
+    const row=element('div','notification-item'+(unread?' unread':'')+(achievement?' achievement':''));
+    const symbolClass=n.event_type==='coin_approved'?'approved':n.event_type==='coin_rejected'?'rejected':n.event_type==='coin_resubmitted'?'resubmitted':n.event_type;
+    const symbol=element('span','notification-symbol '+symbolClass,
+      ({approved:'✓',rejected:'×',new_submission:'!',resubmitted:'↻',coin_new:'◈',coin_resubmitted:'↻',coin_approved:'✓',coin_rejected:'×'})[n.event_type]||'•');
+    symbol.setAttribute('aria-hidden','true');
+    if(achievement){achievementAccent(row,achievement);symbol.replaceChildren(achievementIcon(reclaim?'crown':'trophy'));}
+    const body=element('div','notification-content');
+    const message=element('div','notification-message');
+    if(achievement){
+      const heading=element('strong','notification-achievement-title',reclaim?'Geometry Dasher reclaimed!':`Achievement unlocked: ${achievement.name}!`);
+      achievementName(heading,achievement);
+      const detail=reclaim?"You've reclaimed the #1 spot on the LVMC leaderboard and are once again eligible to equip the Geometry Dasher title!":achievement.key==='geometry_dasher'?"Congratulations! You've reached #1 on the LVMC leaderboard and unlocked the Geometry Dasher title.":achievement.key==='coin_master'?"Congratulations! You've collected all 66 coins across the 22 official RobTop Main Levels and earned the golden Coin Master title.":`Congratulations! You've earned ${achievement.name}. Visit My account → Achievements to view your current eligibility and equip titles.`;
+      message.append(heading,detail);
+    }else if(n.event_type==='approved')message.append(element('strong','',level),' was approved!');
+    else if(n.event_type==='rejected')message.append(element('strong','',level),' was rejected.');
+    else if(n.event_type==='coin_approved')message.append('All coins for ',element('strong','',level),' were approved! (+3 Main pts)');
+    else if(n.event_type==='coin_rejected')message.append('All coins for ',element('strong','',level),' were rejected.');
+    else if(n.event_type==='coin_new')message.append(element('strong','',player),' requested all coins for ',element('strong','',level),'.');
+    else if(n.event_type==='coin_resubmitted')message.append(element('strong','',player),' resubmitted all coins for ',element('strong','',level),'.');
+    else if(n.event_type==='resubmitted')message.append(element('strong','',player),' resubmitted ',element('strong','',level),'.');
+    else message.append(element('strong','',player),' submitted ',element('strong','',level),'.');
+    const time=element('div','notification-meta',new Date(n.created_at).toLocaleString());
+    if(achievement)time.append(' · Achievement');
+    if(kind==='admin'&&c)time.append(' · '+(c.status==='pending'?'Still pending':'Now '+c.status));
+    body.append(message,time);
+    row.append(symbol,body);
+    if(unread){
+      const mark=element('button','notification-read-btn','Mark read');mark.type='button';
+      mark.setAttribute('aria-label',achievement?`Mark ${achievement.name}${reclaim?' reclaim':''} notification as read`:`Mark ${level} notification as read`);
+      mark.addEventListener('click',async()=>{
+        if(!currentUser||currentUser.id!==uid)return;
+        mark.disabled=true;
+        const {error:readError}=await supabase.rpc('mark_notifications_read',{p_notification_id:n.id});
+        if(uid!==currentUser?.id)return;
+        if(readError){setNotificationStatus(kind,'Could not mark notification as read: '+errorText(readError),true);mark.disabled=false;return;}
+        await Promise.all([refreshNotificationBadges(),loadNotifications(kind)]);
+      });
+      row.append(mark);
+    }
+    root.append(row);
+  }
+}
+async function markAllCategoryNotificationsRead(kind){
+  if(!currentUser||(kind==='admin'&&!isAdmin)||notificationBulkBusy)return;
+  const uid=currentUser.id;
+  notificationBulkBusy=true;
+  $('mark-account-notifications-read').disabled=true;
+  $('mark-admin-notifications-read').disabled=true;
+  setNotificationStatus(kind,'Marking notifications as read…');
+  let outcomeMessage='',outcomeError=false;
+  try{
+    // The existing RPC marks all types if called without an ID. Use individual IDs
+    // so an admin's review notifications never clear their account notifications.
+    let total=0;
+    for(;;){
+      if(uid!==currentUser?.id)break;
+      const {data,error}=await supabase.from('notifications').select('id')
+        .eq('recipient_id',uid).in('event_type',NOTIFICATION_TYPES[kind])
+        .is('read_at',null).order('id',{ascending:true}).limit(100);
+      if(error)throw error;
+      if(!data?.length)break;
+      for(let i=0;i<data.length;i+=8){
+        if(uid!==currentUser?.id)break;
+        const results=await Promise.all(data.slice(i,i+8).map(n=>
+          supabase.rpc('mark_notifications_read',{p_notification_id:n.id})
+        ));
+        const failed=results.find(result=>result.error);
+        if(failed)throw failed.error;
+      }
+      total+=data.length;
+      if(total>=1000){
+        outcomeMessage='Marked 1,000 notifications as read. Click again if more remain.';
+        break;
+      }
+    }
+    if(!outcomeMessage)outcomeMessage=total?`${total} notification${total===1?'':'s'} marked as read.`:'All caught up!';
+  }catch(error){
+    outcomeMessage='Could not finish marking notifications as read: '+errorText(error);outcomeError=true;
+  }finally{
+    notificationBulkBusy=false;
+    if(uid===currentUser?.id){
+      await Promise.all([refreshNotificationBadges(),loadNotifications(kind)]);
+      if(outcomeMessage)setNotificationStatus(kind,outcomeMessage,outcomeError);
+    }
+  }
+}
+for(const kind of ['account','admin']){
+  $('mark-'+kind+'-notifications-read').addEventListener('click',()=>markAllCategoryNotificationsRead(kind));
+  $('more-'+kind+'-notifications').addEventListener('click',()=>{
+    notificationVisible[kind]+=5;
+    loadNotifications(kind);
+  });
+}
+async function refreshNotificationUI(){
+  if(!currentUser||notificationBulkBusy)return;
+  const selected=document.querySelector('[data-tab][aria-selected="true"]')?.dataset.tab;
+  const jobs=[refreshNotificationBadges()];
+  if(selected==='account'){if(accountView==='achievements')jobs.push(loadAchievements({quiet:true}));else jobs.push(loadNotifications('account'));}
+  if(selected==='admin'&&isAdmin)jobs.push(loadNotifications('admin'));
+  await Promise.all(jobs);
+}
+function startNotificationPolling(){
+  if(notificationPollTimer!==null)clearInterval(notificationPollTimer);
+  notificationPollTimer=setInterval(()=>{
+    if(!document.hidden&&currentUser)refreshNotificationUI();
+  },30000);
+}
+document.addEventListener('visibilitychange',()=>{
+  if(!document.hidden&&currentUser)refreshNotificationUI();
+});
+
+// V9.0: one shared, viewport-positioned tooltip avoids clipping in the leaderboard.
+const achievementTooltip=element('div','achievement-tooltip');
+achievementTooltip.id='achievement-tooltip';achievementTooltip.hidden=true;
+achievementTooltip.setAttribute('role','tooltip');
+const achievementHeading=element('div','achievement-tooltip-heading');
+const achievementUnlocked=element('div','achievement-tooltip-unlocked');
+const achievementDescription=element('div','achievement-tooltip-description');
+achievementTooltip.append(achievementHeading,achievementDescription,achievementUnlocked);
+document.body.append(achievementTooltip);
+let achievementAnchor=null,achievementPinned=false,achievementHideTimer=null;
+function cancelAchievementHide(){clearTimeout(achievementHideTimer);achievementHideTimer=null;}
+function closeAchievementTooltip(){
+  cancelAchievementHide();
+  if(achievementAnchor){achievementAnchor.setAttribute('aria-expanded','false');achievementAnchor.removeAttribute('aria-describedby');}
+  achievementAnchor=null;achievementPinned=false;achievementTooltip.hidden=true;
+}
+function positionAchievementTooltip(){
+  if(!achievementAnchor)return;
+  if(!achievementAnchor.isConnected||!achievementAnchor.getClientRects().length){closeAchievementTooltip();return;}
+  const rect=achievementAnchor.getBoundingClientRect(),w=document.documentElement.clientWidth,h=window.innerHeight;
+  if(rect.bottom<0||rect.top>h||rect.right<0||rect.left>w){closeAchievementTooltip();return;}
+  const margin=12,gap=7;
+  const width=achievementTooltip.offsetWidth,height=achievementTooltip.offsetHeight;
+  const left=Math.max(margin,Math.min(rect.left,w-width-margin));
+  const below=rect.bottom+gap,above=rect.top-height-gap;
+  const preferred=below+height<=h-margin||above<margin?below:above;
+  const top=Math.max(margin,Math.min(preferred,h-height-margin));
+  achievementTooltip.style.left=left+'px';achievementTooltip.style.top=top+'px';
+}
+function showAchievementTooltip(button,username,a,pinned=false){
+  if(achievementAnchor!==button)closeAchievementTooltip();
+  cancelAchievementHide();achievementAnchor=button;achievementPinned=pinned||achievementPinned;
+  achievementAccent(achievementTooltip,a);
+  achievementHeading.replaceChildren(achievementIcon(a.icon),achievementName(element('span','',a.name+' Achievement'),a));
+  achievementDescription.textContent=a.description+(a.key==='geometry_dasher'?' Only the current #1 player qualifies.':a.key==='absolute_madness'?' All 13 other achievements must be unlocked simultaneously.':'');
+  achievementUnlocked.textContent='✓ Unlocked by '+username;
+  achievementTooltip.hidden=false;
+  button.setAttribute('aria-expanded','true');button.setAttribute('aria-describedby',achievementTooltip.id);
+  positionAchievementTooltip();
+}
+function scheduleAchievementHide(){
+  cancelAchievementHide();
+  if(!achievementAnchor||achievementPinned||achievementAnchor.matches(':focus-visible'))return;
+  achievementHideTimer=setTimeout(closeAchievementTooltip,180);
+}
+function createAchievementTitle(username,a){
+  const button=achievementName(achievementAccent(element('button','achievement-title','· '+a.name),a),a);button.type='button';
+  button.setAttribute('aria-label',a.name+' achievement for '+username);
+  button.setAttribute('aria-expanded','false');
+  button.addEventListener('pointerenter',event=>{
+    if(event.pointerType!=='touch')showAchievementTooltip(button,username,a);
+  });
+  button.addEventListener('pointerleave',()=>{if(achievementAnchor===button)scheduleAchievementHide();});
+  button.addEventListener('focus',()=>{if(button.matches(':focus-visible'))showAchievementTooltip(button,username,a);});
+  button.addEventListener('blur',()=>{if(achievementAnchor===button)closeAchievementTooltip();});
+  button.addEventListener('click',()=>{
+    if(achievementAnchor===button&&achievementPinned)closeAchievementTooltip();
+    else showAchievementTooltip(button,username,a,true);
+  });
+  return button;
+}
+achievementTooltip.addEventListener('pointerenter',cancelAchievementHide);
+achievementTooltip.addEventListener('pointerleave',scheduleAchievementHide);
+document.addEventListener('pointerdown',event=>{
+  if(achievementAnchor&&!achievementAnchor.contains(event.target)&&!achievementTooltip.contains(event.target))closeAchievementTooltip();
+});
+document.addEventListener('keydown',event=>{
+  if(event.key==='Escape'&&achievementAnchor)closeAchievementTooltip();
+});
+window.addEventListener('resize',positionAchievementTooltip);
+window.addEventListener('scroll',positionAchievementTooltip,{passive:true,capture:true});
+let leaderboardLoadToken=0;
+async function loadLeaderboard(){
+  const token=++leaderboardLoadToken;
+  closeAchievementTooltip();
+  const root=$('leaderboard-list'); root.textContent='Loading leaderboard…';
+  // Server calculates both the existing scores and current achievement eligibility.
+  const {data,error}=await supabase.rpc('get_leaderboard_v90');
+  if(token!==leaderboardLoadToken)return;
+  if(error){root.textContent='Could not load leaderboard: '+errorText(error);return;}
+  clear(root);
+  if(!data?.length){root.textContent='No players yet. Be the first!';return;}
+  data.forEach((player,i)=>{
+    const row=element('div','board-row board-row-v8');
+    const rank=element('span','board-rank',`#${i+1}`);
+    const middle=element('div','board-player');
+    const name=element('div','board-name',player.username);
+    const equipped=Array.isArray(player.equipped_titles)?player.equipped_titles:[];
+    for(const key of [...new Set(equipped)].slice(0,3)){const a=ACHIEVEMENT_MAP.get(key);if(a)name.append(createAchievementTitle(player.username,a));}
+    middle.append(
+      name,
+      element('div','board-sub',`${player.main_completed} / ${mainLevels.length} main levels · ${player.community_completed} / ${communityLevels.length} community levels`)
+    );
+    const right=element('div','board-scores');
+    right.append(
+      element('div','board-main-score',`${player.main_points} pts`),
+      element('div','board-community-score',`${player.community_points} community pts`)
+    );
+    row.append(rank,middle,right);root.append(row);
+  });
+}
+$('refresh-leaderboard').addEventListener('click',loadLeaderboard);
+
+// Filter the existing Supabase level IDs without changing the submission workflow.
+const normalizeLevelSearch=value=>String(value).normalize('NFKC').trim().replace(/\s+/g,' ').toLowerCase();
+function selectedCoinEligible(){
+  const level=dbLevels.find(l=>String(l.id)===$('completion-level').value);
+  return !!(level&&level.category==='main'&&level.coin_eligible===true);
+}
+function updateCompletionCoinOption(){
+  const allowed=selectedCoinEligible();
+  $('completion-coin-option').hidden=!allowed;
+  if(!allowed)$('completion-all-coins').checked=false;
+}
+$('completion-level').addEventListener('change',updateCompletionCoinOption);
+function renderCompletionLevelOptions(){
+  const select=$('completion-level');
+  const search=normalizeLevelSearch($('completion-level-search').value);
+  const previouslySelected=select.value;
+  const matches=orderedSubmissionLevels.filter(level=>normalizeLevelSearch(level.name).includes(search));
+  clear(select);
+  const placeholder=element('option','',matches.length?(search?'Choose a matching level…':'Choose a level…'):'No matching levels');
+  placeholder.value='';
+  select.append(placeholder);
+  const mainGroup=document.createElement('optgroup');mainGroup.label='Main Levels List';
+  const communityGroup=document.createElement('optgroup');communityGroup.label='Community Voted Levels';
+  for(const level of matches){
+    const option=element('option','',`${level.name} · ${level.points} pts`);
+    option.value=String(level.id);
+    (level.category==='community'?communityGroup:mainGroup).append(option);
+  }
+  if(mainGroup.children.length)select.append(mainGroup);
+  if(communityGroup.children.length)select.append(communityGroup);
+  // Never silently submit a level hidden by a new search.
+  select.value=matches.some(level=>String(level.id)===previouslySelected)?previouslySelected:'';
+  const status=$('completion-level-search-status');
+  status.textContent=search?(matches.length?`${matches.length} matching level${matches.length===1?'':'s'}. Choose one from the level dropdown above.`:'No matching levels. Try another search.'):'';
+  updateCompletionCoinOption();
+}
+$('completion-level-search').addEventListener('input',renderCompletionLevelOptions);
+$('completion-level-search').addEventListener('keydown',event=>{
+  // Enter while searching should focus the selector, not submit the form.
+  if(event.key==='Enter'){
+    event.preventDefault();
+    $('completion-level').focus();
+  }
+});
+async function loadLevels(){
+  // Fetch IDs from Supabase rather than assuming rank numbers equal database IDs.
+  const {data,error}=await supabase.from('levels').select('id,name,points,category,coin_eligible');
+  const select=$('completion-level'); clear(select);
+  const searchInput=$('completion-level-search');
+  if(error){
+    searchInput.disabled=true;
+    select.append(element('option','', 'Could not load levels'));
+    showStatus('submission-status',errorText(error),true);
+    return;
+  }
+  dbLevels=data||[];
+  const byName=new Map(dbLevels.map(l=>[normalizeLevelSearch(l.name),l]));
+  const sorted=levels.map(l=>byName.get(normalizeLevelSearch(l.name))).filter(Boolean);
+  const remaining=dbLevels.filter(l=>!sorted.some(x=>String(x.id)===String(l.id)));
+  orderedSubmissionLevels=[...sorted,...remaining];
+  searchInput.disabled=false;
+  renderCompletionLevelOptions();
+  if(sorted.length!==levels.length) showStatus('submission-status',`Heads up: matched ${sorted.length} of ${levels.length} website levels to the database. Check level names before submitting.`,true);
+  const mismatched=levels.filter(l=>{const db=byName.get(normalizeLevelSearch(l.name));return db&&db.category!==(l.category||'main');});
+  if(mismatched.length)showStatus('submission-status','Some website level categories differ from Supabase. Contact an LVMC administrator before submitting.',true);
+}
+async function loadProfile(){
+  if(!currentUser)return;
+  const uid=currentUser.id;
+  const {data,error}=await supabase.from('profiles').select('username').eq('id',uid).maybeSingle();
+  if(uid!==currentUser?.id)return;
+  profileUsername=data?.username||'';
+  if(achievementReady)renderAchievements();
+  $('welcome').textContent=data?.username?`${data.username}'s profile`:'My player profile';
+  $('profile-info').textContent=error?'Signed in. Could not load profile: '+errorText(error):`Signed in as ${data?.username||'player'}. Your submissions need admin approval to earn points.`;
+}
+async function loadMySubmissions(){
+  if(!currentUser)return;
+  const root=$('my-submissions');root.textContent='Loading…';
+  const uid=currentUser.id;
+  const {data,error}=await supabase.from('completions').select('id,level_id,status,submitted_at,rejection_reason').eq('user_id',uid).order('submitted_at',{ascending:false});
+  if(uid!==currentUser?.id)return;
+  if(error){root.textContent='Could not load submissions: '+errorText(error);return;}
+  clear(root);
+  if(!data?.length){root.textContent='No submissions yet.';return;}
+  const ids=data.map(c=>c.id);
+  const {data:claims,error:coinError}=await supabase.from('coin_claims')
+    .select('id,completion_id,status,submitted_at,rejection_reason')
+    .in('completion_id',ids);
+  if(uid!==currentUser?.id)return;
+  const claimMap=new Map((claims||[]).map(c=>[String(c.completion_id),c]));
+  if(coinError)root.append(element('div','status-line error','Coin requests could not be loaded: '+errorText(coinError)));
+  for(const c of data){
+    const row=element('div','submission-row');const line=element('div');
+    line.append(element('strong','',nameForLevel(c.level_id)),' ',element('span','tag '+c.status,c.status));
+    row.append(line,element('div','submission-meta',new Date(c.submitted_at).toLocaleString()));
+    if(c.status==='rejected'){
+      if(c.rejection_reason?.trim()){
+        const note=element('div','rejection-note');
+        note.append(element('strong','','Reason: '),document.createTextNode(c.rejection_reason));
+        row.append(note);
+      }
+      const form=element('form','form-stack');
+      const label=element('label','', 'New evidence link (optional)');
+      const input=element('input');input.type='url';input.placeholder='https://...';input.maxLength=2000;
+      label.append(input);
+      const button=element('button','action-btn primary','Resubmit for review');button.type='submit';
+      const status=element('div','status-line');form.append(label,button,status);
+      form.addEventListener('submit',async event=>{
+        event.preventDefault();if(!currentUser)return;
+        const video=input.value.trim();
+        if(video){try{if(new URL(video).protocol!=='https:')throw Error();}catch{status.textContent='Use an https:// video URL.';status.classList.add('error');return;}}
+        button.disabled=true;status.textContent='Resubmitting…';status.classList.remove('error');
+        const {error}=await supabase.rpc('resubmit_completion',{p_level_id:c.level_id,p_video_url:video||null});
+        if(error){status.textContent=await submissionErrorText(error);status.classList.add('error');button.disabled=false;}
+        else{showStatus('submission-status','Completion resubmitted for admin review!');await loadMySubmissions();}
+      });
+      row.append(form);
+    }
+    // An existing completion can request or retry its +3 coin bonus separately.
+    const level=dbLevels.find(l=>String(l.id)===String(c.level_id));
+    if(!coinError&&level?.category==='main'&&level.coin_eligible===true){
+      const claim=claimMap.get(String(c.id));
+      const box=element('div','coin-summary');
+      const head=element('div','coin-summary-head');
+      head.append(element('span','coin-symbol','◈'),element('strong','','All 3 coins (+3 Main pts)'));
+      const state=claim?.status||'not claimed';
+      head.append(element('span','tag '+(claim?.status||''),state));
+      box.append(head);
+      if(claim?.status==='approved'){
+        box.append(element('div','coin-status approved',c.status==='approved'?'Coin bonus approved and counted.':'Coin bonus is inactive until the base completion is approved.'));
+      }else if(claim?.status==='pending'){
+        box.append(element('div','coin-status pending','Coin request awaiting admin review.'));
+      }else{
+        if(claim?.status==='rejected'&&claim.rejection_reason?.trim()){
+          const note=element('div','coin-status rejected');
+          note.append(element('strong','','Reason: '),document.createTextNode(claim.rejection_reason));box.append(note);
+        }
+        if(c.status==='pending'||c.status==='approved'){
+          // Keep long submission histories compact: show the evidence editor on demand.
+          const toggle=element('button','action-btn',claim?'Resubmit coin request':'Request +3 coin points');toggle.type='button';
+          toggle.setAttribute('aria-expanded','false');
+          const form=element('form','form-stack');form.hidden=true;
+          const label=element('label','', 'Coin evidence link (optional)');
+          const input=element('input');input.type='url';input.placeholder='https://...';input.maxLength=2000;
+          label.append(input);
+          const buttons=element('div','button-row');
+          const button=element('button','action-btn primary','Send coin request');button.type='submit';
+          const cancel=element('button','action-btn','Cancel');cancel.type='button';
+          buttons.append(button,cancel);
+          const status=element('div','status-line');
+          form.append(label,buttons,status);
+          toggle.addEventListener('click',()=>{form.hidden=false;toggle.hidden=true;toggle.setAttribute('aria-expanded','true');input.focus();});
+          cancel.addEventListener('click',()=>{form.hidden=true;toggle.hidden=false;toggle.setAttribute('aria-expanded','false');input.value='';status.textContent='';toggle.focus();});
+          form.addEventListener('submit',async event=>{
+            event.preventDefault();if(!currentUser||currentUser.id!==uid)return;
+            const video=input.value.trim();
+            if(video){try{if(new URL(video).protocol!=='https:')throw Error();}catch{status.textContent='Use an https:// video URL.';status.classList.add('error');return;}}
+            button.disabled=true;cancel.disabled=true;status.textContent='Sending coin request…';status.classList.remove('error');
+            const {error}=await supabase.rpc('submit_coin_claim',{p_level_id:c.level_id,p_video_url:video||null});
+            if(uid!==currentUser?.id)return;
+            if(error){status.textContent=await submissionErrorText(error);status.classList.add('error');button.disabled=false;cancel.disabled=false;}
+            else{showStatus('submission-status','All-coins request submitted for admin review!');await loadMySubmissions();}
+          });
+          box.append(toggle,form);
+        }else{
+          box.append(element('div','coin-status','Coin upgrades are available after you resubmit the base completion.'));
+        }
+      }
+      row.append(box);
+    }
+    root.append(row);
+  }
+}
+async function loadAdminStatus(){
+  isAdmin=false;
+  if(currentUser){
+    const {data,error}=await supabase.from('admins').select('user_id').eq('user_id',currentUser.id).maybeSingle();
+    if(error) showStatus('global-status','Could not check admin permissions: '+errorText(error),true);
+    isAdmin=!!data;
+  }
+  $('admin-tab').hidden=!isAdmin;
+  $('delete-account-zone').hidden=isAdmin;
+  if(!isAdmin && !document.querySelector('[data-panel="admin"]').hidden)switchTab('rankings');
+}
+async function refreshAuth(user){
+  const previousId=currentUser?.id;
+  currentUser=user;
+  $('signed-out').hidden=!!user;
+  $('signed-in').hidden=!user;
+  if(previousId!==user?.id){
+    clearNotificationSession();
+    clearAchievementSession();
+    moderationLoadToken++;
+    $('admin-players').textContent='Loading players…';
+    showStatus('moderation-status','');
+  }
+  if(user){
+    await Promise.all([loadProfile(),loadAdminStatus(),loadMySubmissions()]);
+    if(currentUser?.id!==user.id)return;
+    startNotificationPolling();
+    await refreshNotificationUI();
+  }else{
+    clearNotificationSession();
+    isAdmin=false;$('admin-tab').hidden=true;$('delete-account-zone').hidden=false;$('profile-info').textContent='';
+  }
+}
+$('signup-form').addEventListener('submit',async(e)=>{
+  e.preventDefault();const form=e.currentTarget;const btn=form.querySelector('[type="submit"]');btn.disabled=true;
+  showStatus('auth-status','Creating your account…');
+  try{
+    const username=form.elements.namedItem('username').value.trim();
+    if(!/^[A-Za-z0-9_]{3,20}$/.test(username))throw new Error('Username must be 3–20 letters, numbers, or underscores.');
+    const {error}=await supabase.auth.signUp({email:form.elements.namedItem('email').value.trim(),password:form.elements.namedItem('password').value,options:{data:{username},emailRedirectTo:window.location.origin+window.location.pathname}});
+    if(error)throw error;
+    showStatus('auth-status',"Check your inbox for a confirmation email (check spam if you can't find it).");form.reset();
+  }catch(err){showStatus('auth-status',errorText(err),true);}finally{btn.disabled=false;}
+});
+$('username-form').addEventListener('submit',async(e)=>{
+  e.preventDefault();if(!currentUser)return;
+  const form=e.currentTarget,btn=form.querySelector('[type="submit"]');
+  const username=form.elements.namedItem('username').value.trim();
+  if(!/^[A-Za-z0-9_]{3,20}$/.test(username)){
+    showStatus('username-status','Username must be 3–20 letters, numbers, or underscores.',true);return;
+  }
+  btn.disabled=true;showStatus('username-status','Saving username…');
+  try{
+    const {error}=await supabase.rpc('change_my_username',{new_username:username});
+    if(error)throw error;
+    showStatus('username-status','Username updated successfully!');
+    form.reset();await Promise.all([loadProfile(),loadLeaderboard(),refreshNotificationUI()]);
+    if(isAdmin)await loadAdminQueue();
+  }catch(err){
+    const msg=errorText(err);
+    showStatus('username-status',(err?.code==='23505'||/duplicate key|unique constraint/i.test(String(err?.message||'')))?'That username already exists. Please try another.':msg,true);
+  }finally{btn.disabled=false;}
+});
+
+$('login-form').addEventListener('submit',async(e)=>{
+  e.preventDefault();const form=e.currentTarget;const btn=form.querySelector('[type="submit"]');btn.disabled=true;
+  showStatus('auth-status','Signing in…');
+  try{
+    const {error}=await supabase.auth.signInWithPassword({email:form.elements.namedItem('email').value.trim(),password:form.elements.namedItem('password').value});
+    if(error)throw error;
+    showStatus('auth-status','Signed in!');form.reset();
+  }catch(err){showStatus('auth-status',errorText(err),true);}finally{btn.disabled=false;}
+});
+$('reset-password').addEventListener('click',async()=>{
+  const email=$('login-form').elements.namedItem('email').value.trim();
+  if(!email){showStatus('auth-status','Enter your email in the login form first.',true);return;}
+  const {error}=await supabase.auth.resetPasswordForEmail(email,{redirectTo:window.location.origin+window.location.pathname});
+  showStatus('auth-status',error?errorText(error):'If the email belongs to an account, a reset link will be sent.',!!error);
+});
+$('logout').addEventListener('click',async()=>{const {error}=await supabase.auth.signOut();if(error)showStatus('global-status',errorText(error),true);else switchTab('rankings');});
+$('completion-form').addEventListener('submit',async(e)=>{
+  e.preventDefault();if(!currentUser)return;
+  const form=e.currentTarget;const btn=form.querySelector('[type="submit"]');
+  const id=Number(form.elements.namedItem('level').value);if(!dbLevels.some(l=>l.id===id)){showStatus('submission-status','Choose a valid level.',true);return;}
+  const video=form.elements.namedItem('video').value.trim();
+  if(video){try{const url=new URL(video);if(url.protocol!=='https:')throw Error();}catch{showStatus('submission-status','Video links must begin with https://',true);return;}}
+  const claimCoins=$('completion-all-coins').checked&&selectedCoinEligible();
+  btn.disabled=true;showStatus('submission-status','Submitting…');
+  const uid=currentUser.id;
+  const {error}=await supabase.from('completions').insert({user_id:uid,level_id:id,video_url:video||null});
+  if(uid!==currentUser?.id){btn.disabled=false;return;}
+  if(error){showStatus('submission-status',await submissionErrorText(error),true);btn.disabled=false;return;}
+  let message='Completion submitted! Awaiting admin review.',partialError=false;
+  if(claimCoins){
+    showStatus('submission-status','Completion submitted. Sending all-coins request…');
+    const {error:coinError}=await supabase.rpc('submit_coin_claim',{p_level_id:id,p_video_url:video||null});
+    if(uid!==currentUser?.id){btn.disabled=false;return;}
+    if(coinError){
+      message='Completion submitted, but the coin request failed: '+await submissionErrorText(coinError)+' Request coins from My Submissions.';
+      partialError=true;
+    }else message='Completion and all-coins request submitted! Both await admin review.';
+  }
+  showStatus('submission-status',message,partialError);
+  form.reset();renderCompletionLevelOptions();await loadMySubmissions();btn.disabled=false;
+});
+async function loadAdminQueue(){
+  if(!isAdmin)return;
+  const root=$('admin-queue');root.textContent='Loading…';
+  const filter=$('completion-review-filter').value;
+  let query=supabase.from('completions')
+    .select('id,user_id,level_id,video_url,status,submitted_at')
+    .order('submitted_at',{ascending:false}).limit(200);
+  if(filter!=='all')query=query.eq('status',filter);
+  const {data,error}=await query;
+  if(error){root.textContent='Could not load submissions: '+errorText(error);return;}
+  clear(root);
+  if(!data?.length){root.textContent=filter==='all'?'No submissions yet.':`No ${filter} submissions.`;return;}
+  if(data.length===200)root.append(element('p','muted-note','Showing the 200 most recently submitted requests in this view. Use the status filter to narrow the list.'));
+  // Admins can see user IDs. Profile names are retrieved separately when permitted by profile RLS.
+  const ids=[...new Set(data.map(c=>c.user_id))];
+  const {data:profiles}=await supabase.from('profiles').select('id,username').in('id',ids);
+  const names=new Map((profiles||[]).map(p=>[p.id,p.username]));
+  for(const c of data){
+    const row=element('div','submission-row');
+    const top=element('div');top.append(element('strong','',nameForLevel(c.level_id)),' ',element('span','tag '+c.status,c.status));
+    const name=names.get(c.user_id)||`Player ${c.user_id.slice(0,8)}…`;
+    row.append(top,element('div','submission-meta',`${name} · ${new Date(c.submitted_at).toLocaleString()}`));
+    if(c.video_url){try{const u=new URL(c.video_url);if(u.protocol==='https:'){const link=element('a','safe-link','View submitted video ↗');link.href=u.href;link.target='_blank';link.rel='noopener noreferrer';row.append(link);}}catch{}}
+    // Only expand the optional reason editor after an admin chooses Reject.
+    if(c.status!=='revoked'){
+      const actions=element('div','button-row');
+      const approveBtn=element('button','action-btn primary','Approve');approveBtn.type='button';
+      const rejectBtn=element('button','action-btn','Reject');rejectBtn.type='button';
+      actions.append(approveBtn,rejectBtn);
+      row.append(actions);
+
+      const panel=element('div','rejection-panel');panel.hidden=true;
+      const panelTitle=element('div','rejection-panel-title','Reject completion');
+      const reasonLabel=element('label','rejection-reason-field','Reason (optional)');
+      const reasonInput=element('textarea');reasonInput.maxLength=500;reasonInput.rows=3;
+      reasonInput.placeholder='Explain why this completion was rejected…';
+      reasonInput.setAttribute('aria-label',`Rejection reason for ${name}'s ${nameForLevel(c.level_id)} completion`);
+      reasonLabel.append(reasonInput);
+      const counter=element('div','rejection-counter','0 / 500 characters');
+      reasonInput.addEventListener('input',()=>{counter.textContent=`${reasonInput.value.length} / 500 characters`;});
+      const panelActions=element('div','button-row');
+      const confirmBtn=element('button','action-btn danger-btn','Confirm rejection');confirmBtn.type='button';
+      const cancelBtn=element('button','action-btn','Cancel');cancelBtn.type='button';
+      panelActions.append(confirmBtn,cancelBtn);
+      panel.append(panelTitle,reasonLabel,counter,panelActions);
+      row.append(panel);
+      rejectBtn.setAttribute('aria-expanded','false');
+      rejectBtn.addEventListener('click',()=>{
+        panel.hidden=false;
+        rejectBtn.setAttribute('aria-expanded','true');
+        actions.hidden=true;
+        reasonInput.focus();
+      });
+      cancelBtn.addEventListener('click',()=>{
+        panel.hidden=true;
+        actions.hidden=false;
+        rejectBtn.setAttribute('aria-expanded','false');
+        reasonInput.value='';counter.textContent='0 / 500 characters';
+        rejectBtn.focus();
+      });
+      async function saveReview(decision,reason,button){
+        button.disabled=true;
+        approveBtn.disabled=true;rejectBtn.disabled=true;
+        confirmBtn.disabled=true;cancelBtn.disabled=true;
+        showStatus('admin-status','Saving review…');
+        const {error}=await supabase.rpc('review_completion',{
+          p_completion_id:c.id,p_decision:decision,p_rejection_reason:reason
+        });
+        showStatus('admin-status',error?errorText(error):`Completion ${decision}.`,!!error);
+        if(!error){await loadAdminQueue();}
+        else{
+          button.disabled=false;
+          approveBtn.disabled=false;rejectBtn.disabled=false;
+          confirmBtn.disabled=false;cancelBtn.disabled=false;
+        }
+      }
+      approveBtn.addEventListener('click',async()=>{
+        if(!confirm(`Approve ${name}'s ${nameForLevel(c.level_id)} completion?`))return;
+        await saveReview('approved',null,approveBtn);
+      });
+      confirmBtn.addEventListener('click',async()=>{
+        const reason=reasonInput.value.trim()||null;
+        if(reason && reason.length>500){showStatus('admin-status','Rejection reason must be 500 characters or less.',true);return;}
+        await saveReview('rejected',reason,confirmBtn);
+      });
+    }
+    root.append(row);
+  }
+}
+$('refresh-admin').addEventListener('click',loadAdminQueue);
+$('completion-review-filter').addEventListener('change',loadAdminQueue);
+$('refresh-coins').addEventListener('click',loadAdminCoinQueue);
+$('coin-review-filter').addEventListener('change',loadAdminCoinQueue);
+$('refresh-players').addEventListener('click',loadAdminPlayers);
+
+async function loadAdminCoinQueue(){
+  if(!isAdmin||!currentUser)return;
+  const uid=currentUser.id,root=$('coin-admin-queue');root.textContent='Loading coin requests…';
+  const filter=$('coin-review-filter').value;
+  // Show approved claims too: admins may need to remove a previously granted +3 bonus.
+  let query=supabase.from('coin_claims')
+    .select('id,completion_id,video_url,status,submitted_at,reviewed_at,rejection_reason')
+    .order('submitted_at',{ascending:false}).limit(200);
+  if(filter!=='all')query=query.eq('status',filter);
+  const {data,error}=await query;
+  if(uid!==currentUser?.id||!isAdmin)return;
+  if(error){root.textContent='Could not load coin requests: '+errorText(error);return;}
+  clear(root);
+  if(!data?.length){root.textContent=filter==='all'?'No coin requests yet. All caught up!':`No ${filter} coin requests.`;return;}
+  if(data.length===200)root.append(element('p','muted-note','Showing the 200 most recently submitted requests in this view. Use the status filter to narrow the list.'));
+  const ids=[...new Set(data.map(claim=>claim.completion_id))];
+  const {data:completions,error:completionError}=await supabase.from('completions')
+    .select('id,user_id,level_id,status').in('id',ids);
+  if(uid!==currentUser?.id||!isAdmin)return;
+  if(completionError){root.textContent='Could not verify linked completions: '+errorText(completionError);return;}
+  const completionMap=new Map((completions||[]).map(c=>[String(c.id),c]));
+  const userIds=[...new Set((completions||[]).map(c=>c.user_id))];
+  const {data:profiles,error:profileError}=userIds.length
+    ?await supabase.from('profiles').select('id,username').in('id',userIds)
+    :{data:[],error:null};
+  if(uid!==currentUser?.id||!isAdmin)return;
+  if(profileError){root.textContent='Could not load player names: '+errorText(profileError);return;}
+  const names=new Map((profiles||[]).map(p=>[p.id,p.username]));
+  for(const claim of data){
+    const c=completionMap.get(String(claim.completion_id));
+    const row=element('div','submission-row');
+    if(!c){row.append(element('div','coin-review-note','Linked completion is unavailable; cannot review this request.'));root.append(row);continue;}
+    const level=dbLevels.find(l=>String(l.id)===String(c.level_id));
+    const name=names.get(c.user_id)||`Player ${c.user_id.slice(0,8)}…`;
+    const top=element('div');
+    top.append(element('strong','',nameForLevel(c.level_id)+' · All 3 coins (+3 pts)'),' ',element('span','tag '+claim.status,claim.status));
+    row.append(top,element('div','submission-meta',`${name} · Submitted ${new Date(claim.submitted_at).toLocaleString()}`));
+    row.append(element('div','coin-review-note'+(c.status==='pending'?' waiting':''),`Base completion: ${c.status}`));
+    if(claim.status==='approved'){
+      row.append(element('div','coin-review-note approved',c.status==='approved'?'Bonus active: +3 Main points. Rejecting this claim removes those 3 points.':'Coin bonus is currently inactive because the base completion is not approved.'));
+    }else if(claim.status==='rejected'){
+      row.append(element('div','coin-review-note rejected','Coin claim rejected. The player may resubmit new evidence.'));
+      if(claim.rejection_reason?.trim()){
+        const note=element('div','rejection-note');
+        note.append(element('strong','','Reason: '),document.createTextNode(claim.rejection_reason));
+        row.append(note);
+      }
+    }
+    if(claim.video_url){try{const u=new URL(claim.video_url);if(u.protocol==='https:'){const link=element('a','safe-link','View coin evidence ↗');link.href=u.href;link.target='_blank';link.rel='noopener noreferrer';row.append(link);}}catch{}}
+    if(level?.category!=='main'||level.coin_eligible!==true){
+      row.append(element('div','coin-review-note waiting','Coin eligibility could not be verified. Refresh levels or reject this claim.'));
+    }
+    // Rejected claims are retained for reference, but require player resubmission.
+    if(claim.status==='rejected'){root.append(row);continue;}
+    const actions=element('div','button-row');
+    const approve=element('button','action-btn primary','Approve +3 pts');approve.type='button';
+    approve.disabled=c.status!=='approved'||level?.category!=='main'||level.coin_eligible!==true;
+    if(claim.status==='pending')actions.append(approve);
+    const isRevocation=claim.status==='approved';
+    const reject=element('button',isRevocation?'action-btn danger-btn':'action-btn',isRevocation?'Reject (−3 pts)':'Reject');reject.type='button';
+    actions.append(reject);row.append(actions);
+    if(claim.status==='pending'&&c.status==='pending')row.append(element('div','coin-review-note waiting','Approve the base level completion first to enable coin approval.'));
+    const panel=element('div','rejection-panel');panel.hidden=true;
+    const title=element('div','rejection-panel-title',isRevocation?'Reject approved coin bonus':'Reject coin request');
+    if(isRevocation)panel.append(element('div','coin-review-note','This removes the +3 Main point bonus, but keeps the original level completion and its base points. The player can submit a new coin claim.'));
+    const label=element('label','rejection-reason-field','Reason (optional)');
+    const reason=element('textarea');reason.rows=3;reason.maxLength=500;reason.placeholder=isRevocation?'Explain why this previously approved coin bonus is being removed…':'Explain why the all-coins claim was rejected…';
+    label.append(reason);
+    const counter=element('div','rejection-counter','0 / 500 characters');
+    reason.addEventListener('input',()=>counter.textContent=`${reason.value.length} / 500 characters`);
+    const panelActions=element('div','button-row');
+    const confirmReject=element('button','action-btn danger-btn',isRevocation?'Confirm removal of +3 pts':'Confirm rejection');confirmReject.type='button';
+    const cancel=element('button','action-btn','Cancel');cancel.type='button';
+    panelActions.append(confirmReject,cancel);panel.prepend(title);panel.append(label,counter,panelActions);row.append(panel);
+    reject.setAttribute('aria-expanded','false');
+    reject.addEventListener('click',()=>{actions.hidden=true;panel.hidden=false;reject.setAttribute('aria-expanded','true');reason.focus();});
+    cancel.addEventListener('click',()=>{panel.hidden=true;actions.hidden=false;reject.setAttribute('aria-expanded','false');reason.value='';counter.textContent='0 / 500 characters';reject.focus();});
+    async function save(decision,rejectionReason){
+      approve.disabled=true;reject.disabled=true;confirmReject.disabled=true;cancel.disabled=true;
+      showStatus('coin-admin-status','Saving coin review…');
+      const {error}=await supabase.rpc('review_coin_claim',{
+        p_coin_claim_id:claim.id,p_decision:decision,p_rejection_reason:rejectionReason
+      });
+      if(uid!==currentUser?.id)return;
+      showStatus('coin-admin-status',error?errorText(error):(isRevocation?'Approved coin bonus rejected. The 3 points have been removed.':`Coin claim ${decision}.`),!!error);
+      if(error){approve.disabled=c.status!=='approved'||level?.category!=='main'||level.coin_eligible!==true;reject.disabled=false;confirmReject.disabled=false;cancel.disabled=false;}
+      else await Promise.all([loadAdminCoinQueue(),loadLeaderboard(),refreshNotificationBadges()]);
+    }
+    if(claim.status==='pending')approve.addEventListener('click',async()=>{if(!confirm(`Approve ${name}'s all-coins claim for ${nameForLevel(c.level_id)} (+3 pts)?`))return;await save('approved',null);});
+    confirmReject.addEventListener('click',async()=>{await save('rejected',reason.value.trim()||null);});
+    root.append(row);
+  }
+}
+
+// Approved-level moderation uses the same review RPCs as the review queues.
+// The database remains the authority for admin permissions, points and notifications.
+function verifiedAdminIds(result,uid){
+  const rows=result?.data;
+  if(result?.error||!Array.isArray(rows)||!rows.length||
+     !rows.every(a=>typeof a?.user_id==='string')||!rows.some(a=>a.user_id===uid))return null;
+  return new Set(rows.map(a=>a.user_id));
+}
+function createPlayerApprovedPanel(player,uid,banBtn,resetBtn){
+  const details=element('details','player-approved');
+  const summary=element('summary');
+  const title=element('span','','View approved levels');
+  const arrow=element('span','chev','⌄');arrow.setAttribute('aria-hidden','true');
+  summary.append(title,arrow);
+  const body=element('div','player-approved-body');
+  const status=element('div','status-line player-approved-status');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+  const content=element('div','player-approved-group');
+  body.append(status,content);details.append(summary,body);
+  let loadToken=0,busy=false,activeEditor=null;
+  const valid=()=>isAdmin&&currentUser?.id===uid&&details.isConnected;
+  function setStatus(message,error=false){status.textContent=message;status.classList.toggle('error',error);}
+  function setBusy(value){
+    busy=value;
+    if(value)loadToken++;
+    banBtn.disabled=value;resetBtn.disabled=value;
+    content.querySelectorAll('button').forEach(button=>button.disabled=value);
+  }
+  async function refreshApproved(){
+    if(!valid()||busy)return;
+    const token=++loadToken;
+    const live=()=>valid()&&token===loadToken;
+    activeEditor=null;
+    title.textContent='View approved levels';
+    content.textContent='Loading approved levels…';
+    try{
+      const {data:completions,error}=await supabase.from('completions')
+        .select('id,level_id,status').eq('user_id',player.id).eq('status','approved');
+      if(!live())return;
+      if(error)throw error;
+      const records=completions||[];
+      if(!records.length){title.textContent='View approved levels (0)';content.textContent='No approved completions.';return;}
+      const ids=records.map(c=>c.id);
+      const {data:claims,error:coinError}=await supabase.from('coin_claims')
+        .select('id,completion_id,status').in('completion_id',ids).eq('status','approved');
+      if(!live())return;
+      if(coinError)throw coinError;
+      const levelMap=new Map(dbLevels.map(l=>[String(l.id),l]));
+      if(records.some(c=>!levelMap.has(String(c.level_id)))){
+        content.textContent='Could not verify level details. Reload the website before moderating this player.';
+        return;
+      }
+      const claimMap=new Map((claims||[]).map(c=>[String(c.completion_id),c]));
+      const order=new Map(orderedSubmissionLevels.map((l,i)=>[String(l.id),i]));
+      const entries=records.map(c=>{
+        const level=levelMap.get(String(c.level_id));
+        const claim=level.category==='main'&&level.coin_eligible===true?claimMap.get(String(c.id)):null;
+        return {c,level,claim,points:Number(level.points)+(claim?3:0)};
+      }).sort((a,b)=>(order.get(String(a.level.id))??Infinity)-(order.get(String(b.level.id))??Infinity)||a.level.name.localeCompare(b.level.name));
+      title.textContent=`View approved levels (${entries.length})`;
+      clear(content);
+      for(const [category,label] of [['main','Main Levels'],['community','Community Voted Levels']]){
+        const group=entries.filter(e=>e.level.category===category);
+        const section=element('div','player-approved-group');
+        const heading=element('div','player-approved-heading');
+        heading.append(element('span','',`${label} (${group.length})`),element('strong','',`${group.reduce((sum,e)=>sum+e.points,0)} pts`));
+        section.append(heading);
+        if(!group.length)section.append(element('div','muted-note','No approved levels in this category.'));
+        for(const entry of group)section.append(renderApprovedItem(entry));
+        content.append(section);
+      }
+    }catch(error){
+      if(live())content.textContent='Could not load approved levels: '+errorText(error)+'. Close and reopen to retry.';
+    }
+  }
+  function renderApprovedItem({c,level,claim,points}){
+    const item=element('div','player-approved-item');
+    const head=element('div','player-approved-item-head');
+    head.append(element('strong','',level.name),element('strong','player-approved-points',`${points} ${points===1?'pt':'pts'}`));
+    item.append(head);
+    if(claim)item.append(element('div','coin-status approved',`All 3 coins approved · +3 pts (${level.points} base pts)`));
+    const actions=element('div','button-row');
+    const removeLevel=element('button','action-btn danger-btn','Remove completion');removeLevel.type='button';
+    const removeCoins=claim?element('button','action-btn','Remove coins'):null;
+    if(removeCoins){removeCoins.type='button';actions.append(removeCoins);}
+    actions.append(removeLevel);item.append(actions);
+    const panel=element('div','rejection-panel');panel.hidden=true;
+    const panelTitle=element('div','rejection-panel-title');
+    const note=element('div','coin-review-note');
+    const label=element('label','rejection-reason-field','Reason (optional)');
+    const reason=element('textarea');reason.rows=3;reason.maxLength=500;reason.placeholder='Explain why the points are being removed…';label.append(reason);
+    const counter=element('div','rejection-counter','0 / 500 characters');
+    reason.addEventListener('input',()=>counter.textContent=`${reason.value.length} / 500 characters`);
+    const panelActions=element('div','button-row');
+    const confirmBtn=element('button','action-btn danger-btn');confirmBtn.type='button';
+    const cancel=element('button','action-btn','Cancel');cancel.type='button';
+    panelActions.append(confirmBtn,cancel);panel.append(panelTitle,note,label,counter,panelActions);item.append(panel);
+    let mode=null,trigger=null;
+    function closeEditor(restoreFocus=false){
+      panel.hidden=true;actions.hidden=false;
+      if(trigger){trigger.setAttribute('aria-expanded','false');if(restoreFocus)trigger.focus();}
+      reason.value='';counter.textContent='0 / 500 characters';mode=null;trigger=null;
+      if(activeEditor===closeEditor)activeEditor=null;
+    }
+    function openEditor(kind,button){
+      if(busy||!valid())return;
+      if(activeEditor)activeEditor();
+      setStatus('');mode=kind;trigger=button;activeEditor=closeEditor;
+      const coins=kind==='coins';
+      panelTitle.textContent=coins?'Remove approved coins':'Remove approved completion';
+      note.textContent=coins
+        ?`Remove 3 Main points from ${player.username}. ${level.name} stays approved. The player will be notified and may resubmit the coin claim.`
+        :`Reject ${player.username}’s ${level.name} completion and remove ${points} ${points===1?'point':'points'}${claim?' (including the 3 coin points)':''}. The player will be notified and may resubmit.`;
+      confirmBtn.textContent=coins?'Confirm removal of +3 pts':'Confirm removal';
+      button.setAttribute('aria-expanded','true');actions.hidden=true;panel.hidden=false;reason.focus();
+    }
+    removeLevel.setAttribute('aria-expanded','false');
+    removeLevel.addEventListener('click',()=>openEditor('completion',removeLevel));
+    if(removeCoins){removeCoins.setAttribute('aria-expanded','false');removeCoins.addEventListener('click',()=>openEditor('coins',removeCoins));}
+    cancel.addEventListener('click',()=>{if(!busy)closeEditor(true);});
+    confirmBtn.addEventListener('click',async()=>{
+      if(busy||!valid()||!mode)return;
+      const coins=mode==='coins',rejectionReason=reason.value.trim()||null;
+      if(rejectionReason&&rejectionReason.length>500){setStatus('Rejection reason must be 500 characters or less.',true);return;}
+      setBusy(true);setStatus('Checking current approval and permissions…');
+      let changed=false,stale=false;
+      try{
+        // Recheck the admin exclusion and current approval before sending a rejection.
+        // Existing server-side review RPCs still enforce actual authorization.
+        const adminResult=await supabase.rpc('list_admin_user_ids');
+        if(!valid())return;
+        const admins=verifiedAdminIds(adminResult,uid);
+        if(!admins||admins.has(player.id)){
+          showStatus('moderation-status','Could not verify that this player is a non-admin. No changes were made.',true);
+          await loadAdminPlayers();return;
+        }
+        const {data:base,error:baseError}=await supabase.from('completions')
+          .select('id,status').eq('id',c.id).eq('user_id',player.id).maybeSingle();
+        if(!valid())return;
+        if(baseError)throw baseError;
+        if(base?.status!=='approved'){
+          stale=true;setStatus('This completion is no longer approved. No changes were made.',true);return;
+        }
+        if(coins){
+          const {data:currentClaim,error:claimError}=await supabase.from('coin_claims')
+            .select('id,status').eq('id',claim.id).eq('completion_id',c.id).maybeSingle();
+          if(!valid())return;
+          if(claimError)throw claimError;
+          if(currentClaim?.status!=='approved'){
+            stale=true;setStatus('This coin bonus is no longer approved. No changes were made.',true);return;
+          }
+        }
+        setStatus(coins?'Removing coin bonus…':'Removing completion…');
+        const {error}=coins
+          ?await supabase.rpc('review_coin_claim',{p_coin_claim_id:claim.id,p_decision:'rejected',p_rejection_reason:rejectionReason})
+          :await supabase.rpc('review_completion',{p_completion_id:c.id,p_decision:'rejected',p_rejection_reason:rejectionReason});
+        if(error)throw error;
+        changed=true;
+        if(valid())setStatus(coins?`${level.name}: coin bonus removed. Base completion remains approved.`:`${level.name}: completion rejected.`);
+      }catch(error){if(valid())setStatus('Could not remove points: '+errorText(error),true);}
+      finally{
+        if(valid()){
+          setBusy(false);
+          if(changed||stale)await refreshApproved();
+        }
+        if(changed&&isAdmin&&currentUser?.id===uid){
+          // The other review queues reload when opened. Refresh scores and unread counts now.
+          await Promise.allSettled([loadLeaderboard(),refreshNotificationBadges()]);
+          if(!details.isConnected&&adminView==='players')await loadAdminPlayers();
+        }
+      }
+    });
+    return item;
+  }
+  details.addEventListener('toggle',()=>{if(details.open&&!busy){setStatus('');refreshApproved();}});
+  return {details,setBusy,refresh:()=>{if(details.open){setStatus('');return refreshApproved();}title.textContent='View approved levels';}};
+}
+
+async function loadAdminPlayers(){
+  if(!isAdmin||!currentUser)return;
+  const root=$('admin-players');
+  const expanded=new Set([...root.querySelectorAll('.player-approved[open]')].map(d=>d.dataset.playerId));
+  root.textContent='Loading players…';
+  const requestingAdminId=currentUser.id,token=++moderationLoadToken;
+  const live=()=>isAdmin&&currentUser?.id===requestingAdminId&&token===moderationLoadToken;
+  let profilesResult,bansResult,adminsResult;
+  try{
+    [profilesResult,bansResult,adminsResult]=await Promise.all([
+      supabase.from('profiles').select('id,username').order('username'),
+      supabase.from('submission_bans').select('user_id,reason'),
+      // Admin-only RPC returns ALL admin IDs despite self-only RLS on admins.
+      supabase.rpc('list_admin_user_ids')
+    ]);
+  }catch(error){
+    if(live())root.textContent='Could not load players. Check your connection and refresh.';
+    return;
+  }
+  if(!live())return;
+  const error=profilesResult.error||bansResult.error||adminsResult.error;
+  if(error){root.textContent='Could not load players: '+errorText(error);return;}
+  // Fail closed: never display moderation actions without a complete admin list.
+  const adminIds=verifiedAdminIds(adminsResult,requestingAdminId);
+  if(!adminIds){root.textContent='Could not verify the complete admin list. Player moderation is unavailable; refresh to retry.';return;}
+  const banned=new Map((bansResult.data||[]).map(b=>[b.user_id,b]));
+  clear(root);
+  const players=(profilesResult.data||[]).filter(p=>!adminIds.has(p.id));
+  if(!players.length){root.textContent='No non-admin players found.';return;}
+  for(const player of players){
+    const row=element('div','moderation-row');
+    const header=element('div');header.append(element('strong','',player.username));
+    if(banned.has(player.id))header.append(' ',element('span','tag rejected','Submission banned'));
+    row.append(header);
+    const actions=element('div','button-row');
+    const banBtn=element('button','action-btn',banned.has(player.id)?'Unban submissions':'Ban submissions');banBtn.type='button';
+    const resetBtn=element('button','action-btn danger-btn','Revoke approved points');resetBtn.type='button';
+    const approved=createPlayerApprovedPanel(player,requestingAdminId,banBtn,resetBtn);
+    approved.details.dataset.playerId=player.id;
+    banBtn.addEventListener('click',async()=>{
+      if(!live())return;
+      const isBanned=banned.has(player.id);
+      let reason=null;
+      if(isBanned){if(!confirm(`Unban ${player.username} from submitting completions?`))return;}
+      else{reason=prompt(`Reason for banning ${player.username} from submissions (optional):`);if(reason===null)return;if(reason.length>500){showStatus('moderation-status','Ban reason must be 500 characters or less.',true);return;}}
+      approved.setBusy(true);showStatus('moderation-status','Updating submission ban…');
+      const {error}=isBanned
+        ?await supabase.rpc('unban_player',{p_user_id:player.id})
+        :await supabase.rpc('ban_player',{p_user_id:player.id,p_reason:reason||null});
+      if(!live())return;
+      showStatus('moderation-status',error?errorText(error):`${player.username}: submission ban updated.`,!!error);
+      if(!error)await loadAdminPlayers();else{approved.setBusy(false);await approved.refresh();}
+    });
+    resetBtn.addEventListener('click',async()=>{
+      if(!live())return;
+      const confirmation=prompt(`This will revoke ALL approved completions for ${player.username}.\n\nType RESET (all capital letters) to confirm:`);
+      if(confirmation===null)return;
+      if(confirmation.trim()!=='RESET'){showStatus('moderation-status','Points were not revoked. Type RESET in all capital letters to confirm.',true);return;}
+      approved.setBusy(true);showStatus('moderation-status','Revoking approved points…');
+      const {data,error}=await supabase.rpc('reset_player_points',{p_user_id:player.id});
+      if(!live())return;
+      showStatus('moderation-status',error?errorText(error):`Revoked ${data} approved completion(s) for ${player.username}.`,!!error);
+      approved.setBusy(false);
+      if(!error){await Promise.allSettled([loadAdminQueue(),loadLeaderboard(),approved.refresh(),refreshNotificationBadges()]);}
+      else await approved.refresh();
+    });
+    actions.append(banBtn,resetBtn);row.append(actions,approved.details);root.append(row);
+    if(expanded.has(player.id))approved.details.open=true;
+  }
+}
+
+$('delete-account-form').addEventListener('submit',async e=>{
+  e.preventDefault();
+  if(!currentUser || isAdmin){showStatus('delete-account-status','Administrator accounts cannot be deleted here.',true);return;}
+  const form=e.currentTarget;
+  if(form.elements.namedItem('confirmation').value.trim()!=='DELETE'){
+    showStatus('delete-account-status','Type DELETE exactly to confirm.',true);return;
+  }
+  if(!confirm('Permanently delete your LVMC account and remove all leaderboard points? This cannot be undone.'))return;
+  const button=form.querySelector('[type="submit"]');button.disabled=true;
+  showStatus('delete-account-status','Deleting your account…');
+  try{
+    const {data:{session},error:sessionError}=await supabase.auth.getSession();
+    if(sessionError||!session?.access_token)throw new Error('Please log in again before deleting your account.');
+    const {data,error}=await supabase.functions.invoke('delete-account',{
+      method:'POST',body:{},headers:{Authorization:`Bearer ${session.access_token}`}
+    });
+    if(error)throw new Error(data?.message||errorText(error));
+    if(data?.message!=='Account deleted successfully')throw new Error(data?.message||'Unexpected server response.');
+    await supabase.auth.signOut({scope:'local'});
+    await refreshAuth(null);
+    form.reset();
+    switchTab('leaderboard');
+    await loadLeaderboard();
+    showStatus('global-status','Your account has been permanently deleted. Your username is available again.');
+  }catch(error){showStatus('delete-account-status',errorText(error),true);}
+  finally{button.disabled=false;}
+});
+supabase.auth.onAuthStateChange((event,session)=>{
+  setTimeout(async()=>{
+    try{
+      await refreshAuth(session?.user||null);
+      if($('global-status').textContent.startsWith('Session check: Auth session missing!')) showStatus('global-status','');
+      if(event==='PASSWORD_RECOVERY'){
+        switchTab('account');
+        const newPassword=prompt('Password reset: enter a new password (at least 8 characters). Cancel to skip.');
+        if(newPassword!==null){
+          if(newPassword.length<8){showStatus('global-status','Password must be at least 8 characters.',true);return;}
+          const {error}=await supabase.auth.updateUser({password:newPassword});
+          showStatus('global-status',error?errorText(error):'Password updated successfully.',!!error);
+        }
+      }
+    }catch(err){showStatus('global-status',errorText(err),true);}
+  },0);
+});
+renderAchievements();
+try{
+  await Promise.all([loadLeaderboard(),loadLevels()]);
+  // A visitor without a session is normal, not an authentication error.
+  // Supabase RLS and the server-side review function enforce real permissions.
+  const {data:{session},error}=await supabase.auth.getSession();
+  if(error)showStatus('global-status','Could not restore login session: '+errorText(error),true);
+  await refreshAuth(session?.user || null);
+}catch(err){showStatus('global-status','Supabase connection error: '+errorText(err),true);}
+</script>
+
+<script src="soundtracks/catalog.js"></script>
+<script>
+(()=>{
+ 'use strict';
+ const catalog={
+  "Stereo Madness": {
+    "song": "Stereo Madness",
+    "artist": "ForeverBound",
+    "source": "https://www.newgrounds.com/audio/listen/500476",
+    "sourceLabel": "Song page",
+    "file": "StereoMadness.mp3",
+    "offset": 0
+  },
+  "Back On Track": {
+    "song": "Back On Track",
+    "artist": "DJVI",
+    "source": "https://www.newgrounds.com/audio/listen/522654",
+    "sourceLabel": "Song page",
+    "file": "BackOnTrack.mp3",
+    "offset": 0
+  },
+  "Polargeist": {
+    "song": "Polargeist",
+    "artist": "Step",
+    "source": "https://geometrydash.wiki.gg/wiki/Polargeist",
+    "sourceLabel": "Song information",
+    "file": "Polargeist.mp3",
+    "offset": 0
+  },
+  "Dry Out": {
+    "song": "Dry Out",
+    "artist": "DJVI",
+    "source": "https://djvi.newgrounds.com/audio",
+    "sourceLabel": "Artist catalog",
+    "file": "3-06. Dry Out.mp3",
+    "offset": 0
+  },
+  "Base After Base": {
+    "song": "Base After Base",
+    "artist": "DJVI",
+    "source": "https://www.newgrounds.com/audio/listen/404997",
+    "sourceLabel": "Original song",
+    "file": "BaseAfterBase.mp3",
+    "offset": 0
+  },
+  "Can't Let Go": {
+    "song": "Can't Let Go",
+    "artist": "DJVI",
+    "source": "https://djvi.newgrounds.com/audio",
+    "sourceLabel": "Artist catalog",
+    "file": "CantLetGo.mp3",
+    "offset": 0
+  },
+  "Jumper": {
+    "song": "Jumper",
+    "artist": "Waterflame",
+    "source": "https://waterflame.newgrounds.com/audio",
+    "sourceLabel": "Artist catalog",
+    "file": "Jumper.mp3",
+    "offset": 0
+  },
+  "Time Machine": {
+    "song": "Time Machine",
+    "artist": "Waterflame",
+    "source": "https://waterflame.newgrounds.com/audio",
+    "sourceLabel": "Artist catalog",
+    "file": "TimeMachine.mp3",
+    "offset": 0
+  },
+  "Cycles": {
+    "song": "Cycles",
+    "artist": "DJVI",
+    "source": "https://djvi.newgrounds.com/audio",
+    "sourceLabel": "Artist catalog",
+    "file": "Cycles.mp3",
+    "offset": 0
+  },
+  "xStep": {
+    "song": "xStep",
+    "artist": "DJVI",
+    "source": "https://djvi.newgrounds.com/audio",
+    "sourceLabel": "Artist catalog",
+    "file": "xStep.mp3",
+    "offset": 0
+  },
+  "Clutterfunk": {
+    "song": "Clutterfunk",
+    "artist": "Waterflame",
+    "source": "https://waterflame.newgrounds.com/audio",
+    "sourceLabel": "Artist catalog",
+    "file": "Clutterfunk.mp3",
+    "offset": 0
+  },
+  "Theory Of Everything": {
+    "song": "Theory of Everything",
+    "artist": "dj-Nate",
+    "source": "https://dj-nate.newgrounds.com/audio",
+    "sourceLabel": "Artist catalog",
+    "file": "TheoryOfEverything.mp3",
+    "offset": 0
+  },
+  "Electroman Adventures": {
+    "song": "Electroman Adventures",
+    "artist": "Waterflame",
+    "source": "https://waterflame.newgrounds.com/audio",
+    "sourceLabel": "Artist catalog",
+    "file": "Electroman.mp3",
+    "offset": 0
+  },
+  "Clubstep": {
+    "song": "Clubstep",
+    "artist": "dj-Nate",
+    "source": "https://www.newgrounds.com/audio/listen/396093",
+    "sourceLabel": "Original song",
+    "file": "Clubstep.mp3",
+    "offset": 0
+  },
+  "Electrodynamix": {
+    "song": "Electrodynamix",
+    "artist": "dj-Nate",
+    "source": "https://www.newgrounds.com/audio/listen/368392",
+    "sourceLabel": "Original song",
+    "file": "Electrodynamix.mp3",
+    "offset": 0
+  },
+  "Hexagon Force": {
+    "song": "Hexagon Force",
+    "artist": "Waterflame",
+    "source": "https://www.newgrounds.com/audio/listen/568699",
+    "sourceLabel": "Original song",
+    "file": "HexagonForce.mp3",
+    "offset": 0
+  },
+  "Blast Processing": {
+    "song": "Blast Processing",
+    "artist": "Waterflame",
+    "source": "https://www.newgrounds.com/audio/listen/507560",
+    "sourceLabel": "Original song",
+    "file": "BlastProcessing.mp3",
+    "offset": 0
+  },
+  "Theory Of Everything 2": {
+    "song": "Theory of Everything 2",
+    "artist": "dj-Nate",
+    "source": "https://dj-nate.newgrounds.com/audio",
+    "sourceLabel": "Artist catalog",
+    "file": "TheoryOfEverything2.mp3",
+    "offset": 0
+  },
+  "Geometrical Dominator": {
+    "song": "Geometrical Dominator",
+    "artist": "Waterflame",
+    "source": "https://waterflame.newgrounds.com/audio",
+    "sourceLabel": "Artist catalog",
+    "file": "GeometricalDominator.mp3",
+    "offset": 0
+  },
+  "Deadlocked": {
+    "song": "Deadlocked",
+    "artist": "F-777",
+    "source": "https://geometrydash.wiki.gg/wiki/Deadlocked",
+    "sourceLabel": "Song information",
+    "file": "Deadlocked.mp3",
+    "offset": 0
+  },
+  "Fingerdash": {
+    "song": "Fingerbang",
+    "artist": "MDK",
+    "source": "https://mdkofficial.bandcamp.com/",
+    "sourceLabel": "Artist catalog",
+    "file": "Fingerdash.mp3",
+    "offset": 0
+  },
+  "Dash": {
+    "song": "Geometry Dash (Official Theme Song)",
+    "artist": "MDK",
+    "source": "https://mdkofficial.bandcamp.com/track/mdk-geometry-dash-official-theme-song",
+    "sourceLabel": "Original song",
+    "file": "Dash.mp3",
+    "offset": 0
+  },
+  "The Challenge": {
+    "song": "Random Song 06 (D J Rub Rub)",
+    "artist": "RobTop",
+    "source": "https://www.newgrounds.com/audio/listen/633385",
+    "sourceLabel": "Original song",
+    "file": "1-10. D J Rub Rub.mp3",
+    "offset": 0
+  }
+};
+ const hosted=window.LVMC_HOSTED_TRACKS||{};
+ function sourceFor(name){
+  if(!Object.prototype.hasOwnProperty.call(hosted,name))return null;
+  const entry=hosted[name];if(typeof entry?.url!=='string'||!entry.url)return null;
+  try{const url=new URL(entry.url,document.baseURI);if(url.protocol==='https:'||url.origin===location.origin&&url.protocol==='http:')return url.href;}catch{}
+  return null;
+ }
+ const states=new Map(),stack=[];
+ let context=null,active=null,enabled=true,volume=.25;
+ try{const p=JSON.parse(localStorage.getItem('lvmc.music.v93')||'null');if(p){if(typeof p.enabled==='boolean')enabled=p.enabled;if(typeof p.volume==='number'&&Number.isFinite(p.volume))volume=Math.min(1,Math.max(0,p.volume));}}catch{}
+ function save(){try{localStorage.setItem('lvmc.music.v93',JSON.stringify({enabled,volume}));}catch{}}
+ function syncControls(){for(const s of states.values()){s.mute.setAttribute('aria-pressed',String(enabled));s.mute.textContent=enabled?'♫ On':'♫ Off';s.mute.setAttribute('aria-label',enabled?'Mute level music':'Enable level music');s.slider.value=String(Math.round(volume*100));s.output.textContent=Math.round(volume*100)+'%';}}
+ function unlock(){
+  try{if(!context)context=new (window.AudioContext||window.webkitAudioContext)();if(context.state==='suspended')context.resume().catch(()=>{});}catch{}
+ }
+ function ramp(s,value,seconds){
+  if(!s.gain||!context)return;
+  const p=s.gain.gain,t=context.currentTime;
+  if(typeof p.cancelAndHoldAtTime==='function')p.cancelAndHoldAtTime(t);else{const v=p.value;p.cancelScheduledValues(t);p.setValueAtTime(v,t);}
+  p.linearRampToValueAtTime(value,t+seconds);
+ }
+ function cancelStop(s){if(s.timer!==null){clearTimeout(s.timer);s.timer=null;}}
+ function reset(s){
+  s.ended=false;s.needsSeek=true;s.error='';
+  if(s.audio){try{s.audio.currentTime=s.meta.offset;}catch{}}
+ }
+ function stop(s,resetAfter=false){
+  if(!s)return;
+  ++s.generation;cancelStop(s);
+  if(!s.audio){if(resetAfter)reset(s);return;}
+  if(s.audio.paused){ramp(s,0,.01);if(resetAfter)reset(s);return;}
+  ramp(s,0,.4);
+  s.timer=setTimeout(()=>{s.timer=null;if(active===s&&enabled&&s.details.open)return;s.audio?.pause();if(resetAfter||!s.details.open)reset(s);refresh();},410);
+ }
+ function createAudio(s){
+  if(s.audio)return;
+  if(!context||!s.url)return;
+  const a=new Audio();a.preload='none';a.loop=false;
+  if(new URL(s.url).origin!==location.origin)a.crossOrigin='anonymous';a.src=s.url;
+  s.audio=a;s.node=context.createMediaElementSource(a);s.gain=context.createGain();s.gain.gain.value=0;s.node.connect(s.gain);s.gain.connect(context.destination);
+  a.addEventListener('loadedmetadata',()=>{if(s.audio===a&&s.needsSeek){try{a.currentTime=Math.min(s.meta.offset,Math.max(0,a.duration-.05));s.needsSeek=false;}catch{}}});
+  a.addEventListener('ended',()=>{if(s.audio!==a)return;s.ended=true;cancelStop(s);ramp(s,0,.01);refresh();});
+  a.addEventListener('error',()=>{if(s.audio!==a)return;s.error='Could not load this audio file.';refresh();});
+  for(const ev of ['playing','pause','waiting'])a.addEventListener(ev,()=>{if(s.audio===a)refresh();});
+ }
+ function start(s){
+  if(!s||!s.url||s.ended)return;
+  cancelStop(s);s.error='';
+  try{createAudio(s);}catch{ s.error='Audio setup failed.';refresh();return;}
+  if(!s.audio){s.error='Audio unavailable. Try Resume music.';refresh();return;}
+  const a=s.audio,g=++s.generation;if(a.error)a.load();
+  if(s.needsSeek&&a.readyState>=1){try{a.currentTime=Math.min(s.meta.offset,Math.max(0,a.duration-.05));s.needsSeek=false;}catch{}}
+  if(a.paused){s.gain.gain.cancelScheduledValues(context.currentTime);s.gain.gain.setValueAtTime(0,context.currentTime);}
+  a.play().then(()=>{
+   if(s.generation!==g||active!==s||!enabled||!s.details.open){if(active!==s||!enabled||!s.details.open){if(s.timer===null)a.pause();}return;}
+   ramp(s,volume,.3);refresh();
+  }).catch(()=>{if(s.generation===g&&active===s){s.error='Playback blocked or unavailable. Try Resume music.';refresh();}});
+ }
+ function refresh(){
+  for(const s of states.values()){
+   const t=!s.url?'Soundtrack not available yet':!s.details.open?'Ready':s.ended?'Finished — reopen to restart':!enabled?'Music disabled':s===active?(s.error||(!s.audio||s.audio.paused?'Ready / loading':'Playing')):'Paused / waiting';
+   s.label.textContent=t;s.retry.hidden=!(enabled&&s===active&&s.url&&!s.ended&&s.error);
+  }
+ }
+ function reconcile(force=false){
+  const next=enabled?states.get(stack.at(-1))||null:null;
+  if(active!==next){const old=active;active=next;if(old)stop(old,!old.details.open);if(next)start(next);}
+  else if(force&&next)start(next);
+  refresh();
+ }
+ for(const d of document.querySelectorAll('#main-list details, #community-list details')){
+  const name=d.dataset.musicLevel,meta=catalog[name];
+  if(meta){
+   const credit=document.createElement('div');credit.className='music-credit';
+   const strong=document.createElement('strong');strong.textContent='♫ '+meta.song;credit.append(strong,document.createTextNode(' — '+meta.artist));
+   if(meta.source){const link=document.createElement('a');link.href=meta.source;link.target='_blank';link.rel='noopener noreferrer';link.textContent=' · '+meta.sourceLabel+' ↗';credit.append(link);}
+   const controls=document.createElement('div');controls.className='music-controls';
+   const mute=document.createElement('button');mute.type='button';mute.className='music-mute';
+   const slider=document.createElement('input');slider.type='range';slider.min='0';slider.max='100';slider.step='1';slider.setAttribute('aria-label','Level music volume');
+   const output=document.createElement('output');const volumeLabel=document.createElement('label');volumeLabel.append(document.createTextNode('Volume'),slider,output);
+   const retry=document.createElement('button');retry.type='button';retry.className='music-retry';retry.textContent='Resume music';retry.hidden=true;
+   const label=document.createElement('span');label.className='music-credit-status';label.setAttribute('role','status');
+   controls.append(mute,volumeLabel,retry);credit.append(controls,label);d.querySelector('.detail-panel > div:last-child').append(credit);
+   const url=sourceFor(name),entry=hosted[name];const offset=Number.isFinite(entry?.offset)&&entry.offset>=0?entry.offset:meta.offset;
+   if(entry?.test===true){const note=document.createElement('span');note.textContent='Temporary test audio — not the original soundtrack.';credit.insertBefore(note,controls);}
+   states.set(name,{meta:{...meta,offset},details:d,label,mute,slider,output,retry,audio:null,node:null,gain:null,url,timer:null,generation:0,ended:false,needsSeek:true,error:''});
+   mute.addEventListener('click',()=>{enabled=!enabled;if(enabled)unlock();syncControls();save();reconcile();});
+   slider.addEventListener('input',()=>{volume=Number(slider.value)/100;syncControls();save();if(active&&!active.ended)ramp(active,volume,.08);});
+   retry.addEventListener('click',()=>{unlock();reconcile(true);});
+  }
+  d.querySelector('summary').addEventListener('click',()=>{if(enabled)unlock();});
+  d.addEventListener('toggle',()=>{
+   const index=stack.indexOf(name),s=states.get(name);
+   if(d.open){if(index!==-1)return;stack.push(name);if(s){cancelStop(s);if(s.audio)s.audio.pause();reset(s);}}
+   else{if(index===-1)return;stack.splice(index,1);if(s&&s!==active)stop(s,true);}
+   reconcile();
+  });
+ }
+
+ syncControls();refresh();
+})();
+</script>
+
+</body>
+</html>
