@@ -91,5 +91,9 @@ window.LVMC_HOSTED_TRACKS = Object.freeze({
   "Time Machine": {
     url: "soundtracks/time-machine.mp3",
     offset: 0
+  },
+  "RobTop Travel": {
+    url: "soundtracks/robtop-travel.mp3",
+    offset: 0
   }
 });
