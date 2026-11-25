@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <meta name="theme-color" content="#0d1118" />
 <meta name="description" content="LVMC Geometry Dash rankings: a Main Levels List and separate Discord Community Voted Levels, with independent scores and a main-first leaderboard." />
-<title>LVMC Rankings V9.2 — Community Expansion</title>
+<title>LVMC Rankings V9.2.1 — Visual Polish</title>
 <style>
  :root{color-scheme:dark;--bg:#0d1118;--panel:#151b25;--panel-active:#192333;--border:#293241;--muted:#99a7ba;--text:#f1f5fb;--accent:#79b9ff}
  *{box-sizing:border-box}
@@ -215,7 +215,8 @@
   .rankings-column .points{font-size:11px;padding:5px 7px}
   .rankings-column .detail-panel{grid-template-columns:1fr;gap:12px;padding:13px}
   .rankings-column .detail-image{max-height:none}
-  .community-rankings{position:sticky;top:18px}
+  /* V9.2.1: both ranking columns move with the page. */
+  .community-rankings{position:static}
   .community-vote-note{margin-top:15px;padding:13px 14px;border-radius:11px;border:1px dashed #426182;background:#15263b;color:#b3cde9;font-size:12px;line-height:1.55}
   .community-vote-note span{color:#79b9ff;margin-right:5px}
   .board-row-v8{grid-template-columns:42px minmax(0,1fr) minmax(160px,auto);gap:14px;padding:17px 6px}
@@ -226,7 +227,7 @@
   .board-row-v8 .board-rank{color:#f4d35e}
   .board-main-score{color:#f1f5fb;font-size:19px;font-weight:800;font-variant-numeric:tabular-nums}
   .board-community-score{color:#9aa7b7;font-size:12px;font-weight:550;font-variant-numeric:tabular-nums;margin-top:2px}
-  @media(max-width:980px){.rankings-grid{grid-template-columns:1fr}.community-rankings{position:static}.rankings-column-heading{min-height:0}.rankings-column .detail-panel{grid-template-columns:180px 1fr;align-items:center}}
+  @media(max-width:980px){.rankings-grid{grid-template-columns:1fr}.rankings-column-heading{min-height:0}.rankings-column .detail-panel{grid-template-columns:180px 1fr;align-items:center}}
   @media(max-width:600px){.rankings-column{padding:11px}.rankings-column .detail-panel{grid-template-columns:1fr}.rankings-column .thumb{width:73px;height:45px;flex-basis:73px}.rankings-column .rank{width:26px;flex-basis:26px}.rankings-column .name{font-size:13px}.rankings-column summary{gap:9px;padding:9px;min-height:67px}.rankings-intro h2{font-size:21px}.board-row-v8{grid-template-columns:30px minmax(0,1fr);gap:10px}.board-scores{grid-column:2;text-align:left;white-space:normal}.board-main-score{font-size:18px}}
   @media(max-width:360px){.rankings-column .thumb{width:62px;height:41px;flex-basis:62px}.rankings-column .rank{width:23px;flex-basis:23px}.rankings-column .points{font-size:10px;padding:4px 5px}.rankings-column summary{gap:7px}}
 
@@ -287,6 +288,8 @@
   .level-difficulty-fallback{display:inline;font-size:10px;font-weight:600;color:var(--muted);margin-left:5px}
   @media(max-width:480px){.level-difficulty-icon{width:22px;height:22px;margin-left:4px}.level-difficulty-icon.special-difficulty{width:20px;height:20px}}
   @media(max-width:360px){.level-difficulty-icon{width:21px;height:21px;margin-left:4px}.level-difficulty-icon.special-difficulty{width:20px;height:20px}}
+  /* V9.2.1: use the full, cropped artwork without further clipping. */
+  .rankings-column .thumb.full-artwork,.rankings-column .detail-image.full-artwork{height:auto;aspect-ratio:auto;object-fit:contain}
  </style>
 </head>
 <body>
@@ -494,7 +497,7 @@
 </section>
 <footer>
   <p>Made for the LVMC gang · Not affiliated with actual RobTop or Geometry Dash</p>
-  <p class="credit">Background image: <a href="https://www.charlieintel.com/" target="_blank" rel="noopener noreferrer">CharlieIntel</a>. Gameplay screenshots: <a href="https://stpkukaif.github.io/GeometryDash/" target="_blank" rel="noopener noreferrer">GD screenshot collection</a> &amp; <a href="https://store.steampowered.com/app/322170/Geometry_Dash/" target="_blank" rel="noopener noreferrer">Steam (Dash)</a>. RobTop Travel thumbnail art: <a href="https://www.youtube.com/watch?v=CaoUIkQ3QuI" target="_blank" rel="noopener noreferrer">Lairon GD showcase</a>. Sweater Weather thumbnail: <a href="https://www.youtube.com/watch?v=y3Kk0ZvDqUM" target="_blank" rel="noopener noreferrer">credited showcase</a>. Nine Circles thumbnail: <a href="https://www.youtube.com/watch?v=LPl51rdl6-o" target="_blank" rel="noopener noreferrer">credited showcase</a>. Cataclysm thumbnail: <a href="https://www.reddit.com/r/geometrydash/comments/1lv9gxk/i_make_level_thumbnails/" target="_blank" rel="noopener noreferrer">Reddit thumbnail creator</a>. Bloodbath thumbnail: <a href="https://www.youtube.com/watch?v=JR981ToYoYA" target="_blank" rel="noopener noreferrer">credited showcase</a>. Acu thumbnail: <a href="https://x.com/zchilost/status/1426461482552864772" target="_blank" rel="noopener noreferrer">original X post</a>. Supersonic thumbnail: <a href="https://www.youtube.com/watch?v=jKJVVn4N0Fk" target="_blank" rel="noopener noreferrer">credited showcase</a>. Windy Landscape thumbnail: <a href="https://www.youtube.com/watch?v=5PVyVI2xbiI" target="_blank" rel="noopener noreferrer">credited showcase</a>. Sakupen Egg thumbnail: <a href="https://www.youtube.com/watch?v=PLDMeLujlok" target="_blank" rel="noopener noreferrer">credited showcase</a>. Aperture thumbnail: <a href="https://www.youtube.com/watch?v=RTz0gkRik94" target="_blank" rel="noopener noreferrer">credited showcase</a>. Bird Brain thumbnail: <a href="https://www.youtube.com/watch?v=f16XwBFY9hU" target="_blank" rel="noopener noreferrer">credited showcase</a>. Difficulty artwork: <a href="https://geometrydash.wiki.gg/wiki/Category:Difficulty_icon_images" target="_blank" rel="noopener noreferrer">Geometry Dash Wiki</a>.</p>
+  <p class="credit">Background image: <a href="https://www.charlieintel.com/" target="_blank" rel="noopener noreferrer">CharlieIntel</a>. Difficulty artwork: <a href="https://geometrydash.wiki.gg/wiki/Category:Difficulty_icon_images" target="_blank" rel="noopener noreferrer">Geometry Dash Wiki</a>.</p>
 </footer>
 </main>
 
@@ -556,7 +559,7 @@ const levels = [
     "difficulty": "insane_demon",
     "points": 38,
     "category": "community",
-    "image": "https://i.ytimg.com/vi/jKJVVn4N0Fk/sddefault.jpg?v=6b04bb2b",
+    "image": "supersonic.jpg",
     "source": "https://www.youtube.com/watch?v=jKJVVn4N0Fk",
     "sourceLabel": "Thumbnail image credit: Supersonic showcase ↗",
     "description": "Supersonic is an Insane Demon level selected through an LVMC community poll. Completing this level earns 38 Community points toward the {categoryTotal}-point Community Voted Levels maximum."
@@ -606,7 +609,7 @@ const levels = [
     "difficulty": "insane",
     "points": 8,
     "category": "community",
-    "image": "https://i.ytimg.com/vi/5PQsdzNFFFI/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBNDynQBNIfyrXtRunZWRPQwwbKuQ",
+    "image": "bird-brain.jpg",
     "source": "https://www.youtube.com/watch?v=f16XwBFY9hU",
     "sourceLabel": "Thumbnail image credit: Bird Brain showcase ↗",
     "description": "Bird Brain is an Insane level selected through an LVMC community poll. Completing this level earns 8 Community points toward the {categoryTotal}-point Community Voted Levels maximum."
@@ -797,6 +800,7 @@ function fallbackThumbnail(i){
 function levelImage(level,i,klass){
  const img=document.createElement('img');
  img.className=klass;
+ if(level.name==='Supersonic'||level.name==='Bird Brain')img.classList.add('full-artwork');
  if(klass==='detail-image' && level.name==='RobTop Travel')img.classList.add('robtop-travel-expanded');
  img.alt=klass==='detail-image'?'Gameplay screenshot for '+level.name:'';
  img.src=level.image;
