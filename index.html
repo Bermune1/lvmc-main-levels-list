@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <meta name="theme-color" content="#0d1118" />
 <meta name="description" content="LVMC Geometry Dash rankings: a Main Levels List and separate Discord Community Voted Levels, with independent scores and a main-first leaderboard." />
-<title>LVMC Rankings V9.2.1 — Visual Polish</title>
+<title>LVMC Rankings V9.3 Beta — Hosted Soundtracks</title>
 <style>
  :root{color-scheme:dark;--bg:#0d1118;--panel:#151b25;--panel-active:#192333;--border:#293241;--muted:#99a7ba;--text:#f1f5fb;--accent:#79b9ff}
  *{box-sizing:border-box}
@@ -290,7 +290,22 @@
   @media(max-width:360px){.level-difficulty-icon{width:21px;height:21px;margin-left:4px}.level-difficulty-icon.special-difficulty{width:20px;height:20px}}
   /* V9.2.1: use the full, cropped artwork without further clipping. */
   .rankings-column .thumb.full-artwork,.rankings-column .detail-image.full-artwork{height:auto;aspect-ratio:auto;object-fit:contain}
- </style>
+ 
+  /* V9.3 compact soundtrack controls */
+  .music-credit{border-top:1px solid var(--border);margin-top:12px;padding-top:10px;font-size:12px;color:var(--muted);display:grid;gap:7px;min-width:0}
+  .music-credit strong{color:#a3dbb1;font-weight:650}
+  .music-credit a{color:var(--accent);text-decoration:none;overflow-wrap:anywhere}
+  .music-credit a:hover{text-decoration:underline}
+  .music-credit-status{font-size:11px;color:#a3dbb1;overflow-wrap:anywhere}
+  .music-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .music-controls .music-mute,.music-controls .music-retry{font:inherit;color:var(--text);background:var(--panel);border:1px solid var(--border);border-radius:7px;padding:5px 8px;cursor:pointer}
+  .music-controls .music-mute[aria-pressed="true"]{color:#a3dbb1}
+  .music-controls label{display:flex;align-items:center;gap:6px;min-width:0}
+  .music-controls input[type=range]{width:84px;max-width:28vw;accent-color:#a3dbb1;margin:0}
+  .music-controls output{min-width:30px;text-align:right;font-variant-numeric:tabular-nums}
+  .music-controls button:focus-visible,.music-controls input:focus-visible{outline:2px solid #a3dbb1;outline-offset:2px}
+
+</style>
 </head>
 <body>
 <div class="lvmc-backdrop" aria-hidden="true"><div class="lvmc-backdrop-image"></div><div class="lvmc-backdrop-shade"></div></div>
@@ -855,6 +870,7 @@ function renderRankedLevels(group,listId,categoryName,categoryTotal){
  group.forEach((level,i)=>{
   const originalIndex=levels.indexOf(level);
   const details=document.createElement('details');
+  details.dataset.musicLevel=level.name;
   const summary=document.createElement('summary');
   const rank=document.createElement('span');rank.className='rank';rank.textContent='#'+(i+1);
   const tier=i===0?'tier-red':i<4?'tier-gold':i<10?'tier-green':'';
@@ -2255,5 +2271,299 @@ try{
   await refreshAuth(session?.user || null);
 }catch(err){showStatus('global-status','Supabase connection error: '+errorText(err),true);}
 </script>
+
+<script src="soundtracks/catalog.js"></script>
+<script>
+(()=>{
+ 'use strict';
+ const catalog={
+  "Stereo Madness": {
+    "song": "Stereo Madness",
+    "artist": "ForeverBound",
+    "source": "https://www.newgrounds.com/audio/listen/500476",
+    "sourceLabel": "Song page",
+    "file": "StereoMadness.mp3",
+    "offset": 0
+  },
+  "Back On Track": {
+    "song": "Back On Track",
+    "artist": "DJVI",
+    "source": "https://www.newgrounds.com/audio/listen/522654",
+    "sourceLabel": "Song page",
+    "file": "BackOnTrack.mp3",
+    "offset": 0
+  },
+  "Polargeist": {
+    "song": "Polargeist",
+    "artist": "Step",
+    "source": "https://geometrydash.wiki.gg/wiki/Polargeist",
+    "sourceLabel": "Song information",
+    "file": "Polargeist.mp3",
+    "offset": 0
+  },
+  "Dry Out": {
+    "song": "Dry Out",
+    "artist": "DJVI",
+    "source": "https://djvi.newgrounds.com/audio",
+    "sourceLabel": "Artist catalog",
+    "file": "3-06. Dry Out.mp3",
+    "offset": 0
+  },
+  "Base After Base": {
+    "song": "Base After Base",
+    "artist": "DJVI",
+    "source": "https://www.newgrounds.com/audio/listen/404997",
+    "sourceLabel": "Original song",
+    "file": "BaseAfterBase.mp3",
+    "offset": 0
+  },
+  "Can't Let Go": {
+    "song": "Can't Let Go",
+    "artist": "DJVI",
+    "source": "https://djvi.newgrounds.com/audio",
+    "sourceLabel": "Artist catalog",
+    "file": "CantLetGo.mp3",
+    "offset": 0
+  },
+  "Jumper": {
+    "song": "Jumper",
+    "artist": "Waterflame",
+    "source": "https://waterflame.newgrounds.com/audio",
+    "sourceLabel": "Artist catalog",
+    "file": "Jumper.mp3",
+    "offset": 0
+  },
+  "Time Machine": {
+    "song": "Time Machine",
+    "artist": "Waterflame",
+    "source": "https://waterflame.newgrounds.com/audio",
+    "sourceLabel": "Artist catalog",
+    "file": "TimeMachine.mp3",
+    "offset": 0
+  },
+  "Cycles": {
+    "song": "Cycles",
+    "artist": "DJVI",
+    "source": "https://djvi.newgrounds.com/audio",
+    "sourceLabel": "Artist catalog",
+    "file": "Cycles.mp3",
+    "offset": 0
+  },
+  "xStep": {
+    "song": "xStep",
+    "artist": "DJVI",
+    "source": "https://djvi.newgrounds.com/audio",
+    "sourceLabel": "Artist catalog",
+    "file": "xStep.mp3",
+    "offset": 0
+  },
+  "Clutterfunk": {
+    "song": "Clutterfunk",
+    "artist": "Waterflame",
+    "source": "https://waterflame.newgrounds.com/audio",
+    "sourceLabel": "Artist catalog",
+    "file": "Clutterfunk.mp3",
+    "offset": 0
+  },
+  "Theory Of Everything": {
+    "song": "Theory of Everything",
+    "artist": "dj-Nate",
+    "source": "https://dj-nate.newgrounds.com/audio",
+    "sourceLabel": "Artist catalog",
+    "file": "TheoryOfEverything.mp3",
+    "offset": 0
+  },
+  "Electroman Adventures": {
+    "song": "Electroman Adventures",
+    "artist": "Waterflame",
+    "source": "https://waterflame.newgrounds.com/audio",
+    "sourceLabel": "Artist catalog",
+    "file": "Electroman.mp3",
+    "offset": 0
+  },
+  "Clubstep": {
+    "song": "Clubstep",
+    "artist": "dj-Nate",
+    "source": "https://www.newgrounds.com/audio/listen/396093",
+    "sourceLabel": "Original song",
+    "file": "Clubstep.mp3",
+    "offset": 0
+  },
+  "Electrodynamix": {
+    "song": "Electrodynamix",
+    "artist": "dj-Nate",
+    "source": "https://www.newgrounds.com/audio/listen/368392",
+    "sourceLabel": "Original song",
+    "file": "Electrodynamix.mp3",
+    "offset": 0
+  },
+  "Hexagon Force": {
+    "song": "Hexagon Force",
+    "artist": "Waterflame",
+    "source": "https://www.newgrounds.com/audio/listen/568699",
+    "sourceLabel": "Original song",
+    "file": "HexagonForce.mp3",
+    "offset": 0
+  },
+  "Blast Processing": {
+    "song": "Blast Processing",
+    "artist": "Waterflame",
+    "source": "https://www.newgrounds.com/audio/listen/507560",
+    "sourceLabel": "Original song",
+    "file": "BlastProcessing.mp3",
+    "offset": 0
+  },
+  "Theory Of Everything 2": {
+    "song": "Theory of Everything 2",
+    "artist": "dj-Nate",
+    "source": "https://dj-nate.newgrounds.com/audio",
+    "sourceLabel": "Artist catalog",
+    "file": "TheoryOfEverything2.mp3",
+    "offset": 0
+  },
+  "Geometrical Dominator": {
+    "song": "Geometrical Dominator",
+    "artist": "Waterflame",
+    "source": "https://waterflame.newgrounds.com/audio",
+    "sourceLabel": "Artist catalog",
+    "file": "GeometricalDominator.mp3",
+    "offset": 0
+  },
+  "Deadlocked": {
+    "song": "Deadlocked",
+    "artist": "F-777",
+    "source": "https://geometrydash.wiki.gg/wiki/Deadlocked",
+    "sourceLabel": "Song information",
+    "file": "Deadlocked.mp3",
+    "offset": 0
+  },
+  "Fingerdash": {
+    "song": "Fingerbang",
+    "artist": "MDK",
+    "source": "https://mdkofficial.bandcamp.com/",
+    "sourceLabel": "Artist catalog",
+    "file": "Fingerdash.mp3",
+    "offset": 0
+  },
+  "Dash": {
+    "song": "Geometry Dash (Official Theme Song)",
+    "artist": "MDK",
+    "source": "https://mdkofficial.bandcamp.com/track/mdk-geometry-dash-official-theme-song",
+    "sourceLabel": "Original song",
+    "file": "Dash.mp3",
+    "offset": 0
+  },
+  "The Challenge": {
+    "song": "Random Song 06 (D J Rub Rub)",
+    "artist": "RobTop",
+    "source": "https://www.newgrounds.com/audio/listen/633385",
+    "sourceLabel": "Original song",
+    "file": "1-10. D J Rub Rub.mp3",
+    "offset": 0
+  }
+};
+ const hosted=window.LVMC_HOSTED_TRACKS||{};
+ function sourceFor(name){
+  if(!Object.prototype.hasOwnProperty.call(hosted,name))return null;
+  const entry=hosted[name];if(typeof entry?.url!=='string'||!entry.url)return null;
+  try{const url=new URL(entry.url,document.baseURI);if(url.protocol==='https:'||url.origin===location.origin&&url.protocol==='http:')return url.href;}catch{}
+  return null;
+ }
+ const states=new Map(),stack=[];
+ let context=null,active=null,enabled=true,volume=.25;
+ try{const p=JSON.parse(localStorage.getItem('lvmc.music.v93')||'null');if(p){if(typeof p.enabled==='boolean')enabled=p.enabled;if(typeof p.volume==='number'&&Number.isFinite(p.volume))volume=Math.min(1,Math.max(0,p.volume));}}catch{}
+ function save(){try{localStorage.setItem('lvmc.music.v93',JSON.stringify({enabled,volume}));}catch{}}
+ function syncControls(){for(const s of states.values()){s.mute.setAttribute('aria-pressed',String(enabled));s.mute.textContent=enabled?'♫ On':'♫ Off';s.mute.setAttribute('aria-label',enabled?'Mute level music':'Enable level music');s.slider.value=String(Math.round(volume*100));s.output.textContent=Math.round(volume*100)+'%';}}
+ function unlock(){
+  try{if(!context)context=new (window.AudioContext||window.webkitAudioContext)();if(context.state==='suspended')context.resume().catch(()=>{});}catch{}
+ }
+ function ramp(s,value,seconds){
+  if(!s.gain||!context)return;
+  const p=s.gain.gain,t=context.currentTime;
+  if(typeof p.cancelAndHoldAtTime==='function')p.cancelAndHoldAtTime(t);else{const v=p.value;p.cancelScheduledValues(t);p.setValueAtTime(v,t);}
+  p.linearRampToValueAtTime(value,t+seconds);
+ }
+ function cancelStop(s){if(s.timer!==null){clearTimeout(s.timer);s.timer=null;}}
+ function reset(s){
+  s.ended=false;s.needsSeek=true;s.error='';
+  if(s.audio){try{s.audio.currentTime=s.meta.offset;}catch{}}
+ }
+ function stop(s,resetAfter=false){
+  if(!s)return;
+  ++s.generation;cancelStop(s);
+  if(!s.audio){if(resetAfter)reset(s);return;}
+  if(s.audio.paused){ramp(s,0,.01);if(resetAfter)reset(s);return;}
+  ramp(s,0,.4);
+  s.timer=setTimeout(()=>{s.timer=null;if(active===s&&enabled&&s.details.open)return;s.audio?.pause();if(resetAfter||!s.details.open)reset(s);refresh();},410);
+ }
+ function createAudio(s){
+  if(s.audio)return;
+  if(!context||!s.url)return;
+  const a=new Audio();a.preload='none';a.loop=false;
+  if(new URL(s.url).origin!==location.origin)a.crossOrigin='anonymous';a.src=s.url;
+  s.audio=a;s.node=context.createMediaElementSource(a);s.gain=context.createGain();s.gain.gain.value=0;s.node.connect(s.gain);s.gain.connect(context.destination);
+  a.addEventListener('loadedmetadata',()=>{if(s.audio===a&&s.needsSeek){try{a.currentTime=Math.min(s.meta.offset,Math.max(0,a.duration-.05));s.needsSeek=false;}catch{}}});
+  a.addEventListener('ended',()=>{if(s.audio!==a)return;s.ended=true;cancelStop(s);ramp(s,0,.01);refresh();});
+  a.addEventListener('error',()=>{if(s.audio!==a)return;s.error='Could not load this audio file.';refresh();});
+  for(const ev of ['playing','pause','waiting'])a.addEventListener(ev,()=>{if(s.audio===a)refresh();});
+ }
+ function start(s){
+  if(!s||!s.url||s.ended)return;
+  cancelStop(s);s.error='';
+  try{createAudio(s);}catch{ s.error='Audio setup failed.';refresh();return;}
+  if(!s.audio){s.error='Audio unavailable. Try Resume music.';refresh();return;}
+  const a=s.audio,g=++s.generation;if(a.error)a.load();
+  if(s.needsSeek&&a.readyState>=1){try{a.currentTime=Math.min(s.meta.offset,Math.max(0,a.duration-.05));s.needsSeek=false;}catch{}}
+  if(a.paused){s.gain.gain.cancelScheduledValues(context.currentTime);s.gain.gain.setValueAtTime(0,context.currentTime);}
+  a.play().then(()=>{
+   if(s.generation!==g||active!==s||!enabled||!s.details.open){if(active!==s||!enabled||!s.details.open){if(s.timer===null)a.pause();}return;}
+   ramp(s,volume,.3);refresh();
+  }).catch(()=>{if(s.generation===g&&active===s){s.error='Playback blocked or unavailable. Try Resume music.';refresh();}});
+ }
+ function refresh(){
+  for(const s of states.values()){
+   const t=!s.url?'Soundtrack not available yet':!s.details.open?'Ready':s.ended?'Finished — reopen to restart':!enabled?'Music disabled':s===active?(s.error||(!s.audio||s.audio.paused?'Ready / loading':'Playing')):'Paused / waiting';
+   s.label.textContent=t;s.retry.hidden=!(enabled&&s===active&&s.url&&!s.ended&&s.error);
+  }
+ }
+ function reconcile(force=false){
+  const next=enabled?states.get(stack.at(-1))||null:null;
+  if(active!==next){const old=active;active=next;if(old)stop(old,!old.details.open);if(next)start(next);}
+  else if(force&&next)start(next);
+  refresh();
+ }
+ for(const d of document.querySelectorAll('#main-list details, #community-list details')){
+  const name=d.dataset.musicLevel,meta=catalog[name];
+  if(meta){
+   const credit=document.createElement('div');credit.className='music-credit';
+   const strong=document.createElement('strong');strong.textContent='♫ '+meta.song;credit.append(strong,document.createTextNode(' — '+meta.artist));
+   if(meta.source){const link=document.createElement('a');link.href=meta.source;link.target='_blank';link.rel='noopener noreferrer';link.textContent=' · '+meta.sourceLabel+' ↗';credit.append(link);}
+   const controls=document.createElement('div');controls.className='music-controls';
+   const mute=document.createElement('button');mute.type='button';mute.className='music-mute';
+   const slider=document.createElement('input');slider.type='range';slider.min='0';slider.max='100';slider.step='1';slider.setAttribute('aria-label','Level music volume');
+   const output=document.createElement('output');const volumeLabel=document.createElement('label');volumeLabel.append(document.createTextNode('Volume'),slider,output);
+   const retry=document.createElement('button');retry.type='button';retry.className='music-retry';retry.textContent='Resume music';retry.hidden=true;
+   const label=document.createElement('span');label.className='music-credit-status';label.setAttribute('role','status');
+   controls.append(mute,volumeLabel,retry);credit.append(controls,label);d.querySelector('.detail-panel > div:last-child').append(credit);
+   const url=sourceFor(name),entry=hosted[name];const offset=Number.isFinite(entry?.offset)&&entry.offset>=0?entry.offset:meta.offset;
+   if(entry?.test===true){const note=document.createElement('span');note.textContent='Temporary test audio — not the original soundtrack.';credit.insertBefore(note,controls);}
+   states.set(name,{meta:{...meta,offset},details:d,label,mute,slider,output,retry,audio:null,node:null,gain:null,url,timer:null,generation:0,ended:false,needsSeek:true,error:''});
+   mute.addEventListener('click',()=>{enabled=!enabled;if(enabled)unlock();syncControls();save();reconcile();});
+   slider.addEventListener('input',()=>{volume=Number(slider.value)/100;syncControls();save();if(active&&!active.ended)ramp(active,volume,.08);});
+   retry.addEventListener('click',()=>{unlock();reconcile(true);});
+  }
+  d.querySelector('summary').addEventListener('click',()=>{if(enabled)unlock();});
+  d.addEventListener('toggle',()=>{
+   const index=stack.indexOf(name),s=states.get(name);
+   if(d.open){if(index!==-1)return;stack.push(name);if(s){cancelStop(s);if(s.audio)s.audio.pause();reset(s);}}
+   else{if(index===-1)return;stack.splice(index,1);if(s&&s!==active)stop(s,true);}
+   reconcile();
+  });
+ }
+
+ syncControls();refresh();
+})();
+</script>
+
 </body>
 </html>
