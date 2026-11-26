@@ -95,5 +95,9 @@ window.LVMC_HOSTED_TRACKS = Object.freeze({
   "RobTop Travel": {
     url: "soundtracks/robtop-travel.mp3",
     offset: 0
+  },
+  "Bloodbath": {
+    url: "soundtracks/bloodbath.mp3",
+    offset: 2
   }
 });
