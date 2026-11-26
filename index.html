@@ -821,7 +821,7 @@ function fallbackThumbnail(i){
 function levelImage(level,i,klass){
  const img=document.createElement('img');
  img.className=klass;
- if(level.name==='Supersonic'||level.name==='Bird Brain')img.classList.add('full-artwork');
+ if(level.name==='Supersonic'||level.name==='BIRDBRAIN')img.classList.add('full-artwork');
  if(klass==='detail-image' && level.name==='RobTop Travel')img.classList.add('robtop-travel-expanded');
  img.alt=klass==='detail-image'?'Gameplay screenshot for '+level.name:'';
  img.src=level.image;
