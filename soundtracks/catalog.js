@@ -125,7 +125,7 @@ window.LVMC_HOSTED_TRACKS = Object.freeze({
     offset: 109.95
     },
   "Sakupen Egg": {
-    url: "soundtracks/sakupen-circles.mp3",
+    url: "soundtracks/sakupen-egg.mp3",
     offset: 16
   }
 });
