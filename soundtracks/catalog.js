@@ -122,6 +122,6 @@ window.LVMC_HOSTED_TRACKS = Object.freeze({
     },
   "Nine Circles": {
     url: "soundtracks/nine-circles.mp3",
-    offset: 28.5
+    offset: 110
   }
 });
