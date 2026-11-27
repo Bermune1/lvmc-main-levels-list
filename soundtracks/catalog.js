@@ -107,5 +107,9 @@ window.LVMC_HOSTED_TRACKS = Object.freeze({
   "Cataclysm": {
     url: "soundtracks/bloodbath.mp3",
     offset: 0
+    },
+  "Acu": {
+    url: "soundtracks/acu.mp3",
+    offset: 0
   }
 });
