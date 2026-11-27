@@ -99,5 +99,9 @@ window.LVMC_HOSTED_TRACKS = Object.freeze({
   "Bloodbath": {
     url: "soundtracks/bloodbath.mp3",
     offset: 0
+  },
+  "Sweater Weather": {
+    url: "soundtracks/sweater-weather.mp3",
+    offset: 0
   }
 });
