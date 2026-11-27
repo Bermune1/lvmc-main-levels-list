@@ -110,7 +110,7 @@ window.LVMC_HOSTED_TRACKS = Object.freeze({
     },
   "Acu": {
     url: "soundtracks/acu.mp3",
-    offset: 0
+    offset: 500
     },
   "Supersonic": {
     url: "soundtracks/supersonic.mp3",
