@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <meta name="theme-color" content="#0d1118" />
 <meta name="description" content="LVMC Geometry Dash rankings: a Main Levels List and separate Discord Community Voted Levels, with independent scores and a main-first leaderboard." />
-<title>LVMC Rankings V9.4 — Level Soundtracks</title>
+<title>LVMC Rankings V9.5 — Achievement Expansion II</title>
 <style>
  :root{color-scheme:dark;--bg:#0d1118;--panel:#151b25;--panel-active:#192333;--border:#293241;--muted:#99a7ba;--text:#f1f5fb;--accent:#79b9ff}
  *{box-sizing:border-box}
@@ -450,7 +450,7 @@
     </div>
     <div id="account-achievements-panel" role="tabpanel" aria-labelledby="account-achievements-tab" data-account-panel="achievements" hidden>
       <div class="achievement-header"><div><h3>Achievements</h3><p>Unlock achievements through approved completions, coin claims and leaderboard milestones. Equip up to three titles to show off on the leaderboard.</p></div><button type="button" class="action-btn" id="achievement-refresh">Refresh achievements</button></div>
-      <div class="achievement-overview"><div class="achievement-overview-top"><strong id="achievement-count">— / 14</strong><span class="muted-note" id="achievement-percent">Achievement progress loads from your account.</span></div><div id="achievement-overview-bar"></div></div>
+      <div class="achievement-overview"><div class="achievement-overview-top"><strong id="achievement-count">— / 16</strong><span class="muted-note" id="achievement-percent">Achievement progress loads from your account.</span></div><div id="achievement-overview-bar"></div></div>
       <div class="achievement-equipment"><div class="achievement-equipment-head"><h4>Equipped titles</h4><span id="achievement-slot-count">0 / 3 equipped</span></div><p>Titles are cosmetic. Changes save automatically. If you lose eligibility, the title is removed and must be equipped again after you regain it.</p><div class="achievement-slots" id="achievement-slots"></div><p id="achievement-slot-hint" hidden>All three slots are filled. Remove a title to equip a different one.</p><div class="achievement-preview"><div class="achievement-preview-label">Leaderboard preview</div><div class="board-name" id="achievement-preview-name">Your username</div></div></div>
       <div id="achievement-status" class="status-line" role="status" aria-live="polite"></div>
       <div class="achievement-toolbar"><strong id="achievement-filter-heading">All achievements</strong><div class="achievement-filters" role="group" aria-label="Filter achievements"><button type="button" class="achievement-filter" data-achievement-filter="all" aria-pressed="true">All</button><button type="button" class="achievement-filter" data-achievement-filter="unlocked" aria-pressed="false">Unlocked</button><button type="button" class="achievement-filter" data-achievement-filter="locked" aria-pressed="false">Locked</button></div></div>
@@ -998,9 +998,10 @@ async function submissionErrorText(error){
 }
 function element(tag, cls, text) { const el=document.createElement(tag); if(cls)el.className=cls; if(text!==undefined)el.textContent=String(text); return el; }
 function clear(el){el.replaceChildren();}
-// V9.0: achievement definitions are presentation only; eligibility comes from Supabase.
+// V9.5: achievement definitions are presentation only; eligibility comes from Supabase.
 const ACHIEVEMENTS=[
  ['insanely_dedicated','Insanely Dedicated','Complete all official RobTop Insane levels.','#ff9e67','flame','levels'],
+ ['community_explorer','Community Explorer','Complete any level from the Community Voted Levels list.','#8ddcff','users','levels'],
  ['easy_demon','Easy Demon','Complete at least one Easy Demon from either rankings list.','#a3dbb1','shield','demons'],
  ['demon_slayer','Demon Slayer','Complete all three official RobTop Demon levels.','#ff8585','swords','levels'],
  ['medium_demon','Medium Demon','Complete at least one Medium Demon from the Community Voted Levels list.','#79b9ff','shield','demons'],
@@ -1011,14 +1012,18 @@ const ACHIEVEMENTS=[
  ['main_level_master','Main Level Master','Complete RobTop Travel.','#ffab6b','crown','levels'],
  ['extreme_demon','Extreme Demon','Complete at least one Extreme Demon from the Community Voted Levels list.','#ff626b','shield','demons'],
  ['demon_destroyer','Demon Destroyer','Complete at least one Demon of each of the five Demon difficulties.','#f58baf','swords','difficulties'],
+ ['grandpa_demon','Grandpa Demon','Complete the current #1 Community Voted Level.','#c6a5ed','skull','levels'],
  ['perfectionist','Perfectionist','Obtain every possible point across both rankings lists.','#8cddff','gem','points'],
  ['geometry_dasher','Geometry Dasher','Reach #1 on the LVMC leaderboard.','#ffe8a3','crown','rank'],
  ['absolute_madness','Absolute Madness','Unlock all possible achievements.','#f9d66d','trophy','achievements']
 ].map(([key,name,description,color,icon,unit])=>({key,name,description,color,icon,unit}));
 const ACHIEVEMENT_MAP=new Map(ACHIEVEMENTS.map(a=>[a.key,a]));
 const RECLAIM_EVENT='achievement_geometry_dasher_reclaimed';
-const ACHIEVEMENT_EVENTS=[...ACHIEVEMENTS.map(a=>'achievement_'+a.key),RECLAIM_EVENT];
+const GRANDPA_RECLAIM_EVENT='achievement_grandpa_demon_reclaimed';
+const ACHIEVEMENT_EVENTS=[...ACHIEVEMENTS.map(a=>'achievement_'+a.key),RECLAIM_EVENT,GRANDPA_RECLAIM_EVENT];
 const ICON_PATHS={
+ users:'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M13 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0ZM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75',
+ skull:'M12 2a9 9 0 0 0-9 9c0 4 2 6 5 7v4h8v-4c3-1 5-3 5-7a9 9 0 0 0-9-9ZM10 22v-3M14 22v-3M9 9.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 1 0 0-3ZM15 9.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 1 0 0-3ZM12 15h.01',
  flame:'M12 22c-4 0-7-3-7-7 0-4 3-7 5-9 0 3 1 4 2 5 2-3 3-6 2-9 4 3 5 6 5 9 0 6-3 11-7 11ZM12 22c-2 0-4-2-4-4 0-2 2-4 4-6 2 2 4 4 4 6 0 2-2 4-4 4Z',
  shield:'M12 22S4 18 4 11V5l8-3 8 3v6c0 7-8 11-8 11ZM9 10l3 3 3-3M12 13v4',
  swords:'m3 3 6 2 10 10-4 4L5 9 3 3Zm18 0-6 2-3 3M8 12l-3 3 4 4 3-3M13 21l8-8M3 13l8 8M3 21l4-4M21 21l-4-4',
@@ -1056,13 +1061,18 @@ function clearAchievementSession(){
  switchAccountView('profile',false);showStatus('achievement-status','');renderAchievements();
 }
 function equippedRows(){return achievementRows.filter(a=>a.is_unlocked&&a.equipped_slot!=null).sort((a,b)=>a.equipped_slot-b.equipped_slot);}
+// Same #1 rule as Supabase: highest points, then lowest ID.
+function currentCommunityTop(){
+ return (achievementAvailable||[]).filter(l=>l.category==='community').sort((a,b)=>Number(b.points)-Number(a.points)||Number(a.id)-Number(b.id))[0]||null;
+}
 function achievementFuture(key){
  if(!achievementAvailable)return false;
  const has=d=>achievementAvailable.some(l=>l.category==='community'&&l.difficulty===d);
  const missing=['medium_demon','hard_demon','insane_demon','extreme_demon'].some(d=>!has(d))||!achievementAvailable.some(l=>l.difficulty==='easy_demon');
  if(['medium_demon','hard_demon','insane_demon','extreme_demon'].includes(key))return !has(key);
  if(key==='easy_demon')return !achievementAvailable.some(l=>l.difficulty==='easy_demon');
- return ['demon_destroyer','absolute_madness'].includes(key)&&missing;
+ if(key==='community_explorer'||key==='grandpa_demon')return !currentCommunityTop();
+ return key==='demon_destroyer'?missing:key==='absolute_madness'&&(missing||!currentCommunityTop());
 }
 function achievementProgress(current,target,color,label){
  const bar=element('div','achievement-progress');bar.setAttribute('role','progressbar');bar.setAttribute('aria-label',label);bar.setAttribute('aria-valuemin','0');bar.setAttribute('aria-valuemax',String(Math.max(1,target)));bar.setAttribute('aria-valuenow',String(Math.max(0,Math.min(current,Math.max(1,target)))));
@@ -1101,7 +1111,12 @@ function renderAchievements(){
   const state=element('div','achievement-card-status');state.append(element('span',unlocked?'unlocked-label':future?'future-label':'locked-label',unlocked?'✓ Unlocked':future?'Not yet obtainable':'Locked'));
   if(equippedNow)state.append(element('span','unlocked-label','Equipped'));card.append(state);
   if(a.key==='geometry_dasher')card.append(element('p','','Only the current #1 player qualifies. Losing first place removes this title.'));
-  if(a.key==='absolute_madness')card.append(element('p','','All 13 other achievements must be unlocked at the same time.'));
+  if(a.key==='grandpa_demon'){
+   const top=currentCommunityTop();
+   if(top)card.append(element('p','','Current #1: '+top.name+'.'));
+   card.append(element('p','','If you no longer have an approved completion of the current #1, this title is removed.'));
+  }
+  if(a.key==='absolute_madness')card.append(element('p','',`All ${ACHIEVEMENTS.length-1} other achievements must be unlocked at the same time.`));
   if(future)card.append(element('p','','Requires a future level addition.'));
   const progress=element('div','achievement-card-progress'),line=element('div','achievement-card-progress-label');line.append(element('span','','Progress'),element('span','',`${row.progress_current} / ${row.progress_target} ${a.unit==='rank'?'':row.progress_target===1&&a.unit.endsWith('s')?a.unit.slice(0,-1):a.unit}`.trim()));progress.append(line,achievementProgress(row.progress_current,row.progress_target,unlocked?a.color:null,a.name+' progress'));card.append(progress);
   const actions=element('div','achievement-card-actions'),btn=element('button','action-btn'+(unlocked&&!equippedNow?' primary':''),equippedNow?'Unequip':unlocked?'Equip':'Locked');btn.type='button';btn.dataset.achievementAction='card-'+a.key;btn.setAttribute('aria-label',(equippedNow?'Unequip ':unlocked?'Equip ':'Locked: ')+a.name);btn.disabled=disabled||!unlocked||(!equippedNow&&equipped.length>=3);if(unlocked&&!equippedNow&&equipped.length>=3)btn.title='Remove a title to free a slot';btn.addEventListener('click',()=>changeEquipped(a.key));actions.append(btn);
@@ -1115,7 +1130,7 @@ async function loadAchievements({quiet=false,afterSave=false}={}){
  const token=++achievementLoadToken,session=achievementSession;achievementLoading=true;
  if(!quiet){showStatus('achievement-status','Loading achievements…');renderAchievements();}
  try{
-  const [inventory,levelData]=await Promise.all([supabase.rpc('get_my_achievements_v90'),supabase.from('levels').select('category,difficulty')]);
+  const [inventory,levelData]=await Promise.all([supabase.rpc('get_my_achievements_v90'),supabase.from('levels').select('id,name,points,category,difficulty').order('id',{ascending:true})]);
   if(uid!==currentUser?.id||token!==achievementLoadToken||session!==achievementSession)return false;
   if(inventory.error)throw inventory.error;
   const rows=(inventory.data||[]).filter(r=>ACHIEVEMENT_MAP.has(r.achievement_key)).sort((a,b)=>a.sort_order-b.sort_order);
@@ -1325,20 +1340,20 @@ async function loadNotifications(kind){
     const level=c?nameForLevel(c.level_id):'A completion';
     const player=c?(names.get(c.user_id)||'A player'):'A player';
     const unread=n.read_at===null;
-    const reclaim=n.event_type===RECLAIM_EVENT;
-    const achievement=ACHIEVEMENT_MAP.get(reclaim?'geometry_dasher':n.event_type.replace(/^achievement_/,''));
+    const reclaim=n.event_type===RECLAIM_EVENT||n.event_type===GRANDPA_RECLAIM_EVENT;
+    const achievement=ACHIEVEMENT_MAP.get(n.event_type===RECLAIM_EVENT?'geometry_dasher':n.event_type===GRANDPA_RECLAIM_EVENT?'grandpa_demon':n.event_type.replace(/^achievement_/,''));
     const row=element('div','notification-item'+(unread?' unread':'')+(achievement?' achievement':''));
     const symbolClass=n.event_type==='coin_approved'?'approved':n.event_type==='coin_rejected'?'rejected':n.event_type==='coin_resubmitted'?'resubmitted':n.event_type;
     const symbol=element('span','notification-symbol '+symbolClass,
       ({approved:'✓',rejected:'×',new_submission:'!',resubmitted:'↻',coin_new:'◈',coin_resubmitted:'↻',coin_approved:'✓',coin_rejected:'×'})[n.event_type]||'•');
     symbol.setAttribute('aria-hidden','true');
-    if(achievement){achievementAccent(row,achievement);symbol.replaceChildren(achievementIcon(reclaim?'crown':'trophy'));}
+    if(achievement){achievementAccent(row,achievement);symbol.replaceChildren(achievementIcon(reclaim?achievement.icon:'trophy'));}
     const body=element('div','notification-content');
     const message=element('div','notification-message');
     if(achievement){
-      const heading=element('strong','notification-achievement-title',reclaim?'Geometry Dasher reclaimed!':`Achievement unlocked: ${achievement.name}!`);
+      const heading=element('strong','notification-achievement-title',reclaim?`${achievement.name} reclaimed!`:`Achievement unlocked: ${achievement.name}!`);
       achievementName(heading,achievement);
-      const detail=reclaim?"You've reclaimed the #1 spot on the LVMC leaderboard and are once again eligible to equip the Geometry Dasher title!":achievement.key==='geometry_dasher'?"Congratulations! You've reached #1 on the LVMC leaderboard and unlocked the Geometry Dasher title.":achievement.key==='coin_master'?"Congratulations! You've collected all 66 coins across the 22 official RobTop Main Levels and earned the golden Coin Master title.":`Congratulations! You've earned ${achievement.name}. Visit My account → Achievements to view your current eligibility and equip titles.`;
+      const detail=reclaim?(achievement.key==='grandpa_demon'?"You've regained eligibility for Grandpa Demon by having an approved completion of the current #1 Community Voted Level. You can equip the title again!":"You've reclaimed the #1 spot on the LVMC leaderboard and are once again eligible to equip the Geometry Dasher title!"):achievement.key==='geometry_dasher'?"Congratulations! You've reached #1 on the LVMC leaderboard and unlocked the Geometry Dasher title.":achievement.key==='coin_master'?"Congratulations! You've collected all 66 coins across the 22 official RobTop Main Levels and earned the golden Coin Master title.":`Congratulations! You've earned ${achievement.name}. Visit My account → Achievements to view your current eligibility and equip titles.`;
       message.append(heading,detail);
     }else if(n.event_type==='approved')message.append(element('strong','',level),' was approved!');
     else if(n.event_type==='rejected')message.append(element('strong','',level),' was rejected.');
@@ -1472,7 +1487,7 @@ function showAchievementTooltip(button,username,a,pinned=false){
   cancelAchievementHide();achievementAnchor=button;achievementPinned=pinned||achievementPinned;
   achievementAccent(achievementTooltip,a);
   achievementHeading.replaceChildren(achievementIcon(a.icon),achievementName(element('span','',a.name+' Achievement'),a));
-  achievementDescription.textContent=a.description+(a.key==='geometry_dasher'?' Only the current #1 player qualifies.':a.key==='absolute_madness'?' All 13 other achievements must be unlocked simultaneously.':'');
+  achievementDescription.textContent=a.description+(a.key==='geometry_dasher'?' Only the current #1 player qualifies.':a.key==='grandpa_demon'?' Only players with an approved completion of the current #1 community level qualify.':a.key==='absolute_madness'?` All ${ACHIEVEMENTS.length-1} other achievements must be unlocked simultaneously.`:'');
   achievementUnlocked.textContent='✓ Unlocked by '+username;
   achievementTooltip.hidden=false;
   button.setAttribute('aria-expanded','true');button.setAttribute('aria-describedby',achievementTooltip.id);
