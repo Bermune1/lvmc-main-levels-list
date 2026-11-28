@@ -136,7 +136,7 @@ window.LVMC_HOSTED_TRACKS = Object.freeze({
     url: "soundtracks/birdbrain.mp3",
     offset: 0
     },
-  "Blade Of Justice": {
+  "Blade of Justice": {
     url: "soundtracks/boj.mp3",
     offset: 0
     },
@@ -144,7 +144,7 @@ window.LVMC_HOSTED_TRACKS = Object.freeze({
     url: "soundtracks/b.mp3",
     offset: 0
     },
-  "ISpyWithMyLittleEye": {
+  "iSpyWithMyLittleEye": {
     url: "soundtracks/ispy.mp3",
     offset: 0
   }
