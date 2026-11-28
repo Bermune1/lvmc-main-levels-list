@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <meta name="theme-color" content="#0d1118" />
 <meta name="description" content="LVMC Geometry Dash rankings: a Main Levels List and separate Discord Community Voted Levels, with independent scores and a main-first leaderboard." />
-<title>LVMC Rankings V9.4 — Community Expansion II</title>
+<title>LVMC Rankings V9.4.1 — Thumbnail Polish</title>
 <style>
  :root{color-scheme:dark;--bg:#0d1118;--panel:#151b25;--panel-active:#192333;--border:#293241;--muted:#99a7ba;--text:#f1f5fb;--accent:#79b9ff}
  *{box-sizing:border-box}
@@ -296,6 +296,10 @@
   /* The original Blast Processing and Electroman Adventures images have thin horizontal black bars. */
   #main-list details[data-music-level="Blast Processing"] .detail-image,
   #main-list details[data-music-level="Electroman Adventures"] .detail-image{height:auto;aspect-ratio:1000/580;object-fit:cover;object-position:center}
+
+  /* V9.4.1: crop B's letterboxed 4:3 YouTube thumbnail to 16:9. */
+  #community-list details[data-music-level="B"] .thumb,
+  #community-list details[data-music-level="B"] .detail-image{height:auto;aspect-ratio:16/9;object-fit:cover;object-position:center}
 
   /* V9.3 compact soundtrack controls */
   .music-credit{border-top:1px solid var(--border);margin-top:12px;padding-top:10px;font-size:12px;color:var(--muted);display:grid;gap:7px;min-width:0}
